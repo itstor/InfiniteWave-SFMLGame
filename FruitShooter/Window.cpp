@@ -22,15 +22,20 @@ void Window::Create()
 void Window::Update()
 {
 	sf::Event evnt{};
-	while (window.pollEvent(evnt))
+	while (window.isOpen())
 	{
-		switch (evnt.type)
+		while (window.pollEvent(evnt))
 		{
-		case sf::Event::Closed: window.close(); break;
-		default: break;
+			switch (evnt.type)
+			{
+			case sf::Event::Closed: window.close(); break;
+			default: break;
+			}
+			Render();
 		}
 	}
 }
+	
 
 void Window::Render()
 {
