@@ -19,47 +19,122 @@
     <Filter Include="Resource Files\Texture\Icon">
       <UniqueIdentifier>{94a6d92f-71a8-47fc-a6f4-34aa37d43864}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Tester">
-      <UniqueIdentifier>{f55a748e-ab00-4ad3-969b-771654bea0e8}</UniqueIdentifier>
+    <Filter Include="Source Files\Common">
+      <UniqueIdentifier>{c004f4e8-af5b-4dff-a101-fb09b2b0a4e2}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="test.cpp">
-      <Filter>Source Files\Tester</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GamePlay.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GamePlay.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <Filter Include="Header Files\Common">
+      <UniqueIdentifier>{59d89ca1-6a4e-4032-ab09-093f14a2966b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Physics">
+      <UniqueIdentifier>{e9ce666f-0344-4f37-a6e6-bc548c7a5828}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Physics">
+      <UniqueIdentifier>{f7192e7a-00b5-44b9-876b-3bdb34fa32a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\UI">
+      <UniqueIdentifier>{7c3da2a1-3fcf-4f4c-a93c-b57e3ff60121}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI">
+      <UniqueIdentifier>{297a12fa-766c-49fc-b969-fc9a1ece44ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObject">
+      <UniqueIdentifier>{d10fb513-97e5-4b0b-a563-f2cfe2c42bf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObejct">
+      <UniqueIdentifier>{d342302a-2acb-4371-be46-51f7f630700e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scenes">
+      <UniqueIdentifier>{b6d33d79-1282-4af8-90fe-7c99e2575037}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes">
+      <UniqueIdentifier>{b9e0e0b3-e637-42e5-9c56-dcce3125df10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities">
+      <UniqueIdentifier>{eb2a3185-5b03-4591-806b-93a5e0e25597}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities">
+      <UniqueIdentifier>{a3bd2782-8c6b-4c23-ac01-9f4bc8584ef7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Audio">
+      <UniqueIdentifier>{e7354698-aae6-4458-9f44-315e2c5a89a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Audio\SFX">
+      <UniqueIdentifier>{6c61a84f-dd4d-468b-ba09-a6792d104b35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Audio\Backsound">
+      <UniqueIdentifier>{4b47111b-87c0-405a-8353-73dbee25c57e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities\Audio">
+      <UniqueIdentifier>{82267bb5-9d54-42ee-bd11-5c39a77465cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities\Audio">
+      <UniqueIdentifier>{91f90573-2388-4ee6-9770-9aab7583f1ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Texture\Icon\icon.png">
       <Filter>Resource Files\Texture\Icon</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Scripts\Common\source\Window.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Common\source\Game.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Physics\source\Physics.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Scenes\source\GamePlay.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Scenes\source\MainMenu.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Utilities\source\Setting.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Utilities\source\Sfx.cpp">
+      <Filter>Source Files\Utilities\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Utilities\source\AudioManager.cpp">
+      <Filter>Source Files\Utilities\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Utilities\source\Music.cpp">
+      <Filter>Source Files\Utilities\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Scripts\Common\include\Window.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Common\include\Game.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Physics\include\Physics.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Scenes\include\GamePlay.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Scenes\include\MainMenu.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Utilities\inlcude\Setting.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Utilities\inlcude\Sfx.h">
+      <Filter>Header Files\Utilities\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Utilities\inlcude\Music.h">
+      <Filter>Header Files\Utilities\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Utilities\inlcude\AudioManager.h">
+      <Filter>Header Files\Utilities\Audio</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

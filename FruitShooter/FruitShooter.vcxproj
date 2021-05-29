@@ -87,11 +87,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\Programming\Project\TA-FruitShooterGame2\FruitShooter\SFML-file\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\Utilities\inlcude;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\UI\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\Scenes\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\GameObject\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\Physics\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\Common\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\third-party\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>D:\Programming\Project\TA-FruitShooterGame2\FruitShooter\SFML-file\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\Programming\Project\TA-FruitShooterGame\FruitShooter\third-party\SFML\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -118,32 +118,41 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\Programming\Project\TA-FruitShooterGame2\FruitShooter\SFML-file\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\Utilities\inlcude;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\UI\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\Scenes\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\GameObject\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\Physics\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\Common\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\third-party\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>D:\Programming\Project\TA-FruitShooterGame2\FruitShooter\SFML-file\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\Programming\Project\TA-FruitShooterGame\FruitShooter\third-party\SFML\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;sfml-network.lib;sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GamePlay.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="MainMenu.cpp" />
-    <ClCompile Include="test.cpp" />
-    <ClCompile Include="Window.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GamePlay.h" />
-    <ClInclude Include="MainMenu.h" />
-    <ClInclude Include="Window.h" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="Resource\Texture\Icon\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Scripts\Common\source\Game.cpp" />
+    <ClCompile Include="Scripts\Common\source\Window.cpp" />
+    <ClCompile Include="Scripts\main.cpp" />
+    <ClCompile Include="Scripts\Physics\source\Physics.cpp" />
+    <ClCompile Include="Scripts\Scenes\source\GamePlay.cpp" />
+    <ClCompile Include="Scripts\Scenes\source\MainMenu.cpp" />
+    <ClCompile Include="Scripts\Utilities\source\AudioManager.cpp" />
+    <ClCompile Include="Scripts\Utilities\source\Music.cpp" />
+    <ClCompile Include="Scripts\Utilities\source\Setting.cpp" />
+    <ClCompile Include="Scripts\Utilities\source\Sfx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Scripts\Common\include\Game.h" />
+    <ClInclude Include="Scripts\Common\include\Window.h" />
+    <ClInclude Include="Scripts\Physics\include\Physics.h" />
+    <ClInclude Include="Scripts\Scenes\include\GamePlay.h" />
+    <ClInclude Include="Scripts\Scenes\include\MainMenu.h" />
+    <ClInclude Include="Scripts\Utilities\inlcude\AudioManager.h" />
+    <ClInclude Include="Scripts\Utilities\inlcude\Music.h" />
+    <ClInclude Include="Scripts\Utilities\inlcude\Setting.h" />
+    <ClInclude Include="Scripts\Utilities\inlcude\Sfx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
