@@ -10,9 +10,7 @@
 class Window
 {
 public:
-	sf::RenderWindow window;
-
-	Window(const std::string& w_title, const sf::Vector2u& w_size, const sf::Image& w_icon);
+	Window(const std::string& winTitle, const sf::Vector2u& winSize, const sf::Image& winIcon);
 	~Window();
 
 	void BeginDraw();
@@ -29,11 +27,12 @@ public:
 	void Draw(sf::Drawable& Object);
 
 private:
-	sf::Vector2u p_winSize;
-	std::string p_winTitle;
-	sf::Image p_winIcon;
-	bool p_isDone;
-	bool p_isFullScreen;
+	sf::RenderWindow mWindow;
+	sf::Vector2u mWinSize;
+	std::string mWinTitle;
+	sf::Image mWinIcon;
+	bool mIsDone;
+	bool mIsFullScreen;
 
 	void Create();
 	void Destroy();

@@ -7,7 +7,7 @@
 class Game
 {
 public:
-	Game(const std::string& w_title, const sf::Vector2u& w_size, const sf::Image& w_icon);
+	Game(const std::string& winTitle, const sf::Vector2u& winSize, const sf::Image& winIcon);
 	~Game();
 
 	void HandleInput();
@@ -20,9 +20,9 @@ public:
 	void RestartClock();
 
 private:
-	Window window;
-	sf::Clock p_clock;
-	sf::Time p_elapsed;
+	Window mWindow;
+	sf::Clock mClock;
+	sf::Time mElapsed;
 };
 
 #endif

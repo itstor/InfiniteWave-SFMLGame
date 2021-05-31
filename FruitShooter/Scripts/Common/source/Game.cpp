@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game(const std::string& w_title, const sf::Vector2u& w_size, const sf::Image& w_icon): window(w_title, w_size, w_icon)
+Game::Game(const std::string& winTitle, const sf::Vector2u& winSize, const sf::Image& winIcon): mWindow(winTitle, winSize, winIcon)
 {
 	RestartClock();
 	srand(time(nullptr));
@@ -10,17 +10,17 @@ Game::~Game() {}
 
 sf::Time Game::GetElapsed()
 {
-	return p_elapsed;
+	return mElapsed;
 }
 
 void Game::RestartClock()
 {
-	p_elapsed = p_clock.restart();
+	mElapsed = mClock.restart();
 }
 
 Window* Game::GetWindow()
 {
-	return &window;
+	return &mWindow;
 }
 
 void Game::HandleInput()
@@ -30,14 +30,14 @@ void Game::HandleInput()
 
 void Game::Update()
 {
-	window.Update();
+	mWindow.Update();
 }
 
 void Game::Render()
 {
-	window.BeginDraw();
+	mWindow.BeginDraw();
 	//window.Draw(NULL);
-	window.EndDraw();
+	mWindow.EndDraw();
 }
 
 

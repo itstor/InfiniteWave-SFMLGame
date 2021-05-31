@@ -1,12 +1,12 @@
 #include "Window.h"
 
-Window::Window(const std::string& w_title, const sf::Vector2u& w_size, const sf::Image& w_icon)
+Window::Window(const std::string& winTitle, const sf::Vector2u& winSize, const sf::Image& winIcon)
 {
-	p_winSize = w_size;
-	p_winTitle = w_title;
-	p_winIcon = w_icon;
-	p_isFullScreen = false;
-	p_isDone = false;
+	mWinSize = winSize;
+	mWinTitle = winTitle;
+	mWinIcon = winIcon;
+	mIsFullScreen = false;
+	mIsDone = false;
 
 	Create();
 }
@@ -18,25 +18,25 @@ Window::~Window()
 
 void Window::Create()
 {
-	const auto style = p_isFullScreen ? sf::Style::Fullscreen : sf::Style::Titlebar | sf::Style::Close;
+	const auto style = mIsFullScreen ? sf::Style::Fullscreen : sf::Style::Titlebar | sf::Style::Close;
 
-	window.create({ p_winSize.x, p_winSize.y }, p_winTitle, style);
-	window.setIcon(p_winIcon.getSize().x, p_winIcon.getSize().y, p_winIcon.getPixelsPtr());
+	mWindow.create({ mWinSize.x, mWinSize.y }, mWinTitle, style);
+	mWindow.setIcon(mWinIcon.getSize().x, mWinIcon.getSize().y, mWinIcon.getPixelsPtr());
 	//Set FPS Max to 60fps
-	window.setFramerateLimit(60);
+	mWindow.setFramerateLimit(60);
 }
 
 void Window::Destroy()
 {
-	window.close();
-	p_isDone = true;
+	mWindow.close();
+	mIsDone = true;
 }
 
 void Window::Update()
 {
 	sf::Event evnt{};
 
-	while (window.pollEvent(evnt))
+	while (mWindow.pollEvent(evnt))
 	{
 		switch (evnt.type)
 		{
@@ -48,39 +48,39 @@ void Window::Update()
 
 void Window::ToggleFullScreen()
 {
-	p_isFullScreen = !p_isFullScreen;
+	mIsFullScreen = !mIsFullScreen;
 	Destroy();
 	Create();
 }
 
 void Window::Draw(sf::Drawable& Object)
 {
-	window.draw(Object);
+	mWindow.draw(Object);
 }
 
 void Window::BeginDraw()
 {
-	window.clear();
+	mWindow.clear();
 }
 
 void Window::EndDraw()
 {
-	window.display();
+	mWindow.display();
 }
 
 bool Window::isDone()
 {
-	return p_isDone;
+	return mIsDone;
 }
 
 bool Window::isFullScreen()
 {
-	return p_isFullScreen;
+	return mIsFullScreen;
 }
 
 sf::Vector2u Window::GetWindowSize()
 {
-	return p_winSize;
+	return mWinSize;
 }
 
 
