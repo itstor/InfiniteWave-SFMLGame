@@ -3,7 +3,7 @@
 Game::Game(const std::string& w_title, const sf::Vector2u& w_size, const sf::Image& w_icon): window(w_title, w_size, w_icon)
 {
 	RestartClock();
-	srand(time(NULL));
+	srand(time(nullptr));
 }
 
 Game::~Game() {}

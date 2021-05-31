@@ -5,7 +5,7 @@ Window::Window(const std::string& w_title, const sf::Vector2u& w_size, const sf:
 	p_winSize = w_size;
 	p_winTitle = w_title;
 	p_winIcon = w_icon;
-	p_isFullScreen = true;
+	p_isFullScreen = false;
 	p_isDone = false;
 
 	Create();
@@ -29,6 +29,7 @@ void Window::Create()
 void Window::Destroy()
 {
 	window.close();
+	p_isDone = true;
 }
 
 void Window::Update()
@@ -39,7 +40,7 @@ void Window::Update()
 	{
 		switch (evnt.type)
 		{
-		case sf::Event::Closed: window.close(); break;
+		case sf::Event::Closed: Destroy(); break;
 		default: break;
 		}
 	}
