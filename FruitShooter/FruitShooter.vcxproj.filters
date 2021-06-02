@@ -107,6 +107,15 @@
     <ClCompile Include="Scripts\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Utilities\source\SceneManager.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Scenes\source\SplashScreen.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Scenes\source\BaseScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Common\include\Window.h">
@@ -135,6 +144,18 @@
     </ClInclude>
     <ClInclude Include="Scripts\Utilities\inlcude\AudioManager.h">
       <Filter>Header Files\Utilities\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Common\include\SharedObject.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Utilities\inlcude\SceneManager.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Scenes\include\BaseScene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Scenes\include\SplashScreen.h">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

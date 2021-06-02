@@ -2,6 +2,8 @@
 
 Game::Game(const std::string& winTitle, const sf::Vector2u& winSize, const sf::Image& winIcon): mWindow(winTitle, winSize, winIcon)
 {
+	SharedObject shared;
+	shared.mWindow = &mWindow;
 	RestartClock();
 	srand(time(nullptr));
 }

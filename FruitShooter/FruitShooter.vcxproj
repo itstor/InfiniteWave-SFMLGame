@@ -136,21 +136,28 @@
     <ClCompile Include="Scripts\Common\source\Window.cpp" />
     <ClCompile Include="Scripts\main.cpp" />
     <ClCompile Include="Scripts\Physics\source\Physics.cpp" />
+    <ClCompile Include="Scripts\Scenes\source\BaseScene.cpp" />
     <ClCompile Include="Scripts\Scenes\source\GamePlay.cpp" />
     <ClCompile Include="Scripts\Scenes\source\MainMenu.cpp" />
+    <ClCompile Include="Scripts\Scenes\source\SplashScreen.cpp" />
     <ClCompile Include="Scripts\Utilities\source\AudioManager.cpp" />
     <ClCompile Include="Scripts\Utilities\source\Music.cpp" />
+    <ClCompile Include="Scripts\Utilities\source\SceneManager.cpp" />
     <ClCompile Include="Scripts\Utilities\source\Setting.cpp" />
     <ClCompile Include="Scripts\Utilities\source\Sfx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Common\include\Game.h" />
+    <ClInclude Include="Scripts\Common\include\SharedObject.h" />
     <ClInclude Include="Scripts\Common\include\Window.h" />
     <ClInclude Include="Scripts\Physics\include\Physics.h" />
+    <ClInclude Include="Scripts\Scenes\include\BaseScene.h" />
     <ClInclude Include="Scripts\Scenes\include\GamePlay.h" />
     <ClInclude Include="Scripts\Scenes\include\MainMenu.h" />
+    <ClInclude Include="Scripts\Scenes\include\SplashScreen.h" />
     <ClInclude Include="Scripts\Utilities\inlcude\AudioManager.h" />
     <ClInclude Include="Scripts\Utilities\inlcude\Music.h" />
+    <ClInclude Include="Scripts\Utilities\inlcude\SceneManager.h" />
     <ClInclude Include="Scripts\Utilities\inlcude\Setting.h" />
     <ClInclude Include="Scripts\Utilities\inlcude\Sfx.h" />
   </ItemGroup>

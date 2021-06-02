@@ -3,6 +3,7 @@
 #define GAME_H
 
 #include "Window.h"
+#include "SharedObject.h"
 
 class Game
 {
