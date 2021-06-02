@@ -11,19 +11,18 @@ public:
 	Game(const std::string& winTitle, const sf::Vector2u& winSize, const sf::Image& winIcon);
 	~Game();
 
-	void HandleInput();
-	void Update();
+	void Run();
 	void Render();
 
 	Window* GetWindow();
 
-	sf::Time GetElapsed();
+	float GetDeltaTime();
 	void RestartClock();
 
 private:
 	Window mWindow;
 	sf::Clock mClock;
-	sf::Time mElapsed;
+	float mDeltaTime;
 };
 
 #endif

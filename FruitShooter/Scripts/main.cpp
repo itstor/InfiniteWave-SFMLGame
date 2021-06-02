@@ -10,7 +10,9 @@ int main()
 	
 	if (!icon.loadFromFile("Assets/Texture/Icon/icon.png"))
 	{
+#ifdef _DEBUG
 		std::cout << "Icon Not Found" << std::endl;
+#endif
 		return -1;
 	}
 	

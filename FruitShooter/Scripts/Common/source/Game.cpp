@@ -10,14 +10,14 @@ Game::Game(const std::string& winTitle, const sf::Vector2u& winSize, const sf::I
 
 Game::~Game() {}
 
-sf::Time Game::GetElapsed()
+float Game::GetElapsed()
 {
-	return mElapsed;
+	return mDeltaTime;
 }
 
 void Game::RestartClock()
 {
-	mElapsed = mClock.restart();
+	mDeltaTime = mClock.restart().asMilliseconds();
 }
 
 Window* Game::GetWindow()
@@ -25,14 +25,9 @@ Window* Game::GetWindow()
 	return &mWindow;
 }
 
-void Game::HandleInput()
+void Game::Run()
 {
-	//TODO
-}
-
-void Game::Update()
-{
-	mWindow.Update();
+	
 }
 
 void Game::Render()

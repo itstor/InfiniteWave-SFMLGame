@@ -1,22 +1,38 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include "SceneManager.h"
+
+#include <memory>
+
+class SceneManager;
+
+namespace sf
+{
+	class RenderWindow;
+}
 
 class BaseScene
 {
-	friend class SceneManager;
 public:
-	BaseScene(SceneManager* manager) :mManager(manager){}
-	~BaseScene() = default;
+	BaseScene(SceneManager& manager, sf::RenderWindow& window, bool replace);
+	virtual ~BaseScene() = default;
 
-	void ToggleScene();
-	void Update(const sf::Time& deltaTime);
-	void Draw();
+	BaseScene(const BaseScene&) = delete;
+	BaseScene& operator=(const BaseScene&) = delete;
 
-	SceneManager* GetSceneManager();
+	virtual void Pause() = 0;
+	virtual void Resume() = 0;
+	virtual void Update() = 0;
+	virtual void Draw() = 0;
 
-private:
-	SceneManager* mManager;
-	bool mIsActive = false;
+	std::unique_ptr<BaseScene> Next();
+
+	bool isReplacing() const;
+
+protected:
+	SceneManager& mManager;
+	sf::RenderWindow& mWindow;
+
+	bool mReplace;
+
+	std::unique_ptr<BaseScene> mNext;
 };
 

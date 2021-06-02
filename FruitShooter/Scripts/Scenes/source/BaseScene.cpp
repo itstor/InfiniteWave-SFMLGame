@@ -1,11 +1,16 @@
 #include "BaseScene.h"
 
-void BaseScene::ToggleScene()
+BaseScene::BaseScene(SceneManager & manager, sf::RenderWindow & window, bool replace): mManager(manager), mWindow(window), mReplace(replace)
 {
-	mIsActive = !mIsActive;
 }
 
-SceneManager* BaseScene::GetSceneManager()
+std::unique_ptr<BaseScene> BaseScene::Next()
 {
-	return mManager;
+	return std::move(mNext);
 }
+
+bool BaseScene::isReplacing() const
+{
+	return mReplace;
+}
+
