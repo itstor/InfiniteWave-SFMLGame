@@ -3,6 +3,8 @@
 #include <stack>
 #include "BaseScene.h"
 
+class Window;
+
 namespace sf
 {
 	class RenderWindow;
@@ -18,8 +20,8 @@ private:
 
 public:
 	SceneManager();
-	~SceneManager();
 
+	void run(std::unique_ptr<BaseScene> scene);
 	void nextScene();
 	void prevScene();
 	void Update();
@@ -29,11 +31,11 @@ public:
 	void quit();
 
 	template <typename T>
-	static std::unique_ptr<T> build(SceneManager& manager, sf::RenderWindow& window, bool replace = true);
+	static std::unique_ptr<T> build(SceneManager& manager, Window& window, bool replace = true);
 };
 
 template <typename T>
-std::unique_ptr<T> SceneManager::build(SceneManager& manager, sf::RenderWindow& window, bool replace)
+std::unique_ptr<T> SceneManager::build(SceneManager& manager, Window& window, bool replace)
 {
 	return std::make_unique<T>(manager, window, replace);
 }

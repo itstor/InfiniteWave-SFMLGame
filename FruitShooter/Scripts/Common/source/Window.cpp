@@ -53,6 +53,12 @@ void Window::ToggleFullScreen()
 	Create();
 }
 
+sf::RenderWindow* Window::GetRenderWindow()
+{
+	return &mWindow;
+}
+
+
 void Window::Draw(sf::Drawable& Object)
 {
 	mWindow.draw(Object);

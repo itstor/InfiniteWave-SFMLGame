@@ -2,11 +2,15 @@
 #include "Game.h"
 #include <iostream>
 
+#include "SplashScreen.h"
+
 int main()
 {
 	sf::Image icon;
-	const std::string windowTitle = "Fruit Shooter";
-	sf::Vector2u windowSize(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height);
+	const std::string windowTitle = "Space War";
+	const unsigned int screenWidth = sf::VideoMode::getDesktopMode().width;
+	const unsigned int screenHeight = sf::VideoMode::getDesktopMode().height;
+	const sf::Vector2u windowSize(screenWidth, screenHeight);
 	
 	if (!icon.loadFromFile("Assets/Texture/Icon/icon.png"))
 	{
@@ -18,11 +22,14 @@ int main()
 	
 	Game game(windowTitle, windowSize, icon);
 
-	while(!game.GetWindow()->isDone())
+	game.GetSceneManager()->run(SceneManager::build<SplashScreen>(*game.GetSceneManager(), *game.GetWindow(), true));
+
+	while(!game.GetWindow()->isDone() && game.GetSceneManager()->running())
 	{
-		game.HandleInput();
-		game.Update();
-		game.Render();
+		//Window loop here
+		game.GetSceneManager()->nextScene();
+		game.GetSceneManager()->Update();
+		game.GetSceneManager()->Draw();
 		game.RestartClock();
 	}
 	

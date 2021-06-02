@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include "Window.h"
 
 class SceneManager;
 
@@ -12,7 +13,7 @@ namespace sf
 class BaseScene
 {
 public:
-	BaseScene(SceneManager& manager, sf::RenderWindow& window, bool replace);
+	BaseScene(SceneManager& manager, Window& window, bool replace);
 	virtual ~BaseScene() = default;
 
 	BaseScene(const BaseScene&) = delete;
@@ -29,7 +30,7 @@ public:
 
 protected:
 	SceneManager& mManager;
-	sf::RenderWindow& mWindow;
+	Window& mWindow;
 
 	bool mReplace;
 

@@ -1,6 +1,6 @@
 #include "BaseScene.h"
 
-BaseScene::BaseScene(SceneManager & manager, sf::RenderWindow & window, bool replace): mManager(manager), mWindow(window), mReplace(replace)
+BaseScene::BaseScene(SceneManager & manager, Window& window, bool replace): mManager(manager), mWindow(window), mReplace(replace)
 {
 }
 

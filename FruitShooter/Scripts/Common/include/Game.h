@@ -3,7 +3,7 @@
 #define GAME_H
 
 #include "Window.h"
-#include "SharedObject.h"
+#include "SceneManager.h"
 
 class Game
 {
@@ -11,18 +11,19 @@ public:
 	Game(const std::string& winTitle, const sf::Vector2u& winSize, const sf::Image& winIcon);
 	~Game();
 
-	void Run();
-	void Render();
+	//void Render();
 
 	Window* GetWindow();
+	SceneManager* GetSceneManager();
 
-	float GetDeltaTime();
+	unsigned int DeltaTime() const;
 	void RestartClock();
 
 private:
+	SceneManager mManager;
 	Window mWindow;
 	sf::Clock mClock;
-	float mDeltaTime;
+	unsigned int mDeltaTime;
 };
 
 #endif

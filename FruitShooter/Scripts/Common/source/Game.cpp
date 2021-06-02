@@ -2,15 +2,13 @@
 
 Game::Game(const std::string& winTitle, const sf::Vector2u& winSize, const sf::Image& winIcon): mWindow(winTitle, winSize, winIcon)
 {
-	SharedObject shared;
-	shared.mWindow = &mWindow;
 	RestartClock();
 	srand(time(nullptr));
 }
 
-Game::~Game() {}
+Game::~Game() = default;
 
-float Game::GetElapsed()
+unsigned int Game::DeltaTime() const
 {
 	return mDeltaTime;
 }
@@ -25,17 +23,18 @@ Window* Game::GetWindow()
 	return &mWindow;
 }
 
-void Game::Run()
+SceneManager* Game::GetSceneManager()
 {
-	
+	return &mManager;
 }
 
-void Game::Render()
-{
-	mWindow.BeginDraw();
-	//window.Draw(NULL);
-	mWindow.EndDraw();
-}
+
+//void Game::Render()
+//{
+//	mWindow.BeginDraw();
+//	//window.Draw(NULL);
+//	mWindow.EndDraw();
+//}
 
 
 

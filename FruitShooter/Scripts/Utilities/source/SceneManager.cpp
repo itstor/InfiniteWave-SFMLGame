@@ -9,6 +9,13 @@ SceneManager::SceneManager(): mIsResume(false), mIsRunning(false)
 #endif
 }
 
+void SceneManager::run(std::unique_ptr<BaseScene> scene)
+{
+	mIsRunning = true;
+	mScene.push(std::move(scene));
+}
+
+
 void SceneManager::nextScene()
 {
 	if (mIsResume)
