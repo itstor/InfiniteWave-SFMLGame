@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-SceneManager::SceneManager(): mIsResume(false), mIsRunning(false)
+SceneManager::SceneManager(): mIsResume(false)
 {
 #ifdef _DEBUG
 	std::cout << "Scene Manager Created" << std::endl;
@@ -11,7 +11,7 @@ SceneManager::SceneManager(): mIsResume(false), mIsRunning(false)
 
 void SceneManager::run(std::unique_ptr<BaseScene> scene)
 {
-	mIsRunning = true;
+	//move scene to the stack of scene container
 	mScene.push(std::move(scene));
 }
 
@@ -57,14 +57,4 @@ void SceneManager::Update()
 void SceneManager::Draw()
 {
 	mScene.top()->Draw();
-}
-
-bool SceneManager::running() const
-{
-	return mIsRunning;
-}
-
-void SceneManager::quit()
-{
-	mIsRunning = false;
 }

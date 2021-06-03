@@ -16,7 +16,6 @@ private:
 	std::stack<std::unique_ptr<BaseScene>> mScene;
 
 	bool mIsResume;
-	bool mIsRunning;
 
 public:
 	SceneManager();
@@ -26,9 +25,6 @@ public:
 	void prevScene();
 	void Update();
 	void Draw();
-
-	[[nodiscard]] bool running() const;
-	void quit();
 
 	template <typename T>
 	static std::unique_ptr<T> build(SceneManager& manager, Window& window, bool replace = true);

@@ -31,16 +31,3 @@ SceneManager* Game::GetSceneManager()
 {
 	return &mManager;
 }
-
-
-//void Game::Render()
-//{
-//	mWindow.BeginDraw();
-//	//window.Draw(NULL);
-//	mWindow.EndDraw();
-//}
-
-
-
-
-

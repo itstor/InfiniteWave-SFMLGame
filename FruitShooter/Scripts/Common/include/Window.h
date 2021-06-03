@@ -17,6 +17,7 @@ public:
 	void EndDraw();
 
 	void Update();
+	void Destroy();
 
 	bool isDone();
 	bool isFullScreen();
@@ -36,7 +37,6 @@ private:
 	bool mIsFullScreen;
 
 	void Create();
-	void Destroy();
 };
 
 #endif

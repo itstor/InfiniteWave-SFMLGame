@@ -48,7 +48,7 @@ void SplashScreen::Update()
 	{
 		switch (event.type)
 		{
-		case sf::Event::Closed: mManager.quit(); break;
+		case sf::Event::Closed: mWindow.Destroy(); break;
 #ifdef _DEBUG
 		case sf::Event::KeyPressed:
 		{
@@ -57,7 +57,7 @@ void SplashScreen::Update()
 			case sf::Keyboard::Space:
 				mNext = SceneManager::build<MainMenu>(mManager, mWindow, false);
 				break;
-			case sf::Keyboard::Escape: mManager.quit(); break;
+			case sf::Keyboard::Escape: mWindow.Destroy(); break;
 			default: break;
 			}
 			break;

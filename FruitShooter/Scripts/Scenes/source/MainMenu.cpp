@@ -73,7 +73,7 @@ void MainMenu::Update()
 	{
 		switch(event.type)
 		{
-		case sf::Event::Closed: mManager.quit(); break;
+		case sf::Event::Closed: mWindow.Destroy();; break;
 		case sf::Event::KeyPressed:
 			{
 				switch (event.key.code)
@@ -81,7 +81,7 @@ void MainMenu::Update()
 				case sf::Keyboard::Space:
 					mNext = SceneManager::build<SplashScreen>(mManager, mWindow, false);
 					break;
-				case sf::Keyboard::Escape: mManager.quit(); break;
+				case sf::Keyboard::Escape: mWindow.Destroy(); break;
 				case sf::Keyboard::BackSpace: mManager.prevScene(); break;
 				default: break;
 				}
@@ -96,7 +96,7 @@ void MainMenu::Update()
 
 	if (btnExit.isPressed())
 	{
-		mManager.quit();
+		mWindow.Destroy();
 	}
 }
 
