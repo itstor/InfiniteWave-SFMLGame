@@ -55,7 +55,7 @@ void SplashScreen::Update()
 			switch (event.key.code)
 			{
 			case sf::Keyboard::Space:
-				mNext = SceneManager::build<MainMenu>(mManager, mWindow, true);
+				mNext = SceneManager::build<MainMenu>(mManager, mWindow, false);
 				break;
 			case sf::Keyboard::Escape: mManager.quit(); break;
 			default: break;

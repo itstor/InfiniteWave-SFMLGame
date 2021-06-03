@@ -10,9 +10,7 @@ class MainMenu final : public BaseScene
 {
 public:
 	MainMenu(SceneManager& manager, Window& window, bool replace = true);
-#ifdef _DEBUG
-	~MainMenu() override { std::cout << "MainMenu Deleted" << std::endl; }
-#endif
+	~MainMenu() override;
 
 	void Pause() override;
 	void Draw() override;
@@ -28,7 +26,7 @@ private:
 	sf::RectangleShape rect;
 	sf::Texture title;
 	sf::Texture menuBgTex;
-	sf::Sprite menuBgSpi;\
+	sf::Sprite menuBgSpi;
 	
 	Button btnPlay;
 	Button btnSetting;

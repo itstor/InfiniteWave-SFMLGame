@@ -31,9 +31,7 @@ void SceneManager::nextScene()
 
 	if (!mScene.empty())
 	{
-		auto temp = mScene.top()->Next();
-
-		if (temp!=nullptr)
+		if (auto temp = mScene.top()->Next(); temp!=nullptr)
 		{
 			if (temp->isReplacing())
 				mScene.pop();

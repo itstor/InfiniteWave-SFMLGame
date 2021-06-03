@@ -16,6 +16,11 @@ MainMenu::MainMenu(SceneManager& manager, Window& window, bool replace):BaseScen
 	initButton();
 }
 
+MainMenu::~MainMenu()
+{
+	std::cout << "MainMenu Deleted" << std::endl;
+}
+
 void MainMenu::initButton()
 {
 	btnPlay.Setup("Assets/Texture/GUI/Buttons/Start_BTN.png", 
@@ -74,7 +79,7 @@ void MainMenu::Update()
 				switch (event.key.code)
 				{
 				case sf::Keyboard::Space:
-					mNext = SceneManager::build<SplashScreen>(mManager, mWindow, true);
+					mNext = SceneManager::build<SplashScreen>(mManager, mWindow, false);
 					break;
 				case sf::Keyboard::Escape: mManager.quit(); break;
 				case sf::Keyboard::BackSpace: mManager.prevScene(); break;

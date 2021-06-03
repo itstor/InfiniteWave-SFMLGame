@@ -1,14 +1,13 @@
 #include "Button.h"
 
-Button::Button() = default;
 
-void Button::Setup(std::string idlePath, std::string hoverPath, std::string activePath, float sizeFact, sf::Vector2f pos)
+void Button::Setup(const std::string& idlePath, const std::string& hoverPath, const std::string& activePath, float sizeFact, sf::Vector2f pos)
 {
 	btnIdleTex.loadFromFile(idlePath);
 	btnHoverTex.loadFromFile(hoverPath);
 	btnActiveTex.loadFromFile(activePath);
 
-	btn.setSize(sf::Vector2f(btnIdleTex.getSize().x, btnIdleTex.getSize().y));
+	btn.setSize(sf::Vector2f(static_cast<float>(btnIdleTex.getSize().x), static_cast<float>(btnIdleTex.getSize().y)));
 	btn.setScale(sizeFact, sizeFact);
 	btn.setOrigin(btn.getSize().x/2, btn.getSize().y/2);
 	btn.setPosition(pos.x, pos.y);

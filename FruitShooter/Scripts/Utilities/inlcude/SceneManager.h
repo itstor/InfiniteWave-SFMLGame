@@ -27,7 +27,7 @@ public:
 	void Update();
 	void Draw();
 
-	bool running() const;
+	[[nodiscard]] bool running() const;
 	void quit();
 
 	template <typename T>

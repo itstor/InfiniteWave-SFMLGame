@@ -7,9 +7,9 @@ enum btn_state { IDLE = 0, HOVER = 1, ACTIVE = 3 };
 class Button
 {
 public:
-	Button();
-
-	void Setup(std::string idlePath, std::string hoverPath, std::string activePath, float sizeFact, sf::Vector2f pos);
+	Button() = default;
+	
+	void Setup(const std::string& idlePath, const std::string& hoverPath, const std::string& activePath, float sizeFact, sf::Vector2f pos);
 
 	sf::RectangleShape* getDraw();
 	void Update(sf::Vector2f mousePos);
@@ -26,7 +26,7 @@ private:
 
 	sf::RectangleShape btn;
 
-	unsigned char btnState;
+	unsigned char btnState{};
 	
 };
 
