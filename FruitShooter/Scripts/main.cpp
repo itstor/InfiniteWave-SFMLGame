@@ -17,7 +17,7 @@ int main()
 #ifdef _DEBUG
 		std::cout << "Icon Not Found" << std::endl;
 #endif
-		return -1;
+		return EXIT_FAILURE;
 	}
 	
 	Game game(windowTitle, windowSize, icon);

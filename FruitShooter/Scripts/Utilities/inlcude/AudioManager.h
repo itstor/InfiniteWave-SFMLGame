@@ -2,20 +2,20 @@
 //#ifndef AUDIOMANAGER_H
 //#define AUDIOMANAGER_H
 //
-//#include <vector>
+//#include <unordered_map>
+//
 //#include "Music.h"
 //
 //class AudioManager
 //{
 //private:
-//	std::vector<Music> musicList;
+//	std::unordered_map<unsigned int, Music> musicContainer;
 //public:
-//	void addMusic(Music& music);
-//	void update();
-//	void setVolume(float& newVolume);
-//	void mute();
+//	AudioManager();
 //	
-//	
+//	void addMusic(const std::string& musicName, Music& music);
+//	void updateVolume(float& newVolume);
+//	void toggleMute();
 //};
 //
 //#endif

@@ -1,13 +1,23 @@
 //#include "AudioManager.h"
-//#include "Setting.h"
+//#include "Config.h"
 //
-//void mute()
+//AudioManager::AudioManager() = default;
+//
+//void AudioManager::addMusic(const std::string& musicName, Music& music)
 //{
-//	set::isMuted = !set::isMuted;
+//	musicContainer[1]
+//}
 //
-//	set::temp_musicVolume = set::isMuted ? set::musicVolume : set::temp_musicVolume;
-//	set::musicVolume = set::isMuted ? 0.0f : set::temp_musicVolume;
 //
-//	set::temp_sfxVolume = set::isMuted ? set::sfxVolume : set::temp_sfxVolume;
-//	set::sfxVolume = set::isMuted ? 0.0f : set::temp_sfxVolume;
+//void AudioManager::toggleMute()
+//{
+//	conf::isMuted = !conf::isMuted;
+//
+//	conf::temp_musicVolume = conf::isMuted ? conf::musicVolume : conf::temp_musicVolume;
+//	conf::musicVolume = conf::isMuted ? 0.0f : conf::temp_musicVolume;
+//
+//	for (auto& [name, music] : musicContainer)
+//	{
+//		music.setVolume(conf::musicVolume);
+//	}
 //}

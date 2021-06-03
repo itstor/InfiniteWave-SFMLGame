@@ -2,8 +2,11 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <SFML/Audio/Music.hpp>
+
 #include "Window.h"
 #include "SceneManager.h"
+//#include "AudioManager.h"
 
 class Game
 {
@@ -20,6 +23,8 @@ public:
 	void RestartClock();
 
 private:
+	//AudioManager mAudio;
+	sf::Music music;
 	SceneManager mManager;
 	Window mWindow;
 	sf::Clock mClock;

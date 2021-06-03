@@ -1,7 +1,11 @@
 #include "Game.h"
+//#include "Music.h"
 
 Game::Game(const std::string& winTitle, const sf::Vector2u& winSize, const sf::Image& winIcon): mWindow(winTitle, winSize, winIcon)
 {
+	music.openFromFile("Assets/Audio/Backsound/loading.wav");
+	music.setLoop(true);
+	music.play();
 	RestartClock();
 	srand(time(nullptr));
 }

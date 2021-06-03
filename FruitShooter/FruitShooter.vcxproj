@@ -88,6 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\Utilities\inlcude;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\UI\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\Scenes\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\GameObject\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\Physics\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\Common\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\third-party\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -119,6 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\Utilities\inlcude;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\UI\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\Scenes\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\GameObject\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\Physics\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\FruitShooter\Scripts\Common\include;D:\Programming\Project\TA-FruitShooterGame\FruitShooter\third-party\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,10 +142,10 @@
     <ClCompile Include="Scripts\Scenes\source\GamePlay.cpp" />
     <ClCompile Include="Scripts\Scenes\source\MainMenu.cpp" />
     <ClCompile Include="Scripts\Scenes\source\SplashScreen.cpp" />
+    <ClCompile Include="Scripts\UI\source\Button.cpp" />
     <ClCompile Include="Scripts\Utilities\source\AudioManager.cpp" />
     <ClCompile Include="Scripts\Utilities\source\Music.cpp" />
     <ClCompile Include="Scripts\Utilities\source\SceneManager.cpp" />
-    <ClCompile Include="Scripts\Utilities\source\Setting.cpp" />
     <ClCompile Include="Scripts\Utilities\source\Sfx.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -155,10 +157,11 @@
     <ClInclude Include="Scripts\Scenes\include\GamePlay.h" />
     <ClInclude Include="Scripts\Scenes\include\MainMenu.h" />
     <ClInclude Include="Scripts\Scenes\include\SplashScreen.h" />
+    <ClInclude Include="Scripts\UI\include\Button.h" />
     <ClInclude Include="Scripts\Utilities\inlcude\AudioManager.h" />
     <ClInclude Include="Scripts\Utilities\inlcude\Music.h" />
     <ClInclude Include="Scripts\Utilities\inlcude\SceneManager.h" />
-    <ClInclude Include="Scripts\Utilities\inlcude\Setting.h" />
+    <ClInclude Include="Scripts\Utilities\inlcude\Config.h" />
     <ClInclude Include="Scripts\Utilities\inlcude\Sfx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

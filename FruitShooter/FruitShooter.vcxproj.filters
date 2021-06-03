@@ -92,9 +92,6 @@
     <ClCompile Include="Scripts\Scenes\source\MainMenu.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Utilities\source\Setting.cpp">
-      <Filter>Source Files\Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Utilities\source\Sfx.cpp">
       <Filter>Source Files\Utilities\Audio</Filter>
     </ClCompile>
@@ -116,6 +113,9 @@
     <ClCompile Include="Scripts\Scenes\source\BaseScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\UI\source\Button.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Common\include\Window.h">
@@ -132,9 +132,6 @@
     </ClInclude>
     <ClInclude Include="Scripts\Scenes\include\MainMenu.h">
       <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Utilities\inlcude\Setting.h">
-      <Filter>Header Files\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Utilities\inlcude\Sfx.h">
       <Filter>Header Files\Utilities\Audio</Filter>
@@ -156,6 +153,12 @@
     </ClInclude>
     <ClInclude Include="Scripts\Scenes\include\SplashScreen.h">
       <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Utilities\inlcude\Config.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\UI\include\Button.h">
+      <Filter>Header Files\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
