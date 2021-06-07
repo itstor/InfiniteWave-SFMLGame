@@ -79,12 +79,12 @@ bool Window::isDone()
 	return mIsDone;
 }
 
-bool Window::isFullScreen()
+bool Window::isFullScreen() const
 {
 	return mIsFullScreen;
 }
 
-sf::Vector2u Window::GetWindowSize()
+sf::Vector2u Window::GetWindowSize() const
 {
 	return mWinSize;
 }

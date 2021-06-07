@@ -32,4 +32,10 @@ void Music::setVolume(float& newVolume)
 	music.setVolume(newVolume);
 }
 
+sf::SoundSource::Status Music::getStatus() const
+{
+	return music.getStatus();
+}
+
+
 

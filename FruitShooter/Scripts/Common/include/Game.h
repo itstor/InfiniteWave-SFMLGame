@@ -2,11 +2,9 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <SFML/Audio/Music.hpp>
-
 #include "Window.h"
 #include "SceneManager.h"
-//#include "AudioManager.h"
+#include "AudioManager.h"
 
 class Game
 {
@@ -14,7 +12,6 @@ public:
 	Game(const std::string& winTitle, const sf::Vector2u& winSize, const sf::Image& winIcon);
 	~Game();
 
-	//void Render();
 
 	Window* GetWindow();
 	SceneManager* GetSceneManager();
@@ -23,12 +20,11 @@ public:
 	void RestartClock();
 
 private:
-	//AudioManager mAudio;
-	sf::Music music;
+	AudioManager mAudio;
 	SceneManager mManager;
 	Window mWindow;
 	sf::Clock mClock;
-	unsigned int mDeltaTime;
+	unsigned int mDeltaTime = 0;
 };
 
 #endif

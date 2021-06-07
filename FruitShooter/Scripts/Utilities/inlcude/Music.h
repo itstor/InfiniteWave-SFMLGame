@@ -15,6 +15,7 @@ public:
 	void pause();
 	void stop();
 	void setVolume(float& newVolume);
+	sf::SoundSource::Status getStatus() const;
 };
 
 

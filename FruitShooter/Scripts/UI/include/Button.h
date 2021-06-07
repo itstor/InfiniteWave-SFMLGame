@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
-enum btn_state { IDLE = 0, HOVER = 1, ACTIVE = 3 };
+enum btn_state { IDLE = 0, HOVER = 1, ACTIVE = 2 };
 
 class Button
 {

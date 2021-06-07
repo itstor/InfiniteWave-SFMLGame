@@ -20,8 +20,8 @@ public:
 	void Destroy();
 
 	bool isDone();
-	bool isFullScreen();
-	sf::Vector2u GetWindowSize();
+	bool isFullScreen() const;
+	sf::Vector2u GetWindowSize() const;
 	sf::RenderWindow* GetRenderWindow();
 
 	void ToggleFullScreen();

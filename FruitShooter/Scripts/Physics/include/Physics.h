@@ -1,16 +1,12 @@
 #pragma once
-#ifndef PHYSICS_H
-#define PHYSICS_H
 
 #include <SFML/System.hpp>
 
-namespace ph
+namespace pp
 {
 	float g = 0.0f;
 
-	void parabolic(sf::Vector2f& pos, float time);
+	sf::Vector2f parabolic(sf::Vector2f& pos, float time, float angle);
 }
-
-#endif
 
 

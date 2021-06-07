@@ -1,8 +1,6 @@
 #include "BaseScene.h"
 
-BaseScene::BaseScene(SceneManager & manager, Window& window, bool replace): mManager(manager), mWindow(window), mReplace(replace)
-{
-}
+BaseScene::BaseScene(SceneManager & manager, Window& window, bool replace) : mManager(manager), mWindow(window), mReplace(replace){}
 
 std::unique_ptr<BaseScene> BaseScene::Next()
 {

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 #include "Window.h"
+#include "AudioManager.h"
 
 class SceneManager;
 
@@ -27,9 +28,10 @@ public:
 
 	std::unique_ptr<BaseScene> Next();
 
-	bool isReplacing() const;
+	[[nodiscard]] bool isReplacing() const;
 
 protected:
+	AudioManager mAudio;
 	SceneManager& mManager;
 	Window& mWindow;
 

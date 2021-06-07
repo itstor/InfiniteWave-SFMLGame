@@ -1,5 +1,7 @@
 #include "Window.h"
 #include "Game.h"
+//#include "AudioManager.h"
+//#include "SharedObject.h"
 #include <iostream>
 
 #include "SplashScreen.h"
@@ -19,6 +21,12 @@ int main()
 #endif
 		return EXIT_FAILURE;
 	}
+
+	////init required object
+	//SharedObject Obj;
+	//Obj.Window = new Window(windowTitle, windowSize, icon);
+	//Obj.AudioManager = new AudioManager;
+	
 
 	Game game(windowTitle, windowSize, icon);
 
