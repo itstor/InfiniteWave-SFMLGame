@@ -2,8 +2,8 @@
 
 namespace conf
 {
-	float musicVolume = 0.0f;
-	float sfxVolume = 0.0f;
+	float musicVolume = 100.0f;
+	float sfxVolume = 100.0f;
 	float temp_musicVolume;
 	float temp_sfxVolume;
 	//bool isFullscreen = true;

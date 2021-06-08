@@ -89,6 +89,7 @@ void MainMenu::Update()
 					break;
 				case sf::Keyboard::Escape: mWindow.Destroy(); break;
 				case sf::Keyboard::BackSpace: mManager.prevScene(); break;
+				case sf::Keyboard::M: mAudio.toggleMute(); break;
 				default: break;
 				}
 				break;
@@ -96,10 +97,13 @@ void MainMenu::Update()
 		default: break;
 		}
 	}
+
+	//button mouse position update
 	mousePos = sf::Mouse::getPosition(*mWindow.GetRenderWindow());
 	for (auto btn : btnContainer)
 		btn->Update(sf::Vector2f(mousePos.x, mousePos.y));
 
+	//-=-=-=-=-=-=-=-=-=-CLICKED BUTTON HERE-=-=-=-=-=-=-=-=-=-=-=-
 	if (btnExit.isPressed())
 	{
 		mWindow.Destroy();

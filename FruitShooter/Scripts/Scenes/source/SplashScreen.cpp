@@ -14,6 +14,7 @@ SplashScreen::SplashScreen(SharedObject& obj, bool replace):BaseScene(obj, repla
 #ifdef _DEBUG
 	std::cout << "SplashScreen Created" << std::endl;
 #endif
+	initMusic();
 	//Background
 	background.setSize(sf::Vector2f(mWindow.GetWindowSize().x, mWindow.GetWindowSize().y));
 	background.setFillColor(sf::Color::White);
@@ -37,7 +38,8 @@ SplashScreen::SplashScreen(SharedObject& obj, bool replace):BaseScene(obj, repla
 
 void SplashScreen::initMusic()
 {
-	//TODO
+	mAudio.addMusic("Loading", "Assets/Audio/Backsound/loading.wav", true);
+	mAudio.play("Loading");
 }
 
 
@@ -67,6 +69,7 @@ void SplashScreen::Update()
 				mNext = SceneManager::build<MainMenu>(mObj, false);
 				break;
 			case sf::Keyboard::Escape: mWindow.Destroy(); break;
+			case sf::Keyboard::M: mAudio.toggleMute(); break;
 			default: break;
 			}
 			break;

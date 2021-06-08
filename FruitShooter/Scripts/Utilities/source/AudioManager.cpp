@@ -25,7 +25,9 @@ void AudioManager::toggleMute()
 	conf::temp_musicVolume = conf::isMuted ? conf::musicVolume : conf::temp_musicVolume;
 	conf::musicVolume = conf::isMuted ? 0.0f : conf::temp_musicVolume;
 
-	updateVolume(conf::musicVolume);
+	//std::cout << conf::musicVolume << " " << conf::temp_musicVolume << std::endl;
+
+	return updateVolume(conf::musicVolume);
 }
 
 void AudioManager::updateVolume(float& newVolume)
@@ -38,5 +40,6 @@ void AudioManager::updateVolume(float& newVolume)
 
 void AudioManager::play(const std::string & music_name)
 {
+	//std::cout << "Playing " << music_name << std::endl;
 	musicContainer[music_name]->play();
 }
