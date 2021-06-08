@@ -9,7 +9,7 @@ class SceneManager;
 class MainMenu final : public BaseScene
 {
 public:
-	MainMenu(SceneManager& manager, Window& window, bool replace = true);
+	MainMenu(SharedObject& obj, bool replace = true);
 	~MainMenu() override;
 
 	void Pause() override;
@@ -20,6 +20,7 @@ public:
 	void initBg();
 	void initButton();
 
+	void initMusic() override;
 private:
 	std::vector<Button*> btnContainer;
 	

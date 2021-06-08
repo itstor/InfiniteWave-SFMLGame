@@ -1,10 +1,10 @@
-#include "Window.h"
 #include "Game.h"
-//#include "AudioManager.h"
-//#include "SharedObject.h"
-#include <iostream>
+#include "Window.h"
+#include "AudioManager.h"
+#include "SharedObject.h"
+#include "SceneManager.h"
 
-#include "SplashScreen.h"
+#include <iostream>
 
 int main()
 {
@@ -22,23 +22,15 @@ int main()
 		return EXIT_FAILURE;
 	}
 
-	////init required object
-	//SharedObject Obj;
-	//Obj.Window = new Window(windowTitle, windowSize, icon);
-	//Obj.AudioManager = new AudioManager;
-	
+	//init shared object
+	SharedObject Obj;
+	Obj.Window = new Window(windowTitle, windowSize, icon);
+	Obj.AudioManager = new AudioManager;
+	Obj.SceneManager = new SceneManager;
 
-	Game game(windowTitle, windowSize, icon);
+	Game game(Obj);
 
-	//Run game with SplashScreen as the first scene
-	game.GetSceneManager()->run(SceneManager::build<SplashScreen>(*game.GetSceneManager(), *game.GetWindow(), true));
+	game.run();
 
-	while (!game.GetWindow()->isDone())
-	{
-		//Window loop here
-		game.GetSceneManager()->nextScene(); //try to change the scene
-		game.GetSceneManager()->Update(); //update current scene
-		game.GetSceneManager()->Draw(); //render current scene
-		game.RestartClock(); //restart clock to randomize the random function
-	}
+	return 0;
 }

@@ -1,12 +1,15 @@
 #include "SplashScreen.h"
+#include "MainMenu.h"
 
 #include <iostream>
 #include <memory>
 
-#include "MainMenu.h"
+#include "Window.h"
 #include "SceneManager.h"
+#include "AudioManager.h"
 
-SplashScreen::SplashScreen(SceneManager& manager, Window& window, bool replace):BaseScene(manager, window, replace), alphaMask(255, 255,255, 255)
+
+SplashScreen::SplashScreen(SharedObject& obj, bool replace):BaseScene(obj, replace), alphaMask(255, 255,255, 255)
 {
 #ifdef _DEBUG
 	std::cout << "SplashScreen Created" << std::endl;
@@ -32,6 +35,12 @@ SplashScreen::SplashScreen(SceneManager& manager, Window& window, bool replace):
 	rectLogoGame.setPosition(static_cast<float>(mWindow.GetWindowSize().x) / 2, static_cast<float>(mWindow.GetWindowSize().y) / 2);
 }
 
+void SplashScreen::initMusic()
+{
+	//TODO
+}
+
+
 void SplashScreen::Pause()
 {
 	std::cout << "SplashScreen Paused" << std::endl;
@@ -55,7 +64,7 @@ void SplashScreen::Update()
 			switch (event.key.code)
 			{
 			case sf::Keyboard::Space:
-				mNext = SceneManager::build<MainMenu>(mManager, mWindow, false);
+				mNext = SceneManager::build<MainMenu>(mObj, false);
 				break;
 			case sf::Keyboard::Escape: mWindow.Destroy(); break;
 			default: break;
@@ -73,7 +82,7 @@ void SplashScreen::Update()
 		alphaMask.a += 1;
 	
 	if (logoFlag == 3 && alphaMask.a == 0)
-		mNext = SceneManager::build<MainMenu>(mManager, mWindow, true);
+		mNext = SceneManager::build<MainMenu>(mObj, true);
 	
 	if (alphaMask.a == 0 || (alphaMask.a == 255 && logoFlag == 2))
 		logoFlag++;

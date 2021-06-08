@@ -2,27 +2,22 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "Window.h"
-#include "SceneManager.h"
-#include "AudioManager.h"
+#include <SFML/System/Clock.hpp>
+
+#include "SharedObject.h"
 
 class Game
 {
 public:
-	Game(const std::string& winTitle, const sf::Vector2u& winSize, const sf::Image& winIcon);
+	Game(SharedObject& obj);
 	~Game();
 
-
-	Window* GetWindow();
-	SceneManager* GetSceneManager();
-
-	unsigned int DeltaTime() const;
-	void RestartClock();
+	[[nodiscard]] unsigned int DeltaTime() const; //Get Delta time
+	void RestartClock(); //Reset Clock
+	void run(); //Run Game loop
 
 private:
-	AudioManager mAudio;
-	SceneManager mManager;
-	Window mWindow;
+	SharedObject obj;
 	sf::Clock mClock;
 	unsigned int mDeltaTime = 0;
 };

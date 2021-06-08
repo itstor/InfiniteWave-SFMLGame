@@ -1,5 +1,4 @@
 #include "Music.h"
-#include "Config.h"
 #include <iostream>
 
 Music::Music(const std::string& file_path, const bool& isLoop)

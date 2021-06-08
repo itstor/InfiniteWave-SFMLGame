@@ -1,14 +1,15 @@
 #pragma once
 
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include "BaseScene.h"
 
-class SceneManager;
+struct SharedObject;
 
 class SplashScreen final: public BaseScene
 {
 public:
-	SplashScreen(SceneManager& manager, Window& window, bool replace = true);
+	SplashScreen(SharedObject& obj, bool replace = true);
 #ifdef _DEBUG
 	~SplashScreen() override { std::cout << "SplashScreen Deleted" << std::endl; }
 #endif
@@ -17,6 +18,7 @@ public:
 	void Draw() override;
 	void Resume() override;
 	void Update() override;
+	void initMusic() override;
 
 private:
 	unsigned char logoFlag = 1;

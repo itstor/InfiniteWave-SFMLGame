@@ -1,7 +1,16 @@
 #include "AudioManager.h"
-#include "Config.h"
 
-AudioManager::AudioManager() = default;
+#include <iostream>
+
+#include "Config.h"
+#include "Music.h"
+
+AudioManager::AudioManager()
+{
+#ifdef _DEBUG
+	std::cout << "Audio Manager Created\n";
+#endif
+}
 
 void AudioManager::addMusic(const std::string& musicName, const std::string& file_path, bool isLoop)
 {

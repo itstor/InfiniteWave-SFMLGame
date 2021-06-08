@@ -1,11 +1,8 @@
 #pragma once
 
-#include <iostream>
 #include <memory>
-#include "Window.h"
-#include "AudioManager.h"
+#include "SharedObject.h"
 
-class SceneManager;
 
 namespace sf
 {
@@ -15,7 +12,7 @@ namespace sf
 class BaseScene
 {
 public:
-	BaseScene(SceneManager& manager, Window& window, bool replace);
+	BaseScene(SharedObject& obj, bool replace);
 	virtual ~BaseScene() = default;
 
 	BaseScene(const BaseScene&) = delete;
@@ -25,15 +22,17 @@ public:
 	virtual void Resume() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
+	virtual void initMusic() = 0;
 
 	std::unique_ptr<BaseScene> Next();
 
 	[[nodiscard]] bool isReplacing() const;
 
 protected:
-	AudioManager mAudio;
-	SceneManager& mManager;
+	SharedObject& mObj;
 	Window& mWindow;
+	AudioManager& mAudio;
+	SceneManager& mManager;
 
 	bool mReplace;
 

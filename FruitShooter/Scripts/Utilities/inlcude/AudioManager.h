@@ -4,7 +4,7 @@
 
 #include <unordered_map>
 
-#include "Music.h"
+class Music;
 
 class AudioManager
 {

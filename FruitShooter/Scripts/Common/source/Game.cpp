@@ -1,15 +1,14 @@
 #include "Game.h"
+#include "Window.h"
+#include "SplashScreen.h"
+#include "SceneManager.h"
 #include "SharedObject.h"
 
-Game::Game(const std::string& winTitle, const sf::Vector2u& winSize, const sf::Image& winIcon): mWindow(winTitle, winSize, winIcon)
-{
-	//Pack common object
-	SharedObject obj; 
+#include <ctime>
 
-	obj.SceneManager = &mManager;
-	obj.AudioManager = &mAudio;
-	obj.Window = &mWindow;
-	
+Game::Game(SharedObject& obj)
+{
+	this->obj = obj;
 	RestartClock();
 	srand(static_cast<unsigned int>(time(nullptr)));
 }
@@ -26,12 +25,17 @@ void Game::RestartClock()
 	mDeltaTime = mClock.restart().asMilliseconds();
 }
 
-Window* Game::GetWindow()
+void Game::run()
 {
-	return &mWindow;
-}
+	//Run game with SplashScreen as the first scene
+	obj.SceneManager->run(SceneManager::build<SplashScreen>(obj, true));
 
-SceneManager* Game::GetSceneManager()
-{
-	return &mManager;
+	while (!obj.Window->isDone())
+	{
+		//Window loop here
+		obj.SceneManager->nextScene(); //try to change the scene
+		obj.SceneManager->Update(); //update current scene
+		obj.SceneManager->Draw(); //render current scene
+		RestartClock(); //restart clock to randomize the random function
+	}
 }

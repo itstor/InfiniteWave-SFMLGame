@@ -1,12 +1,14 @@
 #include "SplashScreen.h"
+#include "MainMenu.h"
 
 #include <iostream>
 #include <memory>
 
-#include "MainMenu.h"
+#include "Window.h"
 #include "SceneManager.h"
+#include "AudioManager.h"
 
-MainMenu::MainMenu(SceneManager& manager, Window& window, bool replace):BaseScene(manager, window, replace)
+MainMenu::MainMenu(SharedObject& obj, bool replace):BaseScene(obj, replace)
 {
 #ifdef _DEBUG
 	std::cout << "MainMenu Created" << std::endl;
@@ -40,6 +42,10 @@ void MainMenu::initButton()
 		"Assets/Texture/GUI/Buttons/Settings_BTN_ACT.png",
 		0.4f, sf::Vector2f(100, 100));
 	btnContainer.push_back(&btnSetting);
+}
+
+void MainMenu::initMusic()
+{
 }
 
 
@@ -79,7 +85,7 @@ void MainMenu::Update()
 				switch (event.key.code)
 				{
 				case sf::Keyboard::Space:
-					mNext = SceneManager::build<SplashScreen>(mManager, mWindow, false);
+					mNext = SceneManager::build<SplashScreen>(mObj, false);
 					break;
 				case sf::Keyboard::Escape: mWindow.Destroy(); break;
 				case sf::Keyboard::BackSpace: mManager.prevScene(); break;
