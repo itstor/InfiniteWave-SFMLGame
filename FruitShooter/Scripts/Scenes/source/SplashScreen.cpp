@@ -9,7 +9,7 @@
 #include "AudioManager.h"
 
 
-SplashScreen::SplashScreen(SharedObject& obj, bool replace):BaseScene(obj, replace), alphaMask(255, 255,255, 255)
+SplashScreen::SplashScreen(SharedObject& obj, bool replace) :BaseScene(obj, replace), alphaMask(255, 255, 255, 255)
 {
 #ifdef _DEBUG
 	std::cout << "SplashScreen Created" << std::endl;
@@ -27,7 +27,7 @@ SplashScreen::SplashScreen(SharedObject& obj, bool replace):BaseScene(obj, repla
 	logoITS.setSmooth(true);
 	rectLogoITS.setTexture(&logoITS);
 	rectLogoITS.setOrigin(rectLogoITS.getSize().x / 2, rectLogoITS.getSize().y / 2);
-	rectLogoITS.setPosition(static_cast<float>(mWindow.GetWindowSize().x)/2, static_cast<float>(mWindow.GetWindowSize().y) / 2);
+	rectLogoITS.setPosition(static_cast<float>(mWindow.GetWindowSize().x) / 2, static_cast<float>(mWindow.GetWindowSize().y) / 2);
 	//Logo Game
 	rectLogoGame.setSize(sf::Vector2f(500, 500));
 	logoGame.loadFromFile("Assets/Texture/GUI/splash_logogame.png");
@@ -66,7 +66,7 @@ void SplashScreen::Update()
 			switch (event.key.code)
 			{
 			case sf::Keyboard::Space:
-				mNext = SceneManager::build<MainMenu>(mObj, false);
+				mNext = SceneManager::build<MainMenu>(mObj, true);
 				break;
 			case sf::Keyboard::Escape: mWindow.Destroy(); break;
 			case sf::Keyboard::M: mAudio.toggleMute(); break;
@@ -83,17 +83,17 @@ void SplashScreen::Update()
 		alphaMask.a -= 1;
 	else
 		alphaMask.a += 1;
-	
+
 	if (logoFlag == 3 && alphaMask.a == 0)
 		mNext = SceneManager::build<MainMenu>(mObj, true);
-	
+
 	if (alphaMask.a == 0 || (alphaMask.a == 255 && logoFlag == 2))
 		logoFlag++;
 
-	
-	
+
+
 	rectMask.setFillColor(alphaMask);
-	
+
 }
 
 void SplashScreen::Draw()
@@ -106,8 +106,8 @@ void SplashScreen::Draw()
 		mWindow.Draw(rectLogoITS);
 	else
 		mWindow.Draw(rectLogoGame);
-	
-	if (alphaMask.a != 0) 
+
+	if (alphaMask.a != 0)
 	{
 		mWindow.Draw(rectMask);
 	}

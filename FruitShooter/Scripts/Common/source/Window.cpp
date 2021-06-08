@@ -28,8 +28,8 @@ void Window::Create()
 
 void Window::Destroy()
 {
-	mWindow.close();
 	mIsDone = true;
+	mWindow.close();
 }
 
 void Window::Update()

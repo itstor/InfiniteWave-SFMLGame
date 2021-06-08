@@ -8,7 +8,7 @@
 #include "SceneManager.h"
 #include "AudioManager.h"
 
-MainMenu::MainMenu(SharedObject& obj, bool replace):BaseScene(obj, replace)
+MainMenu::MainMenu(SharedObject& obj, bool replace) :BaseScene(obj, replace)
 {
 #ifdef _DEBUG
 	std::cout << "MainMenu Created" << std::endl;
@@ -25,10 +25,10 @@ MainMenu::~MainMenu()
 
 void MainMenu::initButton()
 {
-	btnPlay.Setup("Assets/Texture/GUI/Buttons/Start_BTN.png", 
-		"Assets/Texture/GUI/Buttons/Start_BTN_ACT.png", 
-		"Assets/Texture/GUI/Buttons/Start_BTN_HOV.png", 
-		1.5f, sf::Vector2f(winSize.x/2, winSize.y-250));
+	btnPlay.Setup("Assets/Texture/GUI/Buttons/Start_BTN.png",
+		"Assets/Texture/GUI/Buttons/Start_BTN_ACT.png",
+		"Assets/Texture/GUI/Buttons/Start_BTN_HOV.png",
+		1.5f, sf::Vector2f(winSize.x / 2, winSize.y - 250));
 	btnContainer.push_back(&btnPlay);
 
 	btnExit.Setup("Assets/Texture/GUI/Buttons/Close_BTN.png",
@@ -43,11 +43,6 @@ void MainMenu::initButton()
 		0.4f, sf::Vector2f(100, 100));
 	btnContainer.push_back(&btnSetting);
 }
-
-void MainMenu::initMusic()
-{
-}
-
 
 void MainMenu::initBg()
 {
@@ -77,23 +72,27 @@ void MainMenu::Update()
 {
 	for (auto event = sf::Event{}; mWindow.GetRenderWindow()->pollEvent(event);)
 	{
-		switch(event.type)
+		switch (event.type)
 		{
-		case sf::Event::Closed: mWindow.Destroy();; break;
+		case sf::Event::Closed: mWindow.Destroy(); break;
+#ifdef _DEBUG
 		case sf::Event::KeyPressed:
+		{
+			switch (event.key.code)
 			{
-				switch (event.key.code)
-				{
-				case sf::Keyboard::Space:
-					mNext = SceneManager::build<SplashScreen>(mObj, false);
-					break;
-				case sf::Keyboard::Escape: mWindow.Destroy(); break;
-				case sf::Keyboard::BackSpace: mManager.prevScene(); break;
-				case sf::Keyboard::M: mAudio.toggleMute(); break;
-				default: break;
-				}
+			case sf::Keyboard::Space:
+				mNext = SceneManager::build<SplashScreen>(mObj, true);
 				break;
+			case sf::Keyboard::Escape: mWindow.Destroy(); break;
+			case sf::Keyboard::BackSpace: mManager.prevScene(); break;
+			case sf::Keyboard::M: mAudio.toggleMute(); break;
+			case sf::Keyboard::Add: mAudio.increase_volume(); break;
+			case sf::Keyboard::Hyphen: mAudio.decrease_volume(); break;
+			default: break;
 			}
+			break;
+		}
+#endif
 		default: break;
 		}
 	}
