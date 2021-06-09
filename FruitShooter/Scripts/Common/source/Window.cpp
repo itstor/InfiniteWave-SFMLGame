@@ -1,11 +1,12 @@
 #include "Window.h"
+#include "Config.h"
 
 Window::Window(const std::string& winTitle, const sf::Vector2u& winSize, const sf::Image& winIcon)
 {
 	mWinSize = winSize;
 	mWinTitle = winTitle;
 	mWinIcon = winIcon;
-	mIsFullScreen = false;
+	mIsFullScreen = conf::isFullscreen;
 	mIsDone = false;
 
 	Create();
@@ -88,7 +89,3 @@ sf::Vector2u Window::GetWindowSize() const
 {
 	return mWinSize;
 }
-
-
-
-

@@ -22,7 +22,6 @@ public:
 	virtual void Resume() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
-	virtual void initMusic() = 0;
 
 	std::unique_ptr<BaseScene> Next();
 

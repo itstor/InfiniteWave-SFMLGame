@@ -17,9 +17,12 @@ public:
 	void run(); //Run Game loop
 
 private:
-	SharedObject obj;
+	SharedObject& obj;
 	sf::Clock mClock;
 	unsigned int mDeltaTime = 0;
+
+	void initSFX();
+	void initMusic();
 };
 
 #endif

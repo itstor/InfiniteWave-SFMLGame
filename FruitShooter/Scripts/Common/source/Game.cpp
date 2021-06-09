@@ -3,14 +3,18 @@
 #include "SplashScreen.h"
 #include "SceneManager.h"
 #include "SharedObject.h"
+#include <SFML/Audio.hpp>
 
 #include <ctime>
 
-Game::Game(SharedObject& obj)
+#include "AudioManager.h"
+
+Game::Game(SharedObject& obj) : obj(obj)
 {
-	this->obj = obj;
 	RestartClock();
 	srand(static_cast<unsigned int>(time(nullptr)));
+	initMusic();
+	initSFX();
 }
 
 Game::~Game() = default;
@@ -39,3 +43,14 @@ void Game::run()
 		RestartClock(); //restart clock to randomize the random function
 	}
 }
+
+void Game::initSFX()
+{
+	obj.AudioManager->addSFX("button", "Assets/Audio/SFX/Button_9.wav");
+}
+
+void Game::initMusic()
+{
+	obj.AudioManager->addMusic("Loading", "Assets/Audio/Backsound/loading.wav", true);
+}
+

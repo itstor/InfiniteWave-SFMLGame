@@ -1,4 +1,5 @@
 #include "Button.h"
+#include "Config.h"
 
 
 void Button::Setup(const std::string& idlePath, const std::string& hoverPath, const std::string& activePath, float sizeFact, sf::Vector2f pos)
@@ -32,8 +33,10 @@ void Button::Update(sf::Vector2f mousePos)
 		if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && btnState != ACTIVE)
 		{
 			btnState = ACTIVE;
-			if (btnSfx.getStatus() != sf::SoundSource::Playing)
+			if (btnSfx.getStatus() != sf::SoundSource::Playing) {
+				btnSfx.setVolume(conf::sfxVolume);
 				btnSfx.play();
+			}
 		}
 	}
 

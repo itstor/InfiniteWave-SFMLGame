@@ -1,31 +1,35 @@
-//#include "Sfx.h"
-//#include "Setting.h"
-//#include <iostream>
-//
-//void Sfx::setup(std::string& file_path)
-//{
-//	this->file_path = file_path;
-//
-//	if (!buffer.loadFromFile(this->file_path))
-//		std::cout << "File not found" << std::endl;
-//
-//	sound.setBuffer(buffer);
-//}
-//
-//void Sfx::play()
-//{
-//	sound.setVolume(set::sfxVolume);
-//	sound.play();
-//}
-//
-//void Sfx::pause()
-//{
-//	sound.pause();
-//}
-//
-//void Sfx::stop()
-//{
-//	sound.stop();
-//}
-//
-//
+#include "Sfx.h"
+#include "Config.h"
+#include <iostream>
+
+SFX::SFX(const std::string& file_path)
+{
+	this->file_path = file_path;
+
+	if (!buffer.loadFromFile(this->file_path))
+#ifdef _DEBUG 
+		std::cout << "File not found" << file_path << std::endl;
+#endif
+
+	sound.setBuffer(buffer);
+}
+
+
+void SFX::play()
+{
+	sound.setVolume(conf::sfxVolume);
+	sound.play();
+#ifdef _DEBUG 
+	std::cout << "Playing SFX" << file_path << std::endl;
+#endif
+}
+
+void SFX::pause()
+{
+	sound.pause();
+}
+
+void SFX::stop()
+{
+	sound.stop();
+}

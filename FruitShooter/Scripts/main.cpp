@@ -6,18 +6,20 @@
 
 #include <iostream>
 
+
 int main()
 {
 	sf::Image icon;
+	
 	const std::string windowTitle = "Space War";
-	const unsigned int screenWidth = sf::VideoMode::getDesktopMode().width;
-	const unsigned int screenHeight = sf::VideoMode::getDesktopMode().height;
+	const unsigned int screenWidth = 1920;
+	const unsigned int screenHeight = 1080;
 	const sf::Vector2u windowSize(screenWidth, screenHeight);
 
 	if (!icon.loadFromFile("Assets/Texture/Icon/icon.png"))
 	{
 #ifdef _DEBUG
-		std::cout << "Icon Not Found" << std::endl;
+		std::cout << "icon not found" << std::endl;
 #endif
 		return EXIT_FAILURE;
 	}
@@ -31,6 +33,6 @@ int main()
 	Game game(Obj);
 
 	game.run();
-
-	return 0;
+	
+	return EXIT_SUCCESS;
 }

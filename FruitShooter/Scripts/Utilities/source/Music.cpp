@@ -3,10 +3,16 @@
 
 Music::Music(const std::string& file_path, const bool& isLoop)
 {
+#ifdef _DEBUG
+	std::cout << "Music Created " << file_path << std::endl;
+#endif
+	
 	this->file_path = file_path;
 
 	if (!music.openFromFile(this->file_path))
 		std::cout << "File not found" << std::endl;
+
+	music.setLoop(isLoop);
 }
 
 void Music::play()

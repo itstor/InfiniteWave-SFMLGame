@@ -10,6 +10,7 @@ private:
 
 public:
 	Music(const std::string& file_path, const bool& isLoop);
+	~Music() = default;
 	
 	void play();
 	void pause();

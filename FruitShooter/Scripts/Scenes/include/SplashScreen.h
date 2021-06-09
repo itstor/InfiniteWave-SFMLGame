@@ -18,7 +18,6 @@ public:
 	void Draw() override;
 	void Resume() override;
 	void Update() override;
-	void initMusic() override;
 
 private:
 	unsigned char logoFlag = 1;

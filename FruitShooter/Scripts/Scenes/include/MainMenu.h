@@ -20,7 +20,6 @@ public:
 	void initBg();
 	void initButton();
 
-	void initMusic() override;
 private:
 	std::vector<Button*> btnContainer;
 	

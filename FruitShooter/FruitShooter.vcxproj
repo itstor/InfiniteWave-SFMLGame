@@ -143,6 +143,7 @@
     <ClCompile Include="Scripts\Scenes\source\MainMenu.cpp" />
     <ClCompile Include="Scripts\Scenes\source\SplashScreen.cpp" />
     <ClCompile Include="Scripts\UI\source\Button.cpp" />
+    <ClCompile Include="Scripts\UI\source\Image.cpp" />
     <ClCompile Include="Scripts\Utilities\source\AudioManager.cpp" />
     <ClCompile Include="Scripts\Utilities\source\Music.cpp" />
     <ClCompile Include="Scripts\Utilities\source\SceneManager.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Scripts\Scenes\include\MainMenu.h" />
     <ClInclude Include="Scripts\Scenes\include\SplashScreen.h" />
     <ClInclude Include="Scripts\UI\include\Button.h" />
+    <ClInclude Include="Scripts\UI\include\Image.h" />
     <ClInclude Include="Scripts\Utilities\inlcude\AudioManager.h" />
     <ClInclude Include="Scripts\Utilities\inlcude\Music.h" />
     <ClInclude Include="Scripts\Utilities\inlcude\SceneManager.h" />

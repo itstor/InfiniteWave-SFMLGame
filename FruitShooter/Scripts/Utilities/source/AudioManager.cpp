@@ -4,6 +4,7 @@
 
 #include "Music.h"
 #include "Config.h"
+#include "Sfx.h"
 
 AudioManager::AudioManager()
 {
@@ -12,9 +13,21 @@ AudioManager::AudioManager()
 #endif
 }
 
+AudioManager::~AudioManager()
+{
+#ifdef _DEBUG
+	std::cout << "Audio Manager Destroyed\n";
+#endif
+}
+
 void AudioManager::addMusic(const std::string& musicName, const std::string& file_path, bool isLoop)
 {
 	musicContainer[musicName] = new Music(file_path, isLoop);
+}
+
+void AudioManager::addSFX(const std::string& sfxName, const std::string& file_path)
+{
+	SFXContainer[sfxName] = new SFX(file_path);
 }
 
 
@@ -34,6 +47,15 @@ void AudioManager::toggleMute()
 
 	return updateVolume(conf::musicVolume);
 }
+
+void AudioManager::stopAll()
+{
+	for (auto&[name, music]:musicContainer)
+	{
+		music->stop();
+	}
+}
+
 
 void AudioManager::increase_volume()
 {
@@ -64,6 +86,16 @@ void AudioManager::updateVolume(float& newVolume)
 
 void AudioManager::play(const std::string & music_name)
 {
-	//std::cout << "Playing " << music_name << std::endl;
+#ifdef _DEBUG
+	std::cout << "Playing " << music_name << std::endl;
+#endif
 	musicContainer[music_name]->play();
+}
+
+void AudioManager::playSFX(const std::string& sfx_name)
+{
+#ifdef _DEBUG
+	std::cout << "Playing SFX " << sfx_name << std::endl;
+#endif
+	SFXContainer[sfx_name]->play();
 }

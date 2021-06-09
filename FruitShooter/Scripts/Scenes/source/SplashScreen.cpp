@@ -14,7 +14,6 @@ SplashScreen::SplashScreen(SharedObject& obj, bool replace) :BaseScene(obj, repl
 #ifdef _DEBUG
 	std::cout << "SplashScreen Created" << std::endl;
 #endif
-	initMusic();
 	//Background
 	background.setSize(sf::Vector2f(mWindow.GetWindowSize().x, mWindow.GetWindowSize().y));
 	background.setFillColor(sf::Color::White);
@@ -34,11 +33,6 @@ SplashScreen::SplashScreen(SharedObject& obj, bool replace) :BaseScene(obj, repl
 	rectLogoGame.setTexture(&logoGame);
 	rectLogoGame.setOrigin(rectLogoGame.getSize().x / 2, rectLogoGame.getSize().y / 2);
 	rectLogoGame.setPosition(static_cast<float>(mWindow.GetWindowSize().x) / 2, static_cast<float>(mWindow.GetWindowSize().y) / 2);
-}
-
-void SplashScreen::initMusic()
-{
-	mAudio.addMusic("Loading", "Assets/Audio/Backsound/loading.wav", true);
 	mAudio.play("Loading");
 }
 
