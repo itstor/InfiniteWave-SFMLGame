@@ -1,2 +1,2 @@
-# Tugas Akhir Pemrograman Lanjut - Fruit Shooter with Custom Controller
+# Tugas Akhir Pemrograman Lanjut - Infinite Wave
 Work in Progress

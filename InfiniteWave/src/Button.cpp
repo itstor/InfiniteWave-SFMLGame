@@ -1,4 +1,7 @@
 #include "Button.h"
+
+#include <SFML/Window/Mouse.hpp>
+
 #include "Config.h"
 
 
@@ -11,7 +14,7 @@ void Button::Setup(const std::string& idlePath, const std::string& hoverPath, co
 	btn.setSize(sf::Vector2f(static_cast<float>(btnIdleTex.getSize().x), static_cast<float>(btnIdleTex.getSize().y)));
 	btn.setScale(sizeFact, sizeFact);
 	btn.setOrigin(btn.getSize().x/2, btn.getSize().y/2);
-	btn.setPosition(pos.x, pos.y);
+	btn.setPosition(pos);
 
 	btnSfxBuff.loadFromFile("Assets/Audio/SFX/Button_9.wav");
 	btnSfx.setBuffer(btnSfxBuff);

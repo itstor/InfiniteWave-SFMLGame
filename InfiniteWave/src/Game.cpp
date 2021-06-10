@@ -13,6 +13,7 @@ Game::Game(SharedObject& obj) : obj(obj)
 {
 	RestartClock();
 	srand(static_cast<unsigned int>(time(nullptr)));
+	
 	initMusic();
 	initSFX();
 }

@@ -60,7 +60,7 @@ void SplashScreen::Update()
 			switch (event.key.code)
 			{
 			case sf::Keyboard::Space:
-				mNext = SceneManager::build<MainMenu>(mObj, true);
+				mNext = SceneManager::build<MainMenu>(mObj, false);
 				break;
 			case sf::Keyboard::Escape: mWindow.Destroy(); break;
 			case sf::Keyboard::M: mAudio.toggleMute(); break;

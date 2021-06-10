@@ -26,21 +26,21 @@ MainMenu::~MainMenu()
 void MainMenu::initButton()
 {
 	btnPlay.Setup("Assets/Texture/GUI/Buttons/Start_BTN.png",
-		"Assets/Texture/GUI/Buttons/Start_BTN_ACT.png",
-		"Assets/Texture/GUI/Buttons/Start_BTN_HOV.png",
-		1.0f, sf::Vector2f(winSize.x / 2, winSize.y - 250));
+	              "Assets/Texture/GUI/Buttons/Start_BTN_ACT.png",
+	              "Assets/Texture/GUI/Buttons/Start_BTN_HOV.png",
+	              1.0f, sf::Vector2f(winSize.x / 2, winSize.y - 250));
 	btnContainer.push_back(&btnPlay);
 
 	btnExit.Setup("Assets/Texture/GUI/Buttons/Close_BTN.png",
-		"Assets/Texture/GUI/Buttons/Close_BTN_HOV.png",
-		"Assets/Texture/GUI/Buttons/Close_BTN_ACT.png",
-		0.2f, sf::Vector2f(winSize.x - 100, 100));
+	              "Assets/Texture/GUI/Buttons/Close_BTN_HOV.png",
+	              "Assets/Texture/GUI/Buttons/Close_BTN_ACT.png",
+	              0.2f, sf::Vector2f(winSize.x - 100, 100));
 	btnContainer.push_back(&btnExit);
 
 	btnSetting.Setup("Assets/Texture/GUI/Buttons/Settings_BTN.png",
-		"Assets/Texture/GUI/Buttons/Settings_BTN_HOV.png",
-		"Assets/Texture/GUI/Buttons/Settings_BTN_ACT.png",
-		0.2f, sf::Vector2f(100, 100));
+	                 "Assets/Texture/GUI/Buttons/Settings_BTN_HOV.png",
+	                 "Assets/Texture/GUI/Buttons/Settings_BTN_ACT.png",
+	                 0.2f, sf::Vector2f(100, 100));
 	btnContainer.push_back(&btnSetting);
 }
 
