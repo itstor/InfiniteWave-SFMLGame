@@ -19,7 +19,7 @@ public:
 	void Update();
 	void Destroy();
 
-	bool isDone();
+	bool isDone() const;
 	sf::Vector2u GetWindowSize() const;
 	sf::RenderWindow* GetRenderWindow();
 

@@ -74,7 +74,7 @@ void Window::EndDraw()
 	mWindow.display();
 }
 
-bool Window::isDone()
+bool Window::isDone() const
 {
 	return mIsDone;
 }

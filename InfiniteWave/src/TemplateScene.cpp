@@ -69,7 +69,8 @@ void TemplateScene::Draw()
 {
 	mWindow.BeginDraw();
 
-	mWindow.Draw(rect);
+	/*Draw everything here*/
+	//mWindow.Draw(rect);
 
 	mWindow.EndDraw();
 }

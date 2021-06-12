@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "Window.h"
+#include "Config.h"
 #include "SceneManager.h"
 #include "AudioManager.h"
 
@@ -20,19 +21,15 @@ SplashScreen::SplashScreen(SharedObject& obj, bool replace) :BaseScene(obj, repl
 	//Mask fader
 	rectMask.setFillColor(alphaMask);
 	rectMask.setSize(sf::Vector2f(mWindow.GetWindowSize().x, mWindow.GetWindowSize().y));
-	//Logo ITS
-	rectLogoITS.setSize(sf::Vector2f(500, 500));
-	logoITS.loadFromFile("Assets/Texture/GUI/splash_logoits.png");
-	logoITS.setSmooth(true);
-	rectLogoITS.setTexture(&logoITS);
-	rectLogoITS.setOrigin(rectLogoITS.getSize().x / 2, rectLogoITS.getSize().y / 2);
-	rectLogoITS.setPosition(static_cast<float>(mWindow.GetWindowSize().x) / 2, static_cast<float>(mWindow.GetWindowSize().y) / 2);
-	//Logo Game
-	rectLogoGame.setSize(sf::Vector2f(500, 500));
-	logoGame.loadFromFile("Assets/Texture/GUI/splash_logogame.png");
-	rectLogoGame.setTexture(&logoGame);
-	rectLogoGame.setOrigin(rectLogoGame.getSize().x / 2, rectLogoGame.getSize().y / 2);
-	rectLogoGame.setPosition(static_cast<float>(mWindow.GetWindowSize().x) / 2, static_cast<float>(mWindow.GetWindowSize().y) / 2);
+
+	logoITS.Setup("Assets/Texture/GUI/splash_logoits.png",
+		sf::Vector2f(static_cast<float>(conf::windowWidth) / 2, static_cast<float>(conf::windowHeight) / 2),
+		sf::Vector2f(500, 500));
+	
+	logoGame.Setup("Assets/Texture/GUI/splash_logogame.png",
+		sf::Vector2f(static_cast<float>(conf::windowWidth) / 2, static_cast<float>(conf::windowHeight) / 2),
+		sf::Vector2f(500, 500));
+	
 	mAudio.play("Loading");
 }
 
@@ -97,9 +94,9 @@ void SplashScreen::Draw()
 	mWindow.Draw(background);
 
 	if (logoFlag == 1 || logoFlag == 2)
-		mWindow.Draw(rectLogoITS);
+		mWindow.Draw(*logoITS.getDraw());
 	else
-		mWindow.Draw(rectLogoGame);
+		mWindow.Draw(*logoGame.getDraw());
 
 	if (alphaMask.a != 0)
 	{

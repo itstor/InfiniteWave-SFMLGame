@@ -3,6 +3,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "BaseScene.h"
+#include "Image.h"
 
 struct SharedObject;
 
@@ -21,16 +22,12 @@ public:
 
 private:
 	unsigned char logoFlag = 1;
+	
 	sf::RectangleShape background; //White background
 	sf::Color alphaMask; //Fader color
 	sf::RectangleShape rectMask; //fader mask
-	//----Logo ITS-----
-	sf::Texture logoITS; //Texture logo
-	sf::RectangleShape rectLogoITS; //Container logo
-	//----End of Logo ITS----
-	//----Game Logo-----
-	sf::Texture logoGame; //Texture logo
-	sf::RectangleShape rectLogoGame; //Container logo
-	//----End of Game Logo----
+	
+	Image logoITS;
+	Image logoGame;
 };
 

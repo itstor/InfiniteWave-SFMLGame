@@ -1,6 +1,5 @@
 #include "SplashScreen.h"
 #include "MainMenu.h"
-#include "TemplateScene.h"
 
 #include <iostream>
 #include <memory>
@@ -112,7 +111,7 @@ void MainMenu::Update(float deltaTime)
 	}
 	if (btnPlay.isPressed())
 	{
-		mNext = SceneManager::build<TemplateScene>(mObj, true);
+		mNext = SceneManager::build<SplashScreen>(mObj, true);
 	}
 }
 
