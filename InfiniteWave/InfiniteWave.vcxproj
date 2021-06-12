@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\AudioManager.cpp" />
     <ClCompile Include="src\BaseScene.cpp" />
     <ClCompile Include="src\Button.cpp" />
@@ -32,10 +33,10 @@
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\Sfx.cpp" />
     <ClCompile Include="src\SplashScreen.cpp" />
-    <ClCompile Include="src\TemplateScene.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\AudioManager.h" />
     <ClInclude Include="include\BaseScene.h" />
     <ClInclude Include="include\Button.h" />
@@ -50,7 +51,6 @@
     <ClInclude Include="include\Sfx.h" />
     <ClInclude Include="include\SharedObject.h" />
     <ClInclude Include="include\SplashScreen.h" />
-    <ClInclude Include="include\TemplateScene.h" />
     <ClInclude Include="include\Window.h" />
   </ItemGroup>
   <ItemGroup>

@@ -46,9 +46,6 @@
     <ClCompile Include="src\Game.cpp">
       <Filter>Source\Common</Filter>
     </ClCompile>
-    <ClCompile Include="src\AudioManager.cpp">
-      <Filter>Source\Common</Filter>
-    </ClCompile>
     <ClCompile Include="src\SceneManager.cpp">
       <Filter>Source\Common</Filter>
     </ClCompile>
@@ -79,8 +76,11 @@
     <ClCompile Include="src\Physics.cpp">
       <Filter>Source\Common</Filter>
     </ClCompile>
-    <ClCompile Include="src\TemplateScene.cpp">
-      <Filter>Source\Scene\Template</Filter>
+    <ClCompile Include="src\AudioManager.cpp">
+      <Filter>Source\Common\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Animation.cpp">
+      <Filter>Source\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -129,8 +129,8 @@
     <ClInclude Include="include\Physics.h">
       <Filter>Include\Common</Filter>
     </ClInclude>
-    <ClInclude Include="include\TemplateScene.h">
-      <Filter>Include\Scene\Template</Filter>
+    <ClInclude Include="include\Animation.h">
+      <Filter>Include\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
