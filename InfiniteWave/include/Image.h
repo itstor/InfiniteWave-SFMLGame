@@ -8,7 +8,7 @@ class Image
 public:
 	Image();
 
-	void Setup(const std::string file_path, sf::Vector2f pos, float size_fact);
+	void Setup(const std::string& file_path, sf::Vector2f pos, float size_fact);
 
 	sf::RectangleShape* getDraw();
 private:

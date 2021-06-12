@@ -20,14 +20,9 @@ Game::Game(SharedObject& obj) : obj(obj)
 
 Game::~Game() = default;
 
-unsigned int Game::DeltaTime() const
-{
-	return mDeltaTime;
-}
-
 void Game::RestartClock()
 {
-	mDeltaTime = mClock.restart().asMilliseconds();
+	mDeltaTime = mClock.restart().asSeconds();
 }
 
 void Game::run()
@@ -39,9 +34,9 @@ void Game::run()
 	{
 		//Window loop here
 		obj.SceneManager->nextScene(); //try to change the scene
-		obj.SceneManager->Update(); //update current scene
+		obj.SceneManager->Update(mDeltaTime); //update current scene
 		obj.SceneManager->Draw(); //render current scene
-		RestartClock(); //restart clock to randomize the random function
+		RestartClock(); //restart clock to get delta time
 	}
 }
 

@@ -52,12 +52,13 @@ void SceneManager::prevScene()
 	mIsResume = true;
 }
 
-void SceneManager::Update()
+void SceneManager::Update(float deltaTime)
 {
-	mScene.top()->Update();
+	mScene.top()->Update(deltaTime);
 }
 
 void SceneManager::Draw()
 {
 	mScene.top()->Draw();
 }
+

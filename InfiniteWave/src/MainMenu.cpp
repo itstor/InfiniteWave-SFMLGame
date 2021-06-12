@@ -1,5 +1,6 @@
 #include "SplashScreen.h"
 #include "MainMenu.h"
+#include "TemplateScene.h"
 
 #include <iostream>
 #include <memory>
@@ -7,6 +8,7 @@
 #include "Window.h"
 #include "SceneManager.h"
 #include "AudioManager.h"
+
 
 MainMenu::MainMenu(SharedObject& obj, bool replace) :BaseScene(obj, replace)
 {
@@ -34,13 +36,13 @@ void MainMenu::initButton()
 	btnExit.Setup("Assets/Texture/GUI/Buttons/Close_BTN.png",
 	              "Assets/Texture/GUI/Buttons/Close_BTN_HOV.png",
 	              "Assets/Texture/GUI/Buttons/Close_BTN_ACT.png",
-	              0.2f, sf::Vector2f(winSize.x - 100, 100));
+	              0.3f, sf::Vector2f(winSize.x - 100, 100));
 	btnContainer.push_back(&btnExit);
 
 	btnSetting.Setup("Assets/Texture/GUI/Buttons/Settings_BTN.png",
 	                 "Assets/Texture/GUI/Buttons/Settings_BTN_HOV.png",
 	                 "Assets/Texture/GUI/Buttons/Settings_BTN_ACT.png",
-	                 0.2f, sf::Vector2f(100, 100));
+	                 0.3f, sf::Vector2f(100, 100));
 	btnContainer.push_back(&btnSetting);
 }
 
@@ -68,7 +70,7 @@ void MainMenu::Resume()
 	std::cout << "MainMenu Resume" << std::endl;
 }
 
-void MainMenu::Update()
+void MainMenu::Update(float deltaTime)
 {
 	for (auto event = sf::Event{}; mWindow.GetRenderWindow()->pollEvent(event);)
 	{
@@ -88,6 +90,7 @@ void MainMenu::Update()
 			case sf::Keyboard::M: mAudio.toggleMute(); break;
 			case sf::Keyboard::Add: mAudio.increase_volume(); break;
 			case sf::Keyboard::Hyphen: mAudio.decrease_volume(); break;
+			case sf::Keyboard::F11: mWindow.ToggleFullScreen(); break;
 			default: break;
 			}
 			break;
@@ -100,12 +103,16 @@ void MainMenu::Update()
 	//button mouse position update
 	mousePos = sf::Mouse::getPosition(*mWindow.GetRenderWindow());
 	for (auto btn : btnContainer)
-		btn->Update(sf::Vector2f(mousePos.x, mousePos.y));
+		btn->Update(sf::Vector2f(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)));
 
 	//-=-=-=-=-=-=-=-=-=-CLICKED BUTTON HERE-=-=-=-=-=-=-=-=-=-=-=-
 	if (btnExit.isPressed())
 	{
 		mWindow.Destroy();
+	}
+	if (btnPlay.isPressed())
+	{
+		mNext = SceneManager::build<TemplateScene>(mObj, true);
 	}
 }
 

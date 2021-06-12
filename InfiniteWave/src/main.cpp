@@ -11,7 +11,7 @@ int main()
 {
 	sf::Image icon;
 	
-	const std::string windowTitle = "Space War";
+	const std::string windowTitle = "Infinite Wave";
 	const unsigned int screenWidth = 1920;
 	const unsigned int screenHeight = 1080;
 	const sf::Vector2u windowSize(screenWidth, screenHeight);

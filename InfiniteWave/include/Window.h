@@ -20,7 +20,6 @@ public:
 	void Destroy();
 
 	bool isDone();
-	bool isFullScreen() const;
 	sf::Vector2u GetWindowSize() const;
 	sf::RenderWindow* GetRenderWindow();
 
@@ -34,7 +33,6 @@ private:
 	std::string mWinTitle;
 	sf::Image mWinIcon;
 	bool mIsDone;
-	bool mIsFullScreen;
 
 	void Create();
 };

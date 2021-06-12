@@ -6,7 +6,6 @@ Window::Window(const std::string& winTitle, const sf::Vector2u& winSize, const s
 	mWinSize = winSize;
 	mWinTitle = winTitle;
 	mWinIcon = winIcon;
-	mIsFullScreen = conf::isFullscreen;
 	mIsDone = false;
 
 	Create();
@@ -19,7 +18,7 @@ Window::~Window()
 
 void Window::Create()
 {
-	const auto style = mIsFullScreen ? sf::Style::Fullscreen : sf::Style::Titlebar | sf::Style::Close;
+	const auto style = conf::isFullscreen ? sf::Style::Fullscreen : sf::Style::Titlebar | sf::Style::Close;
 
 	mWindow.create({ mWinSize.x, mWinSize.y }, mWinTitle, style);
 	mWindow.setIcon(mWinIcon.getSize().x, mWinIcon.getSize().y, mWinIcon.getPixelsPtr());
@@ -49,8 +48,8 @@ void Window::Update()
 
 void Window::ToggleFullScreen()
 {
-	mIsFullScreen = !mIsFullScreen;
-	Destroy();
+	conf::isFullscreen = !conf::isFullscreen;
+	mWindow.close();
 	Create();
 }
 
@@ -78,11 +77,6 @@ void Window::EndDraw()
 bool Window::isDone()
 {
 	return mIsDone;
-}
-
-bool Window::isFullScreen() const
-{
-	return mIsFullScreen;
 }
 
 sf::Vector2u Window::GetWindowSize() const

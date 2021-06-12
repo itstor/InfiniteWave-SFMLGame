@@ -17,7 +17,7 @@ public:
 	void Pause() override;
 	void Draw() override;
 	void Resume() override;
-	void Update() override;
+	void Update(float deltaTime) override;
 
 private:
 	unsigned char logoFlag = 1;

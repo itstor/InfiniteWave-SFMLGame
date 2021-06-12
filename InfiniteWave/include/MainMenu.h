@@ -15,7 +15,7 @@ public:
 	void Pause() override;
 	void Draw() override;
 	void Resume() override;
-	void Update() override;
+	void Update(float deltaTime) override;
 
 	void initBg();
 	void initButton();

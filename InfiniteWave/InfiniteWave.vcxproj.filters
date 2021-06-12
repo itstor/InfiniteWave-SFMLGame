@@ -7,99 +7,130 @@
     <Filter Include="Source">
       <UniqueIdentifier>{5c5f214b-9991-4f4a-877b-f61c79f6f404}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Common">
+      <UniqueIdentifier>{bdb4968e-6392-485f-bcdb-bc42ee227b95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Common\Audio">
+      <UniqueIdentifier>{c2b0c3ef-93e3-45e1-b6a8-282e2e6575f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GUI">
+      <UniqueIdentifier>{532c6796-c540-4ce4-ac40-2a42891aa549}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene">
+      <UniqueIdentifier>{a9b7e40b-c39f-46d6-89b6-e6b2a8e5d5ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Common">
+      <UniqueIdentifier>{c5a1e3ae-7f6a-4c73-80d2-0d12542e85d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Common\Audio">
+      <UniqueIdentifier>{17cc28cd-9849-4340-b2c3-a9efcda8bc18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Scene">
+      <UniqueIdentifier>{6d80a32d-3a3d-43b3-aced-65772f6d7a49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\GUI">
+      <UniqueIdentifier>{a1e95e4d-4f57-4d76-9d00-7758bf1cda09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\Template">
+      <UniqueIdentifier>{6d8095e5-8d94-4929-9540-06ba5b2f0fd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Scene\Template">
+      <UniqueIdentifier>{caeac2fa-26af-4c8b-b1ba-05a569d0c4a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AudioManager.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BaseScene.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Button.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Window.cpp">
+      <Filter>Source\Common</Filter>
     </ClCompile>
     <ClCompile Include="src\Game.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Common</Filter>
     </ClCompile>
-    <ClCompile Include="src\GamePlay.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Image.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\main.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MainMenu.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Music.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Physics.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="src\AudioManager.cpp">
+      <Filter>Source\Common</Filter>
     </ClCompile>
     <ClCompile Include="src\SceneManager.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Common</Filter>
     </ClCompile>
     <ClCompile Include="src\Sfx.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Common\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Music.cpp">
+      <Filter>Source\Common\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Image.cpp">
+      <Filter>Source\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Button.cpp">
+      <Filter>Source\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BaseScene.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GamePlay.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainMenu.cpp">
+      <Filter>Source\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\SplashScreen.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\test.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="src\Physics.cpp">
+      <Filter>Source\Common</Filter>
     </ClCompile>
-    <ClCompile Include="src\Window.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="src\TemplateScene.cpp">
+      <Filter>Source\Scene\Template</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AudioManager.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\BaseScene.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Button.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Config.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Game.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GamePlay.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Image.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MainMenu.h">
-      <Filter>Include</Filter>
+      <Filter>Include\Common\Audio</Filter>
     </ClInclude>
     <ClInclude Include="include\Music.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Physics.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SceneManager.h">
-      <Filter>Include</Filter>
+      <Filter>Include\Common\Audio</Filter>
     </ClInclude>
     <ClInclude Include="include\Sfx.h">
-      <Filter>Include</Filter>
+      <Filter>Include\Common\Audio</Filter>
     </ClInclude>
     <ClInclude Include="include\SharedObject.h">
-      <Filter>Include</Filter>
+      <Filter>Include\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SceneManager.h">
+      <Filter>Include\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game.h">
+      <Filter>Include\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Config.h">
+      <Filter>Include\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BaseScene.h">
+      <Filter>Include\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GamePlay.h">
+      <Filter>Include\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MainMenu.h">
+      <Filter>Include\Scene</Filter>
     </ClInclude>
     <ClInclude Include="include\SplashScreen.h">
-      <Filter>Include</Filter>
+      <Filter>Include\Scene</Filter>
     </ClInclude>
     <ClInclude Include="include\Window.h">
-      <Filter>Include</Filter>
+      <Filter>Include\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Button.h">
+      <Filter>Include\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Image.h">
+      <Filter>Include\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Physics.h">
+      <Filter>Include\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TemplateScene.h">
+      <Filter>Include\Scene\Template</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -20,7 +20,7 @@ public:
 
 	virtual void Pause() = 0;
 	virtual void Resume() = 0;
-	virtual void Update() = 0;
+	virtual void Update(float deltaTime) = 0;
 	virtual void Draw() = 0;
 
 	std::unique_ptr<BaseScene> Next();

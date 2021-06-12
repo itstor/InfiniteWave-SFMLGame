@@ -47,7 +47,7 @@ void SplashScreen::Resume()
 	std::cout << "SplashScreen Resume" << std::endl;
 }
 
-void SplashScreen::Update()
+void SplashScreen::Update(float deltaTime)
 {
 	for (auto event = sf::Event{}; mWindow.GetRenderWindow()->pollEvent(event);)
 	{
