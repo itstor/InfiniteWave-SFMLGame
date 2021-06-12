@@ -6,19 +6,22 @@ class Animation
 public:
 	Animation();
 
-	void Setup(const std::string& file_path, unsigned int imageCount, float time);
+	void Setup(sf::Texture* animTex, unsigned imageCount, float time);
 	void Update(float deltaTime);
+	sf::IntRect* getTexture();
 	void Reset();
 	
 	[[nodiscard]] bool isFinish() const;
-private:
-	sf::Texture animTex;
 	sf::IntRect uvRect;
 	
-	unsigned int imageCount;
-	unsigned int currentImage;
-	bool finish;
+private:
+	sf::Texture animTex;
+	
+	
+	unsigned int imageCount = 0;
+	unsigned int currentImage = 0;
+	bool finish = false;
 	float totalTime = 0.0f;
-	float time;
+	float time = 0.0f;
 };
 

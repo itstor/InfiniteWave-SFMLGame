@@ -1,15 +1,16 @@
 #include "Animation.h"
 
 
-void Animation::Setup(const std::string& file_path, unsigned int imageCount, float time)
+Animation::Animation() = default;
+
+
+void Animation::Setup(sf::Texture* animTex, unsigned int imageCount, float time)
 {
-	animTex.loadFromFile(file_path);
-	animTex.setSmooth(true);
 	this->imageCount = imageCount;
 	this->time = time;
 
-	uvRect.width = animTex.getSize().x / imageCount;
-	uvRect.height = animTex.getSize().y;
+	uvRect.width = animTex->getSize().x / imageCount;
+	uvRect.height = animTex->getSize().y;
 }
 
 void Animation::Update(float deltaTime)
@@ -29,6 +30,11 @@ void Animation::Update(float deltaTime)
 	}
 
 	uvRect.left = currentImage * uvRect.width;
+}
+
+sf::IntRect* Animation::getTexture()
+{
+	return &uvRect;
 }
 
 void Animation::Reset()

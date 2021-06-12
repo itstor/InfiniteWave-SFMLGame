@@ -33,6 +33,7 @@
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\Sfx.cpp" />
     <ClCompile Include="src\SplashScreen.cpp" />
+    <ClCompile Include="src\TemplateScene.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +52,7 @@
     <ClInclude Include="include\Sfx.h" />
     <ClInclude Include="include\SharedObject.h" />
     <ClInclude Include="include\SplashScreen.h" />
+    <ClInclude Include="include\TemplateScene.h" />
     <ClInclude Include="include\Window.h" />
   </ItemGroup>
   <ItemGroup>
