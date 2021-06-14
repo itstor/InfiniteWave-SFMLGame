@@ -16,27 +16,27 @@ void Player::Move(sf::Vector2i dir, float deltaTime)
 	status = WALK_ANIM;
 	if (dir.x < 0) //Left
 	{
-		velocity.x = -movementSpeed * deltaTime;
+		movePos.x = -movementSpeed * deltaTime;
 	}
 	if (dir.x > 0) //Right
 	{
-		velocity.x = movementSpeed * deltaTime;
+		movePos.x = movementSpeed * deltaTime;
 	}
 	if (dir.y < 0) //Up
 	{
-		velocity.y = -movementSpeed * deltaTime;
+		movePos.y = -movementSpeed * deltaTime;
 	}
 	if (dir.y > 0) //Down
 	{
-		velocity.y = movementSpeed * deltaTime;
+		movePos.y = movementSpeed * deltaTime;
 	}
 }
 
 void Player::PlayerMove()
 {
-	entityRect.move(velocity);
-	ColliderBody.move(velocity);
-	velocity.x = 0.0f; velocity.y = 0.0f;
+	entityRect.move(movePos);
+	ColliderBody.move(movePos);
+	movePos.x = 0.0f; movePos.y = 0.0f;
 }
 
 
@@ -60,17 +60,27 @@ void Player::lookAt(sf::Vector2f mousePos)
 {
 	const float PI = 3.14159265f;
 
-	const float dx = mousePos.x - playerRect.getPosition().x;
-	const float dy = mousePos.y - playerRect.getPosition().y;
+	const sf::Vector2f dir(mousePos.x - playerRect.getPosition().x,
+		mousePos.y - playerRect.getPosition().y);
+	
+	angle = (atan2(dir.y, dir.x)) * 180 / PI;
 
-	const float rotation = (atan2(dy, dx)) * 180 / PI;
+	dirVect = dir / sqrt(pow(dir.x, 2) + pow(dir.y, 2));
 
-	angle = rotation;
-
-	playerRect.setRotation(rotation);
+	playerRect.setRotation(angle);
 }
 
 sf::Vector2f Player::getPosition() const
 {
-	return position;
+	return playerRect.getPosition();
+}
+
+float Player::getAngle() const
+{
+	return angle;
+}
+
+sf::Vector2f Player::getDirVect() const
+{
+	return dirVect;
 }

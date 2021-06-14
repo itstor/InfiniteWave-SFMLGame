@@ -21,10 +21,13 @@ public:
 	void Shoot();
 	
 	sf::Vector2f getPosition() const;
+	float getAngle() const;
+	sf::Vector2f getDirVect() const;
 	
 private:
 	unsigned short int status{};
 	unsigned short int holdAmmo = 18;
+	sf::Vector2f dirVect;
 
 	sf::RectangleShape& playerRect;
 	sf::Texture idleBodyTex;

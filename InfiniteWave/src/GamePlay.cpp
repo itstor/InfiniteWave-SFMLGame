@@ -17,10 +17,7 @@ GamePlay::GamePlay(SharedObject& obj, bool replace) :BaseScene(obj, replace)
 	std::cout << "GamePlay Created" << std::endl;
 #endif
 	//TEST
-	wall.Create(sf::Vector2f(300, 300), sf::Vector2f(100, 100));
-	obstacle.push_back(wall);
-	wall2.Create(sf::Vector2f(500, 500), sf::Vector2f(100, 500));
-	obstacle.push_back(wall2);
+	initObstacles();
 	player.getDraw()->setSize(sf::Vector2f(50, 50));
 	player.getDraw()->setOrigin(25, 25);
 	player.getDraw()->setFillColor(sf::Color::Red);
@@ -30,6 +27,17 @@ GamePlay::~GamePlay()
 {
 	std::cout << "GamePlay Deleted" << std::endl;
 }
+
+void GamePlay::initObstacles()
+{
+	wall[0].Create(sf::Vector2f(300, 300), sf::Vector2f(100, 100));
+	obstacleContainer.push_back(wall[0]);
+	wall[1].Create(sf::Vector2f(500, 500), sf::Vector2f(100, 500));
+	obstacleContainer.push_back(wall[1]);
+	wall[2].Create(sf::Vector2f(500, 500), sf::Vector2f(500, 100));
+	obstacleContainer.push_back(wall[2]);
+}
+
 
 void GamePlay::initButton()
 {
@@ -58,6 +66,7 @@ void GamePlay::Update(float deltaTime)
 		switch (event.type)
 		{
 		case sf::Event::Closed: mWindow.Destroy(); break;
+		//case sf::Event::MouseButtonPressed: 
 		case sf::Event::KeyPressed:
 		{
 			switch (event.key.code)
@@ -77,6 +86,15 @@ void GamePlay::Update(float deltaTime)
 	worldMousePos = mWindow.GetRenderWindow()->mapPixelToCoords(mousePos);
 	player.lookAt(worldMousePos);
 
+	//Player Mouse input
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+	{
+		bullet.getDraw()->setPosition(player.getPosition());
+		bullet.setDir(player.getDirVect());
+
+		bulletContainer.emplace_back(bullet);
+	}
+	
 	//Player keyboard input
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
@@ -100,13 +118,27 @@ void GamePlay::Update(float deltaTime)
 	}
 
 	//On Collision with obstacle or wall
-	for (auto &obs: obstacle)
+	for (auto &obs: obstacleContainer)
 	{
-		player.checkCollision(obs, deltaTime);
-
+		player.checkCollision(obs);
+		for (size_t i = 0; i < bulletContainer.size(); i++)
+		{
+			if (bulletContainer[i].on_collision(obs))
+			{
+				bulletContainer.erase(bulletContainer.begin() + i);
+			}
+		}
 	}
 
+	std::cout << bulletContainer.size() << std::endl;
+
+	//Move everything here
 	player.PlayerMove();
+
+	for (auto &bul:bulletContainer)
+	{
+		bul.Move(deltaTime);
+	}
 	
 	//Zombie PathFinding
 
@@ -121,9 +153,15 @@ void GamePlay::Draw()
 
 	/*Draw everything here*/
 	mWindow.Draw(*player.getDraw());
-	mWindow.Draw(*wall.getCollider());
-	mWindow.Draw(*wall2.getCollider());
-
+	for (auto &bul:bulletContainer)
+	{
+		mWindow.Draw(*bul.getDraw());
+	}
+	for (auto &obs:obstacleContainer)
+	{
+		mWindow.Draw(*obs.getCollider());
+	}
+	
 	mWindow.EndDraw();
 }
 

@@ -9,13 +9,13 @@ public:
 	Entity() = default;
 	
 	virtual void Move(sf::Vector2i dir, float deltaTime) = 0;
-	void checkCollision(Obstacle& obs, float deltaTime);
+	void checkCollision(Obstacle& obs);
 
 	sf::RectangleShape* getDraw();
 
 protected:
 	sf::RectangleShape entityRect;
-	sf::Vector2f velocity;
+	sf::Vector2f movePos;
 	float movementSpeed;
 	
 	float health = 0;

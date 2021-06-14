@@ -4,28 +4,25 @@
 
 #include "Obstacle.h"
 
-void Entity::checkCollision(Obstacle& obs, float deltaTime)
+void Entity::checkCollision(Obstacle& obs)
 {
 	const sf::FloatRect entityBounds = ColliderBody.getGlobalBounds();
 	const sf::FloatRect obstacleBounds = obs.getCollider()->getGlobalBounds();
 
 	sf::FloatRect nextPosition = entityBounds;
-	nextPosition.left += velocity.x;
-	nextPosition.top += velocity.y;
+	nextPosition.left += movePos.x;
+	nextPosition.top += movePos.y;
 
 	if (obstacleBounds.intersects(nextPosition))
 	{
-		
-		//TODO
-		//Right
 		//Bottom DONE
 		if (entityBounds.top < obstacleBounds.top &&
 			entityBounds.top + entityBounds.height < obstacleBounds.top + obstacleBounds.height &&
 			entityBounds.left < obstacleBounds.left + obstacleBounds.width &&
 			entityBounds.left + entityBounds.width > obstacleBounds.left)
 		{
-			std::cout << "Collided Bottom\n";
-			velocity.y = 0.0f;
+			//std::cout << "Collided Bottom\n";
+			movePos.y = 0.0f;
 			entityRect.setPosition(entityRect.getPosition().x,entityRect.getPosition().y);
 			ColliderBody.setPosition(entityRect.getPosition().x, entityRect.getPosition().y);
 		}
@@ -35,8 +32,8 @@ void Entity::checkCollision(Obstacle& obs, float deltaTime)
 			entityBounds.left < obstacleBounds.left + obstacleBounds.width &&
 			entityBounds.left + entityBounds.width > obstacleBounds.left)
 		{
-			std::cout << "Collided Top\n";
-			velocity.y = 0.0f;
+			//std::cout << "Collided Top\n";
+			movePos.y = 0.0f;
 			entityRect.setPosition(entityRect.getPosition().x,entityRect.getPosition().y);
 			ColliderBody.setPosition(entityRect.getPosition().x, entityRect.getPosition().y);
 		}
@@ -45,8 +42,8 @@ void Entity::checkCollision(Obstacle& obs, float deltaTime)
 			entityBounds.top < obstacleBounds.top + obstacleBounds.height &&
 			entityBounds.top + entityBounds.height > obstacleBounds.top)
 		{
-			std::cout << "Collided Right\n";
-			velocity.x = 0.0f;
+			//std::cout << "Collided Right\n";
+			movePos.x = 0.0f;
 			entityRect.setPosition(entityRect.getPosition().x,entityRect.getPosition().y);
 			ColliderBody.setPosition(entityRect.getPosition().x, entityRect.getPosition().y);
 		}
@@ -55,8 +52,8 @@ void Entity::checkCollision(Obstacle& obs, float deltaTime)
 			entityBounds.top < obstacleBounds.top + obstacleBounds.height &&
 			entityBounds.top + entityBounds.height > obstacleBounds.top)
 		{
-			std::cout << "Collided Left\n";
-			velocity.x = 0.0f;
+			//std::cout << "Collided Left\n";
+			movePos.x = 0.0f;
 			entityRect.setPosition(entityRect.getPosition().x,entityRect.getPosition().y);
 			ColliderBody.setPosition(entityRect.getPosition().x, entityRect.getPosition().y);
 		}
