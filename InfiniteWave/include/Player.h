@@ -13,20 +13,25 @@ public:
 
 	void Update(float deltaTime);
 	void lookAt(sf::Vector2f mousePos);
+	void updateAllowShoot(float deltaTime);
 
 	//In-game function
 	void Move(sf::Vector2i dir, float deltaTime) override;
 	void PlayerMove();
 	void Reload();
-	void Shoot();
 	
 	sf::Vector2f getPosition() const;
 	float getAngle() const;
 	sf::Vector2f getDirVect() const;
+
+	bool allowShoot = true;
+	
 	
 private:
 	unsigned short int status{};
 	unsigned short int holdAmmo = 18;
+	float elapsedShootTime = 0.0f;
+	float shootCooldown = 0.5f;
 	sf::Vector2f dirVect;
 
 	sf::RectangleShape& playerRect;

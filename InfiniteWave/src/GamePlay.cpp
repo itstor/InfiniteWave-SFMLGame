@@ -87,12 +87,14 @@ void GamePlay::Update(float deltaTime)
 	player.lookAt(worldMousePos);
 
 	//Player Mouse input
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && player.allowShoot)
 	{
-		bullet.getDraw()->setPosition(player.getPosition());
+		bullet.setStartPos(player.getPosition());
 		bullet.setDir(player.getDirVect());
 
 		bulletContainer.emplace_back(bullet);
+
+		player.allowShoot = false;
 	}
 	
 	//Player keyboard input
@@ -117,13 +119,24 @@ void GamePlay::Update(float deltaTime)
 		player.Move(sf::Vector2i(1, 0), deltaTime);
 	}
 
+	player.updateAllowShoot(deltaTime);
+	
 	//On Collision with obstacle or wall
 	for (auto &obs: obstacleContainer)
 	{
 		player.checkCollision(obs);
 		for (size_t i = 0; i < bulletContainer.size(); i++)
 		{
+			//Check bullet collision with obstacle
 			if (bulletContainer[i].on_collision(obs))
+			{
+				bulletContainer.erase(bulletContainer.begin() + i);
+			}
+
+			//Check bullet if out of radius delete and allowShoot
+			else if (pow(bulletContainer[i].startPosition.x - bulletContainer[i].getPosition().x, 2) 
+				+ pow(bulletContainer[i].startPosition.y - bulletContainer[i].getPosition().y, 2) 
+				> pow(1000, 2))
 			{
 				bulletContainer.erase(bulletContainer.begin() + i);
 			}

@@ -70,6 +70,16 @@ void Player::lookAt(sf::Vector2f mousePos)
 	playerRect.setRotation(angle);
 }
 
+void Player::updateAllowShoot(float deltaTime)
+{
+	elapsedShootTime += deltaTime;
+	if (elapsedShootTime >= shootCooldown)
+	{
+		allowShoot = true;
+		elapsedShootTime -= shootCooldown;
+	}
+}
+
 sf::Vector2f Player::getPosition() const
 {
 	return playerRect.getPosition();

@@ -17,6 +17,17 @@ void Bullet::setDir(sf::Vector2f dirVect)
 	currentVelo = dirVect * max_speed_;
 }
 
+void Bullet::setStartPos(sf::Vector2f pos)
+{
+	bullet.setPosition(pos);
+	startPosition = pos;
+}
+
+sf::Vector2f Bullet::getPosition() const
+{
+	return bullet.getPosition();
+}
+
 bool Bullet::on_collision(GameObject & other) const
 {
 	const sf::FloatRect selfBounds = bullet.getGlobalBounds();
