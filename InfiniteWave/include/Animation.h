@@ -17,7 +17,6 @@ public:
 private:
 	sf::Texture animTex;
 	
-	
 	unsigned int imageCount = 0;
 	unsigned int currentImage = 0;
 	bool finish = false;

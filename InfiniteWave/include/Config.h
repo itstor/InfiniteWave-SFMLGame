@@ -7,7 +7,7 @@ namespace conf
 	inline float temp_musicVolume = 0.0f;
 	inline float temp_sfxVolume = 0.0f;
 	inline bool isFullscreen = false;
-	inline bool isMuted = false;
+	inline bool isMuted = true;
 	inline unsigned int windowWidth = 1920;
 	inline unsigned int windowHeight = 1080;
 	//bool useCustomController = false;
