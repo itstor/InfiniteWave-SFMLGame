@@ -10,8 +10,8 @@ Player::Player(): playerRect(entityRect)
 	//setup player
 	movementSpeed = 150.0f;
 	
-	ColliderBody.setSize(sf::Vector2f(253, 216));
-	ColliderBody.setOrigin(105, 120);
+	ColliderBody.setSize(sf::Vector2f(117, 142));
+	ColliderBody.setOrigin(59, 71);
 	playerRect.setSize(sf::Vector2f(253, 216));
 	playerRect.setOrigin(105, 120);
 	playerFeetRect.setSize(sf::Vector2f(172, 124));
@@ -35,9 +35,10 @@ Player::Player(): playerRect(entityRect)
 
 void Player::Move(sf::Vector2i dir, float deltaTime)
 {
+	feetAnimState = WALK_ANIM;
 	//Restrict from anim changing
-	if (!(status == SHOOT_ANIM || status == RELOAD_ANIM) || bodyAnim.isFinish())
-		status = WALK_ANIM;
+	if (!(bodyAnimState == SHOOT_ANIM || bodyAnimState == RELOAD_ANIM) || bodyAnim.isFinish())
+		bodyAnimState = WALK_ANIM;
 	
 	if (dir.x < 0) //Left
 	{
@@ -71,7 +72,7 @@ bool Player::Shoot()
 	{
 		holdAmmo--;
 		allowShoot = false;
-		status = SHOOT_ANIM;
+		bodyAnimState = SHOOT_ANIM;
 		return true;
 	}
 	
@@ -81,46 +82,53 @@ bool Player::Shoot()
 void Player::Reload()
 {
 	holdAmmo = 18;
-	status = RELOAD_ANIM;
+	bodyAnimState = RELOAD_ANIM;
 }
 
 
 void Player::Update(float deltaTime)
 {
-	//Change animation based on status
-	//TODO
-	std::cout << status << std::endl;
-	switch (status)
-	{
-	case IDLE_ANIM:
-		{
-			bodyAnim.Update(deltaTime, 0, 0.1f, 20);
-			playerRect.setTextureRect(*bodyAnim.getTexture());
+	//Change animation based on state
 
-			feetAnim.Update(deltaTime, 0, 1, 21, 20, true);
-			playerFeetRect.setTextureRect(*feetAnim.getTexture());
-		} break;
-	case WALK_ANIM: {
+	//body
+	if (bodyAnimState == IDLE_ANIM)
+	{
+		bodyAnim.Update(deltaTime, 0, 0.1f, 20);
+		playerRect.setTextureRect(*bodyAnim.getTexture());
+	}
+	else if(bodyAnimState == WALK_ANIM)
+	{
 		bodyAnim.Update(deltaTime, 1, 0.05f, 20);
 		playerRect.setTextureRect(*bodyAnim.getTexture());
-
-		feetAnim.Update(deltaTime, 0, 0.05f, 20);
-		playerFeetRect.setTextureRect(*feetAnim.getTexture());
-	} break;
-	case SHOOT_ANIM: {
+	}
+	else if(bodyAnimState == SHOOT_ANIM)
+	{
 		bodyAnim.Update(deltaTime, 2, 0.05f, 18, 16);
 		playerRect.setTextureRect(*bodyAnim.getTexture());
-	} break;
-	case RELOAD_ANIM: {
+	}
+	else if(bodyAnimState == RELOAD_ANIM)
+	{
 		bodyAnim.Update(deltaTime, 2, 0.05f, 15);
 		playerRect.setTextureRect(*bodyAnim.getTexture());
-	} break;
-	default: break;
+	}
+
+	//feet
+	if (feetAnimState == IDLE_ANIM)
+	{
+		feetAnim.Hide();
+		playerFeetRect.setTextureRect(*feetAnim.getTexture());
+	}
+	else if (feetAnimState == WALK_ANIM)
+	{
+		feetAnim.Update(deltaTime, 0, 0.05f, 20);
+		playerFeetRect.setTextureRect(*feetAnim.getTexture());
 	}
 
 	//Set back
-	if (!(status == SHOOT_ANIM || status == RELOAD_ANIM) || bodyAnim.isFinish())
-		status = IDLE_ANIM;
+	feetAnimState = IDLE_ANIM;
+
+	if (!(bodyAnimState == SHOOT_ANIM || bodyAnimState == RELOAD_ANIM) || bodyAnim.isFinish())
+		bodyAnimState = IDLE_ANIM;
 }
 
 void Player::lookAt(const sf::Vector2f& mousePos)

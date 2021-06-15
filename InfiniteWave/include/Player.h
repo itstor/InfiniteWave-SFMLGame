@@ -4,7 +4,7 @@
 #include "Animation.h"
 #include "Entity.h"
 
-enum status { IDLE_ANIM = 0, WALK_ANIM = 1, SHOOT_ANIM = 2, RELOAD_ANIM = 3};
+enum AnimState { IDLE_ANIM = 0, WALK_ANIM = 1, SHOOT_ANIM = 2, RELOAD_ANIM = 3};
 
 class Player : public Entity
 {
@@ -27,7 +27,8 @@ public:
 	sf::RectangleShape* getFeetDraw();
 
 private:
-	unsigned short int status{};
+	unsigned short int bodyAnimState;
+	unsigned short int feetAnimState;
 	unsigned short int holdAmmo = 18;
 	float playerHealth = 100.0f;
 	float elapsedShootTime = 0.0f;

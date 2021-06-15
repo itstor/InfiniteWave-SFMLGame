@@ -8,6 +8,7 @@ public:
 
 	void Setup(sf::Texture* animTex, unsigned row, unsigned maxImageCount);
 	void Update(float deltaTime, int row, float switchTime, unsigned endFrame, unsigned startFrame = 0, bool pause = false);
+	void Hide();
 	sf::IntRect* getTexture();
 	void Reset();
 	
@@ -16,6 +17,7 @@ public:
 	
 private:
 	unsigned int currentImage = 0;
+	unsigned int maxImage = 0;
 	int prevRow = -1;
 	bool finish = false;
 	float totalTime = 0.0f;

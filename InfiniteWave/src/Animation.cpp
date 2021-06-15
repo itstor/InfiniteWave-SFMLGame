@@ -7,14 +7,15 @@ Animation::Animation() = default;
 
 
 void Animation::Setup(sf::Texture* animTex, unsigned int row, unsigned int maxImageCount)
-{	
+{
+	maxImage = maxImageCount;
 	uvRect.width = animTex->getSize().x / maxImageCount;
 	uvRect.height = animTex->getSize().y / row;
 }
 
 void Animation::Update(float deltaTime, int row, float switchTime, unsigned int endFrame, unsigned int startFrame, bool pause)
 {
-	if (row != prevRow)
+	if (row != prevRow || pause)
 	{
 		prevRow = row;
 		totalTime = 0;
@@ -39,6 +40,11 @@ void Animation::Update(float deltaTime, int row, float switchTime, unsigned int 
 
 	uvRect.left = currentImage * uvRect.width;
 	uvRect.top = row * uvRect.height;
+}
+
+void Animation::Hide()
+{
+	uvRect.left = (maxImage + 1) * uvRect.width;
 }
 
 sf::IntRect* Animation::getTexture()
