@@ -2,6 +2,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <SFML/Graphics/View.hpp>
 #include <SFML/System/Clock.hpp>
 
 #include "SharedObject.h"
@@ -17,6 +18,7 @@ public:
 
 private:
 	SharedObject& obj;
+	sf::View camera;
 	sf::Clock mClock;
 	float mDeltaTime = 0;
 

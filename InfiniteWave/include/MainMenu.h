@@ -33,7 +33,6 @@ private:
 	Button btnExit;
 	Button btnHow; //How to Play
 
-	sf::Vector2i mousePos;
 	sf::Vector2u winSize;
 };
 

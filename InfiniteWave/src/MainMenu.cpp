@@ -100,10 +100,12 @@ void MainMenu::Update(float deltaTime)
 		}
 	}
 
-	//button mouse position update
-	mousePos = sf::Mouse::getPosition(*mWindow.GetRenderWindow());
+	const sf::Vector2i mousePos = sf::Mouse::getPosition(*mWindow.GetRenderWindow());
+	const sf::Vector2f worldMousePos = mWindow.GetRenderWindow()->mapPixelToCoords(mousePos);
+	
+	
 	for (auto btn : btnContainer)
-		btn->Update(sf::Vector2f(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)));
+		btn->Update(worldMousePos);
 
 	//-=-=-=-=-=-=-=-=-=-CLICKED BUTTON HERE-=-=-=-=-=-=-=-=-=-=-=-
 	if (btnExit.isPressed())

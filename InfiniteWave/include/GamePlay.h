@@ -33,11 +33,8 @@ private:
 	Player player;
 	Bullet bullet;
 	Obstacle wall[3];
-	sf::Vector2i mousePos;
-	sf::Vector2f worldMousePos;
 	std::vector<Obstacle> obstacleContainer;
 	std::vector<Bullet> bulletContainer;
 	/*std::vector<PickupItem> pickupItem;
-	std::vector<Bullet> bullet;
 	std::vector<Zombie> zombie;*/
 };

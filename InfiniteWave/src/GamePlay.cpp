@@ -18,9 +18,6 @@ GamePlay::GamePlay(SharedObject& obj, bool replace) :BaseScene(obj, replace)
 #endif
 	//TEST
 	initObstacles();
-	player.getDraw()->setSize(sf::Vector2f(50, 50));
-	player.getDraw()->setOrigin(25, 25);
-	player.getDraw()->setFillColor(sf::Color::Red);
 }
 
 GamePlay::~GamePlay()
@@ -73,29 +70,39 @@ void GamePlay::Update(float deltaTime)
 			{
 				/*Only for non-simultaneous key
 				Use if statement for simultaneous key*/
+			case sf::Keyboard::R: player.Reload(); break;
 			default: break;
 			}
 			break;
 		}
+		case sf::Event::MouseButtonPressed:
+			{
+				switch (event.mouseButton.button)
+				{
+				case sf::Mouse::Left:
+					{
+						if (player.Shoot())
+						{
+							bullet.setStartPos(player.getPosition());
+							bullet.setDir(player.getDirVect());
+
+							bulletContainer.emplace_back(bullet);
+						}
+					}
+				default: break;
+				}
+			}
 		default: break;
 		}
 	}
 
-	//Player face direction update
-	mousePos = sf::Mouse::getPosition(*mWindow.GetRenderWindow());
-	worldMousePos = mWindow.GetRenderWindow()->mapPixelToCoords(mousePos);
+	//Update player face dir
+	const sf::Vector2i mousePos = sf::Mouse::getPosition(*mWindow.GetRenderWindow());
+	const sf::Vector2f worldMousePos = mWindow.GetRenderWindow()->mapPixelToCoords(mousePos);
 	player.lookAt(worldMousePos);
 
-	//Player Mouse input
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && player.allowShoot)
-	{
-		bullet.setStartPos(player.getPosition());
-		bullet.setDir(player.getDirVect());
-
-		bulletContainer.emplace_back(bullet);
-
-		player.allowShoot = false;
-	}
+	//Update player anim
+	player.Update(deltaTime);
 	
 	//Player keyboard input
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
@@ -120,35 +127,36 @@ void GamePlay::Update(float deltaTime)
 	}
 
 	player.updateAllowShoot(deltaTime);
-	
+
+	//all object collision check here
 	//On Collision with obstacle or wall
 	for (auto &obs: obstacleContainer)
 	{
 		player.checkCollision(obs);
 		for (size_t i = 0; i < bulletContainer.size(); i++)
 		{
-			//Check bullet collision with obstacle
+			//Check id bullet collided with obstacle delete
 			if (bulletContainer[i].on_collision(obs))
 			{
 				bulletContainer.erase(bulletContainer.begin() + i);
 			}
 
-			//Check bullet if out of radius delete and allowShoot
+			//Check if bullet out of radius delete
 			else if (pow(bulletContainer[i].startPosition.x - bulletContainer[i].getPosition().x, 2) 
 				+ pow(bulletContainer[i].startPosition.y - bulletContainer[i].getPosition().y, 2) 
-				> pow(1000, 2))
+				> pow(1500, 2))
 			{
 				bulletContainer.erase(bulletContainer.begin() + i);
 			}
+
+			//TODO Check if collided with zombie
 		}
 	}
 
-	std::cout << bulletContainer.size() << std::endl;
-
 	//Move everything here
-	player.PlayerMove();
+	player.PlayerMove(); // Move Player
 
-	for (auto &bul:bulletContainer)
+	for (auto &bul:bulletContainer) //move bullet
 	{
 		bul.Move(deltaTime);
 	}
@@ -165,7 +173,9 @@ void GamePlay::Draw()
 	mWindow.BeginDraw();
 
 	/*Draw everything here*/
+	mWindow.Draw(*player.getFeetDraw());
 	mWindow.Draw(*player.getDraw());
+	
 	for (auto &bul:bulletContainer)
 	{
 		mWindow.Draw(*bul.getDraw());
