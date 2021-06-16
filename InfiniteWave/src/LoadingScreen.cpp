@@ -21,7 +21,7 @@ LoadingScreen::LoadingScreen(SharedObject& obj, bool replace) :BaseScene(obj, re
 	//setup loading bar and fram
 	loadingFrame.setOutlineColor(sf::Color::White);
 	loadingFrame.setFillColor(sf::Color::Transparent);
-	loadingFrame.setOutlineThickness(7);
+	loadingFrame.setOutlineThickness(5);
 	loadingFrame.setSize(sf::Vector2f(551, 44));
 	loadingFrame.setPosition(684.5f, 1080.0f - 611.0f);
 
@@ -172,7 +172,7 @@ void LoadingScreen::Update(float deltaTime)
 	static float totalTimeLoading;
 	totalTimeLoading += deltaTime;
 
-	if (totalTimeLoading >= 0.7f)
+	if (totalTimeLoading >= 0.5f)
 	{
 		static unsigned int currentLoading = 0;
 		
@@ -190,7 +190,7 @@ void LoadingScreen::Update(float deltaTime)
 	static float totalTimeBar;
 	totalTimeBar += deltaTime;
 
-	if (totalTimeBar >= 1.1f)
+	if (totalTimeBar >= 0.5f)
 	{
 		static unsigned int currentBar = 0;
 

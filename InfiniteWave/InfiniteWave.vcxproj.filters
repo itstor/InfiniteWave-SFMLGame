@@ -112,7 +112,10 @@
     <ClCompile Include="src\Zombie.cpp">
       <Filter>Source\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="src\LoadingScreen.cpp" />
+    <ClCompile Include="src\LoadingScreen.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Map.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AudioManager.h">
@@ -187,7 +190,10 @@
     <ClInclude Include="include\Zombie.h">
       <Filter>Include\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="include\LoadingScreen.h" />
+    <ClInclude Include="include\LoadingScreen.h">
+      <Filter>Include\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Map.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />

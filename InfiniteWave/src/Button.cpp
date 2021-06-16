@@ -19,7 +19,7 @@ void Button::Setup(const std::string& idlePath, const std::string& hoverPath, co
 	btnSfxBuff.loadFromFile("Assets/Audio/SFX/Button_9.wav");
 	btnSfx.setBuffer(btnSfxBuff);
 
-	btnState = IDLE;
+	btnState = IDLE_BTN;
 }
 
 sf::RectangleShape* Button::getDraw()
@@ -29,31 +29,23 @@ sf::RectangleShape* Button::getDraw()
 
 void Button::Update(sf::Vector2f mousePos)
 {
-	btnState = IDLE;
+	btnState = IDLE_BTN;
 	if(btn.getGlobalBounds().contains(mousePos))
 	{
-		btnState = HOVER;
-		if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && btnState != ACTIVE)
-		{
-			btnState = ACTIVE;
-			if (btnSfx.getStatus() != sf::SoundSource::Playing) {
-				btnSfx.setVolume(conf::sfxVolume);
-				btnSfx.play();
-			}
-		}
+		btnState = HOVER_BTN;
 	}
 
 	switch (btnState)
 	{
-	case IDLE:
+	case IDLE_BTN:
 		{
 		btn.setTexture(&btnIdleTex);
 	} break;
-	case HOVER:
+	case HOVER_BTN:
 		{
 		btn.setTexture(&btnHoverTex);
 	} break;
-	case ACTIVE:
+	case ACTIVE_BTN:
 		{
 		btn.setTexture(&btnActiveTex);
 	} break;
@@ -63,5 +55,15 @@ void Button::Update(sf::Vector2f mousePos)
 
 bool Button::isPressed() const
 {
-	return btnState == ACTIVE ? true : false;
+	return btnState == ACTIVE_BTN ? true : false;
+}
+
+bool Button::isHover() const
+{
+	return btnState == HOVER_BTN ? true : false;
+}
+
+void Button::Click()
+{
+	btnState = ACTIVE_BTN;
 }

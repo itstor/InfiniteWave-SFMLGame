@@ -4,7 +4,7 @@
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
 
-enum btn_state { IDLE = 0, HOVER = 1, ACTIVE = 2 };
+enum btn_state { IDLE_BTN = 0, HOVER_BTN = 1, ACTIVE_BTN = 2 };
 
 class Button
 {
@@ -16,8 +16,10 @@ public:
 
 	sf::RectangleShape* getDraw();
 	void Update(sf::Vector2f mousePos);
+	void Click();
 
 	bool isPressed() const;
+	bool isHover() const;
 	
 private:
 	sf::SoundBuffer btnSfxBuff;

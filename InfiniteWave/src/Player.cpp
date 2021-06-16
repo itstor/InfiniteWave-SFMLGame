@@ -8,7 +8,7 @@
 Player::Player(): playerRect(entityRect)
 {
 	//setup player
-	movementSpeed = 150.0f;
+	movementSpeed = 250.0f;
 	
 	ColliderBody.setSize(sf::Vector2f(117, 142));
 	ColliderBody.setOrigin(59, 71);
@@ -154,6 +154,13 @@ void Player::updateAllowShoot(float deltaTime)
 		allowShoot = true;
 		elapsedShootTime = 0;
 	}
+}
+
+void Player::setPosition(const sf::Vector2f & pos)
+{
+	playerRect.setPosition(pos);
+	playerFeetRect.setPosition(pos);
+	ColliderBody.setPosition(pos);
 }
 
 sf::Vector2f Player::getPosition() const

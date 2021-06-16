@@ -32,6 +32,7 @@
     <ClCompile Include="src\LoadingScreen.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainMenu.cpp" />
+    <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Music.cpp" />
     <ClCompile Include="src\Obstacle.cpp" />
     <ClCompile Include="src\Physics.cpp" />
@@ -58,6 +59,7 @@
     <ClInclude Include="include\Image.h" />
     <ClInclude Include="include\LoadingScreen.h" />
     <ClInclude Include="include\MainMenu.h" />
+    <ClInclude Include="include\Map.h" />
     <ClInclude Include="include\Music.h" />
     <ClInclude Include="include\Obstacle.h" />
     <ClInclude Include="include\Physics.h" />

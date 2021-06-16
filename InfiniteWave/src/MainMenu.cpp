@@ -104,9 +104,18 @@ void MainMenu::Update(float deltaTime)
 	const sf::Vector2i mousePos = sf::Mouse::getPosition(*mWindow.GetRenderWindow());
 	const sf::Vector2f worldMousePos = mWindow.GetRenderWindow()->mapPixelToCoords(mousePos);
 	
-	
 	for (auto btn : btnContainer)
+	{
 		btn->Update(worldMousePos);
+		if (btn->isHover())
+		{
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				btn->Click();
+				mAudio.playSFX("button");
+			}
+		}
+	}
 
 	//-=-=-=-=-=-=-=-=-=-CLICKED BUTTON HERE-=-=-=-=-=-=-=-=-=-=-=-
 	if (btnExit.isPressed())

@@ -4,6 +4,7 @@
 #include "BaseScene.h"
 #include "Bullet.h"
 #include "Button.h" //GUI Optional
+#include "Map.h"
 #include "Player.h"
 #include "Obstacle.h"
 
@@ -27,12 +28,17 @@ public:
 	void initObstacles();
 	void initBg();
 	void initButton();
+	void initMap();
 
 private:
 	//Define scene component here
 	Player player;
 	Bullet bullet;
 	Obstacle wall[3];
+	Map gameMap;
+
+	sf::RectangleShape nightOverlay;
+	sf::View camera;
 	std::vector<Obstacle> obstacleContainer;
 	std::vector<Bullet> bulletContainer;
 	/*std::vector<PickupItem> pickupItem;
