@@ -10,19 +10,19 @@
 #include "AudioManager.h"
 
 
-SplashScreen::SplashScreen(SharedObject& obj, bool replace) :BaseScene(obj, replace), alphaMask(255, 255, 255, 255)
+SplashScreen::SplashScreen(SharedObject& obj, bool replace) :BaseScene(obj, replace), alphaMask(0, 0, 0, 255)
 {
 #ifdef _DEBUG
 	std::cout << "SplashScreen Created" << std::endl;
 #endif
 	//Background
 	background.setSize(sf::Vector2f(mWindow.GetWindowSize().x, mWindow.GetWindowSize().y));
-	background.setFillColor(sf::Color::White);
+	background.setFillColor(sf::Color::Black);
 	//Mask fader
 	rectMask.setFillColor(alphaMask);
 	rectMask.setSize(sf::Vector2f(mWindow.GetWindowSize().x, mWindow.GetWindowSize().y));
 
-	logoITS.Setup("Assets/Texture/GUI/splash_logoits.png",
+	logoITS.Setup("Assets/Texture/GUI/splash_whiteits.png",
 		sf::Vector2f(static_cast<float>(conf::windowWidth) / 2, static_cast<float>(conf::windowHeight) / 2),
 		sf::Vector2f(500, 500));
 	

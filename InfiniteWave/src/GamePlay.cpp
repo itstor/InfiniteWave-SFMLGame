@@ -83,7 +83,7 @@ void GamePlay::Update(float deltaTime)
 					{
 						if (player.Shoot())
 						{
-							bullet.setStartPos(player.getPosition());
+							bullet.setStartPos(sf::Vector2f(player.getPosition().x + 20, player.getPosition().y + 20));
 							bullet.setDir(player.getDirVect());
 
 							bulletContainer.emplace_back(bullet);

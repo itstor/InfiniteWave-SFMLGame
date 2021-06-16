@@ -93,22 +93,22 @@ void Player::Update(float deltaTime)
 	//body
 	if (bodyAnimState == IDLE_ANIM)
 	{
-		bodyAnim.Update(deltaTime, 0, 0.1f, 20);
+		bodyAnim.Update(deltaTime, 0, 0.1f, 0, 20);
 		playerRect.setTextureRect(*bodyAnim.getTexture());
 	}
 	else if(bodyAnimState == WALK_ANIM)
 	{
-		bodyAnim.Update(deltaTime, 1, 0.05f, 20);
+		bodyAnim.Update(deltaTime, 1, 0.05f,0, 20);
 		playerRect.setTextureRect(*bodyAnim.getTexture());
 	}
 	else if(bodyAnimState == SHOOT_ANIM)
 	{
-		bodyAnim.Update(deltaTime, 2, 0.05f, 18, 16);
+		bodyAnim.Update(deltaTime, 2, 0.05f, 16, 18);
 		playerRect.setTextureRect(*bodyAnim.getTexture());
 	}
 	else if(bodyAnimState == RELOAD_ANIM)
 	{
-		bodyAnim.Update(deltaTime, 2, 0.05f, 15);
+		bodyAnim.Update(deltaTime, 2, 0.05f,0, 15);
 		playerRect.setTextureRect(*bodyAnim.getTexture());
 	}
 
@@ -120,7 +120,7 @@ void Player::Update(float deltaTime)
 	}
 	else if (feetAnimState == WALK_ANIM)
 	{
-		feetAnim.Update(deltaTime, 0, 0.05f, 20);
+		feetAnim.Update(deltaTime, 0, 0.05f,0, 20);
 		playerFeetRect.setTextureRect(*feetAnim.getTexture());
 	}
 

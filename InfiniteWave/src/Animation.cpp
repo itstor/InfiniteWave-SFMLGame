@@ -13,28 +13,26 @@ void Animation::Setup(sf::Texture* animTex, unsigned int row, unsigned int maxIm
 	uvRect.height = animTex->getSize().y / row;
 }
 
-void Animation::Update(float deltaTime, int row, float switchTime, unsigned int endFrame, unsigned int startFrame, bool pause)
+void Animation::Update(float deltaTime, int row, float switchTime, unsigned int startFrame, unsigned int endFrame)
 {
-	if (row != prevRow || pause)
+	if (row != prevRow)
 	{
 		prevRow = row;
 		totalTime = 0;
 		currentImage = 0 + startFrame;
 	}
 	
-	if (!pause) {
-		totalTime += deltaTime;
-		if (totalTime >= switchTime)
-		{
-			finish = false;
-			totalTime = 0;
-			currentImage++;
+	totalTime += deltaTime;
+	if (totalTime >= switchTime)
+	{
+		finish = false;
+		totalTime = 0;
+		currentImage++;
 
-			if (currentImage >= endFrame)
-			{
-				finish = true;
-				currentImage = 0;
-			}
+		if (currentImage >= endFrame)
+		{
+			finish = true;
+			currentImage = 0;
 		}
 	}
 

@@ -8,6 +8,7 @@
 #include "Window.h"
 #include "SceneManager.h"
 #include "AudioManager.h"
+#include "LoadingScreen.h"
 
 
 MainMenu::MainMenu(SharedObject& obj, bool replace) :BaseScene(obj, replace)
@@ -83,7 +84,7 @@ void MainMenu::Update(float deltaTime)
 			switch (event.key.code)
 			{
 			case sf::Keyboard::Space:
-				mNext = SceneManager::build<SplashScreen>(mObj, true);
+				mNext = SceneManager::build<LoadingScreen>(mObj, true);
 				break;
 			case sf::Keyboard::Escape: mWindow.Destroy(); break;
 			case sf::Keyboard::BackSpace: mManager.prevScene(); break;
@@ -114,7 +115,7 @@ void MainMenu::Update(float deltaTime)
 	}
 	if (btnPlay.isPressed())
 	{
-		mNext = SceneManager::build<GamePlay>(mObj, true);
+		mNext = SceneManager::build<LoadingScreen>(mObj, true);
 	}
 }
 

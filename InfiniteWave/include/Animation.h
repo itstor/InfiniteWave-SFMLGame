@@ -7,7 +7,7 @@ public:
 	Animation();
 
 	void Setup(sf::Texture* animTex, unsigned row, unsigned maxImageCount);
-	void Update(float deltaTime, int row, float switchTime, unsigned endFrame, unsigned startFrame = 0, bool pause = false);
+	void Update(float deltaTime, int row, float switchTime, unsigned startFrame, unsigned endFrame);
 	void Hide();
 	sf::IntRect* getTexture();
 	void Reset();

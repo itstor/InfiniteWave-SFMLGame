@@ -47,6 +47,6 @@ void Game::initSFX()
 
 void Game::initMusic()
 {
-	obj.AudioManager->addMusic("Loading", "Assets/Audio/Backsound/loading.wav", true);
+	obj.AudioManager->addMusic("Loading", "Assets/Audio/Backsound/backsound.wav", true);
 }
 

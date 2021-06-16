@@ -112,6 +112,7 @@
     <ClCompile Include="src\Zombie.cpp">
       <Filter>Source\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="src\LoadingScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AudioManager.h">
@@ -186,6 +187,7 @@
     <ClInclude Include="include\Zombie.h">
       <Filter>Include\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="include\LoadingScreen.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />
