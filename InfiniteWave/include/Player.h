@@ -4,8 +4,6 @@
 #include "Animation.h"
 #include "Entity.h"
 
-enum AnimState { IDLE_ANIM = 0, WALK_ANIM = 1, SHOOT_ANIM = 2, RELOAD_ANIM = 3};
-
 class Player : public Entity
 {
 public:
@@ -17,14 +15,14 @@ public:
 	void setPosition(const sf::Vector2f& pos);
 
 	//In-game function
-	void Move(sf::Vector2i dir, float deltaTime) override;
+	void Move(int dir, float deltaTime) override;
 	void PlayerMove();
 	bool Shoot();
 	void Reload();
-	
+
 	sf::Vector2f getPosition() const;
 	float getAngle() const;
-	sf::Vector2f getDirVect() const;
+	sf::Vector2f* getDirVect();
 	sf::RectangleShape* getFeetDraw();
 
 private:

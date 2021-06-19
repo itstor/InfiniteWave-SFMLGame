@@ -14,6 +14,7 @@ public:
 	SFX(const std::string& file_path);
 	~SFX();
 	void play();
+	void setPitch(float pitch);
 	void pause();
 	void stop();
 };

@@ -11,18 +11,33 @@
 #include "SceneManager.h"
 #include "AudioManager.h"
 
-GamePlay::GamePlay(SharedObject& obj, bool replace) :BaseScene(obj, replace)
+GamePlay::GamePlay(SharedObject& obj, bool replace) :BaseScene(obj, replace), ls(false)
 {
 #ifdef _DEBUG
 	std::cout << "GamePlay Created" << std::endl;
 #endif
+	//stop main menu music
 	mAudio.stopAll();
-	camera.reset(sf::FloatRect(3602.19f, 4756.3f, 3840, 2160));
-	mWindow.GetRenderWindow()->setView(camera);
+
+	//init view
+	camera.reset(sf::FloatRect(0, 0, 3840, 2160));
+	GUICamera.reset(sf::FloatRect(8118, 0, 1920, 1080));
+
+	////init overlay
+	//const sf::Color nightOverlayColor(0,0,0,200);
+	//nightOverlay.setFillColor(nightOverlayColor);
+	//nightOverlay.setSize(sf::Vector2f(1920, 1080));
+	//nightOverlay.setPosition(8118, 0);
+	//mistTex.loadFromFile("Assets/Texture/Sprites/Map/mist.png");
+	//mist.setTexture(&mistTex);
+	//mist.setSize(sf::Vector2f(1920, 1080));
+	//mist.setPosition(8118, 0);
+	
 	player.setPosition(sf::Vector2f(3602.19f, 4756.3f));
+
 	initObstacles();
 	initMap();
-	
+	initLight();
 }
 
 GamePlay::~GamePlay()
@@ -81,21 +96,75 @@ void GamePlay::initMap()
 								809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,
 								809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,626,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809,809 };
 
-	gameMap.load("Assets\/Texture/Sprites/Map/jawbreaker.png", sf::Vector2u(8, 8), map, 59, 48);
+	gameMap.load("Assets/Texture/Sprites/Map/jawbreaker.png", sf::Vector2u(8, 8), map, 59, 48);
 	gameMap.setScale(17, 17);
 }
 
-
 void GamePlay::initObstacles()
 {
-	wall[0].Create(sf::Vector2f(300, 300), sf::Vector2f(100, 100));
-	obstacleContainer.push_back(wall[0]);
-	wall[1].Create(sf::Vector2f(500, 500), sf::Vector2f(100, 500));
-	obstacleContainer.push_back(wall[1]);
-	wall[2].Create(sf::Vector2f(500, 500), sf::Vector2f(500, 100));
-	obstacleContainer.push_back(wall[2]);
-}
+	//MAP BOUNDARIES
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(-1.0f, 6536.0f)));
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(8018.0f, 0.0f), sf::Vector2f(1.0f, 6536.0f)));
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(0.0f, 6536.0f), sf::Vector2f(8018.0f, 1.0f)));
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(8018.0f, -1.0f)));
 
+	//ROCKS
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(5331, 4921), sf::Vector2f(94, 100)));
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(3154, 4236), sf::Vector2f(94, 100)));
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(2470.75f, 3011.46f), sf::Vector2f(94, 100)));
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(836.35f, 2876.25f), sf::Vector2f(94, 100)));
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(7645.07f, 4238.22f), sf::Vector2f(94, 100)));
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(7236.48f, 699.15f), sf::Vector2f(94, 100)));
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(2603.79f, 423.11f), sf::Vector2f(94, 100)));
+	
+	//WALLS
+	/*left top room*/
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(291, 1091), sf::Vector2f(94, 100))); //left
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(1501, 1091), sf::Vector2f(94, 100))); //right
+
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(0, 684), sf::Vector2f(2175, 126))); //right
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(0, 1501), sf::Vector2f(1764, 126))); //right
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(2042, 812), sf::Vector2f(126, 968))); //right
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(546, 1627), sf::Vector2f(126, 967))); //right
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(0, 2591), sf::Vector2f(1764, 126))); //right
+
+	/*center room*/
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(3134, 2588), sf::Vector2f(126, 544)));
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(3815, 2721), sf::Vector2f(126, 411.5f))); //right
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(3815, 2034), sf::Vector2f(126, 411.5f))); //right
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(3135, 2034), sf::Vector2f(126, 281))); //right
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(3135, 1908), sf::Vector2f(811.5f, 126))); //right
+
+	/*right room*/
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(4220, 4500), sf::Vector2f(2721, 126))); //right
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(4900, 2183), sf::Vector2f(2042, 126))); //right
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(4220, 4088), sf::Vector2f(126, 411.5f))); //right
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(4220, 3397), sf::Vector2f(126, 411.5f))); //right
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(6808, 3132), sf::Vector2f(126, 537))); //right
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(6808, 2309), sf::Vector2f(126, 537))); //right
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(6808, 3962), sf::Vector2f(126, 537))); //right
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(4901, 2730), sf::Vector2f(126, 537))); //right
+
+	/*left bottom room*/
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(1653.48f, 4236), sf::Vector2f(94, 100)));
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(1653.48f, 3829.75f), sf::Vector2f(94, 100)));
+	
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(0.0f, 4638.04f), sf::Vector2f(2175, 126.25f))); //bottom wall
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(0.0f, 3408), sf::Vector2f(2175, 126.25f))); //top wall
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(2043.0f, 4226.48f), sf::Vector2f(131, 411.56f))); //left bottom wall
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(2043.0f, 3534.0), sf::Vector2f(131, 411.56f))); //left top wall
+
+
+	//STAIRS
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(269, 3538), sf::Vector2f(822.28f, 272))); //left bottom room
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(4494, 3394), sf::Vector2f(948, 272))); //right room, top
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(4494, 4227), sf::Vector2f(948, 272))); //right room, bottom
+
+	//OUTDOOR LADDER
+	obstacleContainer.push_back(new Obstacle(sf::Vector2f(2700, 4479), sf::Vector2f(182.81f, 176.56f))); //right room, bottom
+
+
+}
 
 void GamePlay::initButton()
 {
@@ -106,6 +175,41 @@ void GamePlay::initBg()
 {
 	//Initialize background here
 }
+
+void GamePlay::initLight()
+{
+	//init light system
+	ls.create({ 100.0f,100.0f,200.0f,200.0f }, mWindow.GetWindowSize());
+
+	//load light texture
+	flashLightTexture.loadFromFile("Assets/Texture/Sprites/Map/flashlight.png");
+	flashLightTexture.setSmooth(true);
+
+	pointLightTexture.loadFromFile("Assets/Texture/Sprites/Map/pointLightTexture.png");
+	pointLightTexture.setSmooth(true);
+
+	flashLight = ls.createLightPointEmission();
+	flashLight->setOrigin(sf::Vector2f(flashLightTexture.getSize().x, flashLightTexture.getSize().y * 0.5f));
+	flashLight->setTexture(flashLightTexture);
+	flashLight->setScale(-5.f, 5.f);
+	flashLight->setColor(sf::Color::White);
+
+	gunLight = ls.createLightPointEmission();
+	gunLight->setOrigin(sf::Vector2f(pointLightTexture.getSize().x / 2, pointLightTexture.getSize().y * 0.5f));
+	gunLight->setTexture(pointLightTexture);
+	gunLight->setScale(12.f, 12.f);
+	gunLight->setColor(sf::Color::Yellow);
+	gunLight->setTurnedOn(false);
+
+	ls.setAmbientColor({ 30,30,30 });
+
+	//Add light obstacle
+	for (auto &obs:obstacleContainer)
+	{
+		ls.createLightShape(*obs->getCollider())->setRenderLightOver(false);
+	}
+}
+
 
 void GamePlay::Pause()
 {
@@ -131,7 +235,10 @@ void GamePlay::Update(float deltaTime)
 			{
 				/*Only for non-simultaneous key
 				Use if statement for simultaneous key*/
-			case sf::Keyboard::R: player.Reload(); break;
+			case sf::Keyboard::R: 
+			{
+				player.Reload();
+			} break;
 			default: break;
 			}
 			break;
@@ -144,8 +251,12 @@ void GamePlay::Update(float deltaTime)
 					{
 						if (player.Shoot())
 						{
+							/*const int newPitch = (rand() % 5) - 2;
+							mAudio.changeSFXPitch("pistol_shoot", newPitch != 0 ? static_cast<float>(newPitch) : 1);*/
+							mAudio.playSFX("pistol_shoot");
 							bullet.setStartPos(sf::Vector2f(player.getPosition().x + 20, player.getPosition().y + 20));
-							bullet.setDir(player.getDirVect());
+							bullet.setDir(*player.getDirVect());
+							//mlight2->setTurnedOn(true);
 
 							bulletContainer.emplace_back(bullet);
 						}
@@ -180,51 +291,55 @@ void GamePlay::Update(float deltaTime)
 		camera.setCenter(player.getPosition());
 	}
 	
-	//Update player face dir
+	//Update player face dir and light dir
 	const sf::Vector2i mousePos = sf::Mouse::getPosition(*mWindow.GetRenderWindow());
 	const sf::Vector2f worldMousePos = mWindow.GetRenderWindow()->mapPixelToCoords(mousePos);
 	player.lookAt(worldMousePos);
 
-	//Update player anim
-	player.Update(deltaTime);
+	flashLight->setPosition(player.getPosition());
+	gunLight->setPosition(player.getPosition());
+	flashLight->setRotation(player.getAngle());
 	
 	//Player keyboard input
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		player.Move(sf::Vector2i(0, -1), deltaTime);
+		player.Move(UP, deltaTime);
 		//camera.move(0*deltaTime, -400.f*deltaTime);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) 
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		player.Move(sf::Vector2i(-1, 0), deltaTime);
+		player.Move(LEFT, deltaTime);
 		//camera.move(-400.0f*deltaTime, 0*deltaTime);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) 
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
-		player.Move(sf::Vector2i(0, 1), deltaTime);
+		player.Move(DOWN, deltaTime);
 		//camera.move(0*deltaTime, 400.f*deltaTime);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) 
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		player.Move(sf::Vector2i(1, 0), deltaTime);
+		player.Move(RIGHT, deltaTime);
 		//camera.move(400.0f*deltaTime, 0*deltaTime);
 	}
 
+	//Update player anim
+	player.Update(deltaTime);
+
 	player.updateAllowShoot(deltaTime);
 
-	//all object collision check here
+	//All object collision check here
 	//On Collision with obstacle or wall
 	for (auto &obs: obstacleContainer)
 	{
-		player.checkCollision(obs);
+		player.checkCollision(*obs);
 		for (size_t i = 0; i < bulletContainer.size(); i++)
 		{
-			//Check id bullet collided with obstacle delete
-			if (bulletContainer[i].on_collision(obs))
+			//Check if bullet collided with obstacle delete
+			if (bulletContainer[i].onCollision(*obs))
 			{
 				bulletContainer.erase(bulletContainer.begin() + i);
 			}
@@ -243,7 +358,6 @@ void GamePlay::Update(float deltaTime)
 
 	//Move everything here
 	player.PlayerMove(); // Move Player
-
 	for (auto &bul:bulletContainer) //move bullet
 	{
 		bul.Move(deltaTime);
@@ -271,6 +385,13 @@ void GamePlay::Draw()
 
 	mWindow.Draw(*player.getFeetDraw());
 	mWindow.Draw(*player.getDraw());
+	//mWindow.Draw(*player.getCollider());
+
+	//mWindow.GetRenderWindow()->setView(GUICamera);
+	ls.render(*mWindow.GetRenderWindow());
+
+	//Reset view back
+	//mWindow.GetRenderWindow()->setView(camera);
 	
 	mWindow.EndDraw();
 }

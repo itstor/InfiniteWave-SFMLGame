@@ -17,10 +17,11 @@ public:
 	void Resume() override;
 	void Update(float deltaTime) override;
 
+private:
 	void initBg();
 	void initButton();
 
-private:
+	
 	std::vector<Button*> btnContainer;
 	
 	sf::RectangleShape rect;

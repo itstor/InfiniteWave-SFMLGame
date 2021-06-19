@@ -99,3 +99,8 @@ void AudioManager::playSFX(const std::string& sfx_name)
 #endif
 	SFXContainer[sfx_name]->play();
 }
+
+void AudioManager::changeSFXPitch(const std::string& sfx_name, float pitch)
+{
+	SFXContainer[sfx_name]->setPitch(pitch);
+}

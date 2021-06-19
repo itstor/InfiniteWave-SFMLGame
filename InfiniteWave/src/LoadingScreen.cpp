@@ -146,6 +146,7 @@ void LoadingScreen::Update(float deltaTime)
 			{
 				/*Only for non-simultaneous key
 				Use if statement for simultaneous key*/
+			case sf::Keyboard::Space: mNext = SceneManager::build<GamePlay>(mObj, true);
 			default: break;
 			}
 			break;

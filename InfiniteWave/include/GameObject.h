@@ -4,13 +4,11 @@
 class GameObject
 {
 public:
-	GameObject() = default;
 	virtual ~GameObject() = default;
-
-	bool onCollision(GameObject& other) const;
+	
+	virtual bool onCollision(GameObject& other) const;
 	sf::RectangleShape* getCollider();
 protected:
 	sf::RectangleShape ColliderBody;
 	sf::Vector2f position;
 };
-

@@ -24,6 +24,7 @@ public:
 	void increase_volume();
 	void play(const std::string& music_name);
 	void playSFX(const std::string& sfx_name);
+	void changeSFXPitch(const std::string& sfx_name, float pitch);
 	void toggleMute();
 	void stopAll();
 };

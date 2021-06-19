@@ -15,47 +15,37 @@ void Entity::checkCollision(Obstacle& obs)
 
 	if (obstacleBounds.intersects(nextPosition))
 	{
-		//Bottom DONE
+		//TOP
 		if (entityBounds.top < obstacleBounds.top &&
-			entityBounds.top + entityBounds.height < obstacleBounds.top + obstacleBounds.height &&
 			entityBounds.left < obstacleBounds.left + obstacleBounds.width &&
 			entityBounds.left + entityBounds.width > obstacleBounds.left)
 		{
-			//std::cout << "Collided Bottom\n";
+			//std::cout << "Collided TOP\n";
 			movePos.y = 0.0f;
-			entityRect.setPosition(entityRect.getPosition().x,entityRect.getPosition().y);
-			ColliderBody.setPosition(entityRect.getPosition().x, entityRect.getPosition().y);
 		}
-		//Top
+		//BOTTOM
 		else if (entityBounds.top > obstacleBounds.top &&
-			entityBounds.top + entityBounds.height > obstacleBounds.top + obstacleBounds.height &&
 			entityBounds.left < obstacleBounds.left + obstacleBounds.width &&
 			entityBounds.left + entityBounds.width > obstacleBounds.left)
 		{
-			//std::cout << "Collided Top\n";
+			//std::cout << "Collided BOTTOM\n";
 			movePos.y = 0.0f;
-			entityRect.setPosition(entityRect.getPosition().x,entityRect.getPosition().y);
-			ColliderBody.setPosition(entityRect.getPosition().x, entityRect.getPosition().y);
 		}
-		//Right
+		//LEFT
 		if (entityBounds.left < obstacleBounds.left &&
 			entityBounds.top < obstacleBounds.top + obstacleBounds.height &&
 			entityBounds.top + entityBounds.height > obstacleBounds.top)
 		{
-			//std::cout << "Collided Right\n";
+			//std::cout << "Collided LEFT\n";
 			movePos.x = 0.0f;
-			entityRect.setPosition(entityRect.getPosition().x,entityRect.getPosition().y);
-			ColliderBody.setPosition(entityRect.getPosition().x, entityRect.getPosition().y);
 		}
-		//Left
+		//RIGHT
 		else if (entityBounds.left > obstacleBounds.left &&
 			entityBounds.top < obstacleBounds.top + obstacleBounds.height &&
 			entityBounds.top + entityBounds.height > obstacleBounds.top)
 		{
-			//std::cout << "Collided Left\n";
+			//std::cout << "Collided RIGHT\n";
 			movePos.x = 0.0f;
-			entityRect.setPosition(entityRect.getPosition().x,entityRect.getPosition().y);
-			ColliderBody.setPosition(entityRect.getPosition().x, entityRect.getPosition().y);
 		}
 	}
 }

@@ -43,6 +43,7 @@ void Game::run()
 void Game::initSFX()
 {
 	obj.AudioManager->addSFX("button", "Assets/Audio/SFX/Button_9.wav");
+	obj.AudioManager->addSFX("pistol_shoot", "Assets/Audio/SFX/pistol-shoot.wav");
 }
 
 void Game::initMusic()

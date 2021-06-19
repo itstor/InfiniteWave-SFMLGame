@@ -1,9 +1,11 @@
 #include "Obstacle.h"
 
-void Obstacle::Create(sf::Vector2f position, sf::Vector2f size)
+Obstacle::Obstacle(const sf::Vector2f & position, const sf::Vector2f & size)
 {
 	this->position = position;
-	this->ColliderBody.setPosition(this->position);
-	this->ColliderBody.setSize(size);
+	ColliderBody.setPosition(this->position);
+	ColliderBody.setSize(size);
+	ColliderBody.setOutlineColor(sf::Color::Red);
+	ColliderBody.setOutlineThickness(1);
+	ColliderBody.setFillColor(sf::Color::Transparent);
 }
-

@@ -43,6 +43,9 @@
     <Filter Include="Include\GameObject">
       <UniqueIdentifier>{4b6e42e8-0925-4dfb-b61b-0bab30a4ac8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="third-party">
+      <UniqueIdentifier>{51c9cc20-462d-496e-9b53-7b7e5984d589}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
@@ -116,6 +119,21 @@
       <Filter>Source\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Map.cpp" />
+    <ClCompile Include="src\LightDirectionEmission.cpp">
+      <Filter>third-party</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LightPointEmission.cpp">
+      <Filter>third-party</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LightShape.cpp">
+      <Filter>third-party</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LightSystem.cpp">
+      <Filter>third-party</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sprite.cpp">
+      <Filter>third-party</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AudioManager.h">
@@ -198,5 +216,6 @@
   <ItemGroup>
     <None Include="..\.gitignore" />
     <None Include="..\README.md" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

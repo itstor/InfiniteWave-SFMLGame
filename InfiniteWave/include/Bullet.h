@@ -12,7 +12,7 @@ public:
 	void setDir(sf::Vector2f dirVect);
 	void setStartPos(sf::Vector2f pos);
 	sf::Vector2f getPosition() const;
-	bool on_collision(GameObject& other) const;
+	bool onCollision(GameObject& other) const override;
 	
 	sf::CircleShape* getDraw();
 	sf::Vector2f startPosition;

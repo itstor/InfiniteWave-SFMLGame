@@ -8,9 +8,9 @@
 Player::Player(): playerRect(entityRect)
 {
 	//setup player
-	movementSpeed = 250.0f;
+	movementSpeed = 350.0f;
 	
-	ColliderBody.setSize(sf::Vector2f(117, 142));
+	ColliderBody.setSize(sf::Vector2f(117, 117));
 	ColliderBody.setOrigin(59, 71);
 	playerRect.setSize(sf::Vector2f(253, 216));
 	playerRect.setOrigin(105, 120);
@@ -33,26 +33,26 @@ Player::Player(): playerRect(entityRect)
 	feetAnim.Setup(&feetTex, 1, 21);
 }
 
-void Player::Move(sf::Vector2i dir, float deltaTime)
+void Player::Move(int dir, float deltaTime)
 {
 	feetAnimState = WALK_ANIM;
 	//Restrict from anim changing
 	if (!(bodyAnimState == SHOOT_ANIM || bodyAnimState == RELOAD_ANIM) || bodyAnim.isFinish())
 		bodyAnimState = WALK_ANIM;
 	
-	if (dir.x < 0) //Left
+	if (dir == LEFT) //Left
 	{
 		movePos.x = -movementSpeed * deltaTime;
 	}
-	if (dir.x > 0) //Right
+	if (dir == RIGHT) //Right
 	{
 		movePos.x = movementSpeed * deltaTime;
 	}
-	if (dir.y < 0) //Up
+	if (dir == UP) //Up
 	{
 		movePos.y = -movementSpeed * deltaTime;
 	}
-	if (dir.y > 0) //Down
+	if (dir == DOWN) //Down
 	{
 		movePos.y = movementSpeed * deltaTime;
 	}
@@ -60,6 +60,9 @@ void Player::Move(sf::Vector2i dir, float deltaTime)
 
 void Player::PlayerMove()
 {
+	if (movePos.x != 0 && movePos.y != 0) //If player move directional
+		movePos *= 0.6f;
+
 	entityRect.move(movePos);
 	ColliderBody.move(movePos);
 	playerFeetRect.setPosition(entityRect.getPosition().x, entityRect.getPosition().y + 20);
@@ -173,9 +176,9 @@ float Player::getAngle() const
 	return angle;
 }
 
-sf::Vector2f Player::getDirVect() const
+sf::Vector2f* Player::getDirVect()
 {
-	return dirVect;
+	return &dirVect;
 }
 
 sf::RectangleShape* Player::getFeetDraw()

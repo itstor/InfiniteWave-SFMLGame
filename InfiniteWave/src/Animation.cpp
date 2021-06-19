@@ -15,6 +15,7 @@ void Animation::Setup(sf::Texture* animTex, unsigned int row, unsigned int maxIm
 
 void Animation::Update(float deltaTime, int row, float switchTime, unsigned int startFrame, unsigned int endFrame)
 {
+	//Reset current frame to start frame
 	if (row != prevRow)
 	{
 		prevRow = row;

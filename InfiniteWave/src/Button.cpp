@@ -16,9 +16,6 @@ void Button::Setup(const std::string& idlePath, const std::string& hoverPath, co
 	btn.setOrigin(btn.getSize().x/2, btn.getSize().y/2);
 	btn.setPosition(pos);
 
-	btnSfxBuff.loadFromFile("Assets/Audio/SFX/Button_9.wav");
-	btnSfx.setBuffer(btnSfxBuff);
-
 	btnState = IDLE_BTN;
 }
 

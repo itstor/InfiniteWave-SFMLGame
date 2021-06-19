@@ -57,8 +57,8 @@ void MainMenu::initBg()
 	rect.setOrigin(rect.getSize().x / 2, rect.getSize().y / 2);
 	rect.setPosition(static_cast<float>(mWindow.GetWindowSize().x) / 2, static_cast<float>(mWindow.GetWindowSize().y) / 5);
 
-	menuBgTex.loadFromFile("Assets/Texture/GUI/backgroundn.png");
-	menuBgSpi.setTexture(menuBgTex);
+	//menuBgTex.loadFromFile("Assets/Texture/GUI/backgroundn.png");
+	//menuBgSpi.setTexture(menuBgTex);
 }
 
 void MainMenu::Pause()
@@ -132,9 +132,9 @@ void MainMenu::Draw()
 {
 	mWindow.BeginDraw();
 
-	mWindow.Draw(menuBgSpi);
+	//mWindow.Draw(menuBgSpi);
 
-	mWindow.Draw(rect);
+	//mWindow.Draw(rect);
 
 	for (auto btn : btnContainer)
 		mWindow.Draw(*btn->getDraw());

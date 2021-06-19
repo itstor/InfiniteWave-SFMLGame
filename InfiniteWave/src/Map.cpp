@@ -33,12 +33,9 @@ void Map::load(const std::string& mapFile, sf::Vector2u tileSize, const int* til
 
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	// apply the transform
 	states.transform *= getTransform();
 
-	// apply the tileset texture
 	states.texture = &tileSet;
 
-	// draw the vertex array
 	target.draw(vertices, states);
 }

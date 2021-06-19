@@ -24,6 +24,11 @@ void SFX::play()
 #endif
 }
 
+void SFX::setPitch(float pitch)
+{
+	sound.setPitch(pitch);
+}
+
 void SFX::pause()
 {
 	sound.pause();

@@ -23,7 +23,7 @@ void Window::Create()
 	mWindow.create({ mWinSize.x, mWinSize.y }, mWinTitle, style);
 	mWindow.setIcon(mWinIcon.getSize().x, mWinIcon.getSize().y, mWinIcon.getPixelsPtr());
 	//Set FPS Max to 60fps
-	mWindow.setFramerateLimit(60);
+	mWindow.setFramerateLimit(conf::maxFPS);
 }
 
 void Window::Destroy()

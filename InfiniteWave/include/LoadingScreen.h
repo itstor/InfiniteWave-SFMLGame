@@ -18,11 +18,11 @@ public:
 	void Draw() override;
 	void Resume() override;
 	void Update(float deltaTime) override;
-
+private:
 	void initBg();
 	void initButton();
 
-private:
+
 	//Define scene component here
 	sf::Font pixelFont;
 	sf::Text loadingText;
