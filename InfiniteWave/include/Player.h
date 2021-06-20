@@ -4,7 +4,7 @@
 #include "Animation.h"
 #include "Entity.h"
 
-class Player : public Entity
+class Player final: public Entity
 {
 public:
 	Player();
@@ -20,6 +20,7 @@ public:
 	bool Shoot();
 	void Reload();
 
+	int getAmmo() const;
 	sf::Vector2f getPosition() const;
 	float getAngle() const;
 	sf::Vector2f* getDirVect();
@@ -29,10 +30,10 @@ private:
 	unsigned short int bodyAnimState;
 	unsigned short int feetAnimState;
 	unsigned short int holdAmmo = 18;
-	float playerHealth = 100.0f;
 	float elapsedShootTime = 0.0f;
 	float shootCooldown = 0.5f;
 	float playerSeekRadius = 500.0f;
+	float radiusGetHit = 100.0f; //zobie attack hit
 	bool allowShoot = true;
 	sf::Vector2f dirVect;
 

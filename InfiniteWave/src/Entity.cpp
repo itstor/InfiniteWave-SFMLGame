@@ -50,6 +50,16 @@ void Entity::checkCollision(Obstacle& obs)
 	}
 }
 
+float Entity::getHealth() const
+{
+	return health;
+}
+
+bool Entity::isDead() const
+{
+	return misDead;
+}
+
 sf::RectangleShape* Entity::getDraw()
 {
 	return &entityRect;

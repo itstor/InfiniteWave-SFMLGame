@@ -22,13 +22,13 @@ SplashScreen::SplashScreen(SharedObject& obj, bool replace) :BaseScene(obj, repl
 	rectMask.setFillColor(alphaMask);
 	rectMask.setSize(sf::Vector2f(mWindow.GetWindowSize().x, mWindow.GetWindowSize().y));
 
-	logoITS.Setup("Assets/Texture/GUI/blank_logo.png",
+	logoITS.Setup("Assets/Texture/GUI/splash_whiteits.png",
 		sf::Vector2f(static_cast<float>(conf::windowWidth) / 2, static_cast<float>(conf::windowHeight) / 2),
 		sf::Vector2f(500, 500));
 	
-	logoGame.Setup("Assets/Texture/GUI/blank_logo.png",
+	logoGame.Setup("Assets/Texture/GUI/splash_logogame.png",
 		sf::Vector2f(static_cast<float>(conf::windowWidth) / 2, static_cast<float>(conf::windowHeight) / 2),
-		sf::Vector2f(500, 500));
+		sf::Vector2f(500, 548));
 	
 	mAudio.play("Loading");
 }
@@ -70,6 +70,7 @@ void SplashScreen::Update(float deltaTime)
 		}
 	}
 
+	
 	if (alphaMask.a != 0 && (logoFlag == 1 || logoFlag == 3))
 		alphaMask.a -= 1;
 	else

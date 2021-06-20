@@ -24,15 +24,13 @@ private:
 	
 	std::vector<Button*> btnContainer;
 	
-	sf::RectangleShape rect;
-	sf::Texture title;
 	sf::Texture menuBgTex;
 	sf::Sprite menuBgSpi;
 	
 	Button btnPlay;
 	Button btnSetting;
 	Button btnExit;
-	Button btnHow; //How to Play
+	Button btnCredit;
 
 	sf::Vector2u winSize;
 };

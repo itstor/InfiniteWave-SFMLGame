@@ -29,36 +29,36 @@ MainMenu::~MainMenu()
 void MainMenu::initButton()
 {
 	btnPlay.Setup("Assets/Texture/GUI/Buttons/Start_BTN.png",
-	              "Assets/Texture/GUI/Buttons/Start_BTN_ACT.png",
 	              "Assets/Texture/GUI/Buttons/Start_BTN_HOV.png",
-	              1.0f, sf::Vector2f(winSize.x / 2, winSize.y - 250));
+	              "Assets/Texture/GUI/Buttons/Start_BTN_ACT.png",
+	              1.0f, sf::Vector2f(204.47f,499.09f));
 	btnContainer.push_back(&btnPlay);
-
-	btnExit.Setup("Assets/Texture/GUI/Buttons/Close_BTN.png",
-	              "Assets/Texture/GUI/Buttons/Close_BTN_HOV.png",
-	              "Assets/Texture/GUI/Buttons/Close_BTN_ACT.png",
-	              0.3f, sf::Vector2f(winSize.x - 100, 100));
-	btnContainer.push_back(&btnExit);
 
 	btnSetting.Setup("Assets/Texture/GUI/Buttons/Settings_BTN.png",
 	                 "Assets/Texture/GUI/Buttons/Settings_BTN_HOV.png",
 	                 "Assets/Texture/GUI/Buttons/Settings_BTN_ACT.png",
-	                 0.3f, sf::Vector2f(100, 100));
+	                 1.0f, sf::Vector2f(204.47f, 579.9f));
 	btnContainer.push_back(&btnSetting);
+
+	btnCredit.Setup("Assets/Texture/GUI/Buttons/Credit_BTN.png",
+	                 "Assets/Texture/GUI/Buttons/Credit_BTN_HOV.png",
+	                 "Assets/Texture/GUI/Buttons/Credit_BTN_ACT.png",
+	                 1.0f, sf::Vector2f(204.47f, 660.73f));
+	btnContainer.push_back(&btnCredit);
+
+	btnExit.Setup("Assets/Texture/GUI/Buttons/Close_BTN.png",
+	              "Assets/Texture/GUI/Buttons/Close_BTN_HOV.png",
+	              "Assets/Texture/GUI/Buttons/Close_BTN_ACT.png",
+	              1.0f, sf::Vector2f(204.47f,746.77f));
+	btnContainer.push_back(&btnExit);
 }
 
 void MainMenu::initBg()
 {
-	rect.setSize(sf::Vector2f(961, 107));
-	rect.setScale(1.5, 1.5);
-	title.loadFromFile("Assets/Texture/GUI/title.png");
-	title.setSmooth(true);
-	rect.setTexture(&title);
-	rect.setOrigin(rect.getSize().x / 2, rect.getSize().y / 2);
-	rect.setPosition(static_cast<float>(mWindow.GetWindowSize().x) / 2, static_cast<float>(mWindow.GetWindowSize().y) / 5);
-
-	//menuBgTex.loadFromFile("Assets/Texture/GUI/backgroundn.png");
-	//menuBgSpi.setTexture(menuBgTex);
+	menuBgTex.loadFromFile("Assets/Texture/GUI/main-menu_background2.png");
+	menuBgSpi.setTexture(menuBgTex);
+	menuBgSpi.setScale(1.f, 1.f);
+	menuBgSpi.setPosition(0, 0);
 }
 
 void MainMenu::Pause()
@@ -132,7 +132,7 @@ void MainMenu::Draw()
 {
 	mWindow.BeginDraw();
 
-	//mWindow.Draw(menuBgSpi);
+	mWindow.Draw(menuBgSpi);
 
 	//mWindow.Draw(rect);
 

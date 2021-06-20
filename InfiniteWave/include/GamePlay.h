@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Obstacle.h"
 #include "LightSystem.hpp"
+#include "Zombie.h"
 
 class Zombie;
 class Bullet;
@@ -25,16 +26,51 @@ public:
 	void Draw() override;
 	void Resume() override;
 	void Update(float deltaTime) override;
+
+
 private:
 	void initObstacles();
 	void initBg();
 	void initButton();
 	void initMap();
 	void initLight();
+	void initGUI();
+	bool spawnZombie(float deltaTime);
+	void spawn(int zombieType, const sf::Vector2f& playerPos);
+	void calculateTotalZombie();
 
 	
 	//Define scene component here
+	bool isGUIZoom = false;
+	bool showGUI = true;
+	
+	float zombieSpawnRadius;
+	float gunLightDelay;
+	float zoomGUIAmount = 1.0f;
+	float zoomGUITotalTime;
+
+	//Wave system here
+	bool nextWave = false;
+	float nextWaveDelay = 5.0f;
+	float spawnCooldown = 1.0f;
+	unsigned int currentWave = 0;
+	int currentActiveZombie;
+	int totalNormalZombie;
+	int totalRedZombie;
+	int totalBrownZombie;
+	int totalBlackZombie;
+	int totalActiveZombie;
+
+
+	int killCount = 0;
+	int gameScore = 0;
+	
 	Player player;
+	//Zombie zombieTest;
+	//NormalZombie normalZombie;
+	//RedZombie redZombie;
+	//BrownZombie brownZombie;
+	//BlackZombie blackZombie;
 	Bullet bullet;
 	Map gameMap;
 
@@ -44,6 +80,7 @@ private:
 
 	sf::Texture flashLightTexture;
 	sf::Texture pointLightTexture;
+	sf::Texture normalZombieTex;
 	sf::RectangleShape nightOverlay;
 	sf::RectangleShape mist;
 	sf::Texture mistTex;
@@ -52,6 +89,24 @@ private:
 	std::vector<Obstacle*> obstacleContainer;
 	std::vector<Bullet> bulletContainer;
 	std::vector<sf::RectangleShape> shapes;
-	/*std::vector<PickupItem> pickupItem;
-	std::vector<Zombie> zombie;*/
+	//std::vector<PickupItem> pickupItem;
+	std::vector<Zombie*> zombieContainer;
+
+	//GUI
+	sf::Texture healthIconTex;
+	sf::Texture killIconTex;
+	sf::Texture ammoIconTex;
+
+	sf::RectangleShape healthIconRect;
+	sf::RectangleShape killIconRect;
+	sf::RectangleShape ammoIconRect;
+	sf::RectangleShape healthBar;
+
+	sf::Font pixelFont;
+	sf::Text killText;
+	sf::Text ammoText;
+	sf::Text scoreTitleText;
+	sf::Text scoreTotalText;
+	sf::Text waveTitleText;
+	sf::Text waveCurrentText;
 };

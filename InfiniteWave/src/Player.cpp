@@ -18,7 +18,7 @@ Player::Player(): playerRect(entityRect)
 	playerFeetRect.setOrigin(86, 62);
 	//playerRect.setFillColor(sf::Color::Red);
 
-	//init animation texture
+	//setup animation texture
 	bodyTex.loadFromFile("Assets/Texture/Sprites/Player/playerspites.png");
 	bodyTex.setSmooth(true);
 	playerRect.setTexture(&bodyTex);
@@ -80,6 +80,11 @@ bool Player::Shoot()
 	}
 	
 	return false;
+}
+
+int Player::getAmmo() const
+{
+	return holdAmmo;
 }
 
 void Player::Reload()

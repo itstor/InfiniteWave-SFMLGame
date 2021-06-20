@@ -12,7 +12,9 @@ public:
 	
 	virtual void Move(int dir, float deltaTime) = 0;
 	void checkCollision(Obstacle& obs);
-
+	float getHealth() const;
+	bool isDead() const;
+	
 	sf::RectangleShape* getDraw();
 
 protected:
@@ -22,6 +24,6 @@ protected:
 	
 	float health = 0;
 	float angle = 0;
-	bool isDead = false;
+	bool misDead = false;
 };
 
