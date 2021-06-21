@@ -154,6 +154,8 @@
     <ClCompile Include="src\BlackZombie.cpp">
       <Filter>Source\GameObject\Zombie</Filter>
     </ClCompile>
+    <ClCompile Include="src\SettingScene.cpp" />
+    <ClCompile Include="src\ToggleButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AudioManager.h">
@@ -246,6 +248,8 @@
     <ClInclude Include="include\BlackZombie.h">
       <Filter>Include\GameObject\Zombie</Filter>
     </ClInclude>
+    <ClInclude Include="include\SettingScene.h" />
+    <ClInclude Include="include\ToggleButton.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />

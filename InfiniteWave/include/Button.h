@@ -2,7 +2,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
-enum btn_state { IDLE_BTN = 0, HOVER_BTN = 1, ACTIVE_BTN = 2 };
+enum btn_state { IDLE_BTN = 0, HOVER_BTN = 1, ACTIVE_BTN = 2, FIRST_STATE = 3, SECOND_STATE = 4};
 
 class Button
 {
@@ -24,9 +24,9 @@ private:
 	sf::Texture btnHoverTex;
 	sf::Texture btnActiveTex;
 
+protected:
 	sf::RectangleShape btn;
-
-	unsigned char btnState{};
+	unsigned short int btnState;
 	
 };
 

@@ -31,7 +31,5 @@ private:
 	Button btnSetting;
 	Button btnExit;
 	Button btnCredit;
-
-	sf::Vector2u winSize;
 };
 

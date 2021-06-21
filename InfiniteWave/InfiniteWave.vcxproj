@@ -47,10 +47,12 @@
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\RedZombie.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
+    <ClCompile Include="src\SettingScene.cpp" />
     <ClCompile Include="src\Sfx.cpp" />
     <ClCompile Include="src\SplashScreen.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\TemplateScene.cpp" />
+    <ClCompile Include="src\ToggleButton.cpp" />
     <ClCompile Include="src\Window.cpp" />
     <ClCompile Include="src\Zombie.cpp" />
   </ItemGroup>
@@ -79,10 +81,12 @@
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\RedZombie.h" />
     <ClInclude Include="include\SceneManager.h" />
+    <ClInclude Include="include\SettingScene.h" />
     <ClInclude Include="include\Sfx.h" />
     <ClInclude Include="include\SharedObject.h" />
     <ClInclude Include="include\SplashScreen.h" />
     <ClInclude Include="include\TemplateScene.h" />
+    <ClInclude Include="include\ToggleButton.h" />
     <ClInclude Include="include\Window.h" />
     <ClInclude Include="include\Zombie.h" />
   </ItemGroup>

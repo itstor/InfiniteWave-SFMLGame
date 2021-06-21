@@ -9,6 +9,7 @@
 #include "SceneManager.h"
 #include "AudioManager.h"
 #include "LoadingScreen.h"
+#include "SettingScene.h"
 
 
 MainMenu::MainMenu(SharedObject& obj, bool replace) :BaseScene(obj, replace)
@@ -16,7 +17,6 @@ MainMenu::MainMenu(SharedObject& obj, bool replace) :BaseScene(obj, replace)
 #ifdef _DEBUG
 	std::cout << "MainMenu Created" << std::endl;
 #endif
-	winSize = mWindow.GetWindowSize();
 	initBg();
 	initButton();
 }
@@ -122,9 +122,13 @@ void MainMenu::Update(float deltaTime)
 	{
 		mWindow.Destroy();
 	}
-	if (btnPlay.isPressed())
+	else if (btnPlay.isPressed())
 	{
 		mNext = SceneManager::build<LoadingScreen>(mObj, true);
+	}
+	else if (btnSetting.isPressed())
+	{
+		mNext = SceneManager::build<SettingScene>(mObj, false);
 	}
 }
 
