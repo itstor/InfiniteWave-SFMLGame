@@ -44,6 +44,5 @@ private:
 
 	sf::RectangleShape& playerRect;
 	sf::RectangleShape playerFeetRect;
-	
 };
 

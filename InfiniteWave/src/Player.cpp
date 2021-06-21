@@ -10,14 +10,6 @@ Player::Player(): playerRect(entityRect)
 	//setup player
 	movementSpeed = 350.0f;
 	
-	ColliderBody.setSize(sf::Vector2f(117, 117));
-	ColliderBody.setOrigin(59, 71);
-	playerRect.setSize(sf::Vector2f(253, 216));
-	playerRect.setOrigin(105, 120);
-	playerFeetRect.setSize(sf::Vector2f(172, 124));
-	playerFeetRect.setOrigin(86, 62);
-	//playerRect.setFillColor(sf::Color::Red);
-
 	//setup animation texture
 	bodyTex.loadFromFile("Assets/Texture/Sprites/Player/playerspites.png");
 	bodyTex.setSmooth(true);
@@ -26,6 +18,13 @@ Player::Player(): playerRect(entityRect)
 	feetTex.loadFromFile("Assets/Texture/Sprites/Player/feetplayer.png");
 	feetTex.setSmooth(true);
 	playerFeetRect.setTexture(&feetTex);
+
+	ColliderBody.setSize(sf::Vector2f(100, 100));
+	ColliderBody.setOrigin(50, 50);
+	playerRect.setSize(sf::Vector2f(253, 216));
+	playerRect.setOrigin(98, 119);
+	playerFeetRect.setSize(sf::Vector2f(172, 124));
+	playerFeetRect.setOrigin(86, 62);
 	
 
 	//init animation
