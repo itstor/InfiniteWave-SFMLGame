@@ -46,6 +46,12 @@
     <Filter Include="third-party">
       <UniqueIdentifier>{51c9cc20-462d-496e-9b53-7b7e5984d589}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\GameObject\Zombie">
+      <UniqueIdentifier>{ef9e2a8d-20fc-4d0e-90cc-c0110b49e859}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\GameObject\Zombie">
+      <UniqueIdentifier>{1e895cb4-7581-4bc5-ba15-8196ed95f263}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
@@ -112,13 +118,9 @@
     <ClCompile Include="src\Player.cpp">
       <Filter>Source\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="src\Zombie.cpp">
-      <Filter>Source\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="src\LoadingScreen.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\LightDirectionEmission.cpp">
       <Filter>third-party</Filter>
     </ClCompile>
@@ -133,6 +135,24 @@
     </ClCompile>
     <ClCompile Include="src\Sprite.cpp">
       <Filter>third-party</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BlueZombie.cpp">
+      <Filter>Source\GameObject\Zombie</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RedZombie.cpp">
+      <Filter>Source\GameObject\Zombie</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Zombie.cpp">
+      <Filter>Source\GameObject\Zombie</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Map.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NormalZombie.cpp">
+      <Filter>Source\GameObject\Zombie</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BlackZombie.cpp">
+      <Filter>Source\GameObject\Zombie</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -205,13 +225,27 @@
     <ClInclude Include="include\Player.h">
       <Filter>Include\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="include\Zombie.h">
-      <Filter>Include\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="include\LoadingScreen.h">
       <Filter>Include\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="include\Map.h" />
+    <ClInclude Include="include\Zombie.h">
+      <Filter>Include\GameObject\Zombie</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RedZombie.h">
+      <Filter>Include\GameObject\Zombie</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BlueZombie.h">
+      <Filter>Include\GameObject\Zombie</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Map.h">
+      <Filter>Include\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\NormalZombie.h">
+      <Filter>Include\GameObject\Zombie</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BlackZombie.h">
+      <Filter>Include\GameObject\Zombie</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />

@@ -57,7 +57,7 @@ private:
 	int currentActiveZombie;
 	int totalNormalZombie;
 	int totalRedZombie;
-	int totalBrownZombie;
+	int totalBlueZombie;
 	int totalBlackZombie;
 	int totalActiveZombie;
 
@@ -66,26 +66,30 @@ private:
 	int gameScore = 0;
 	
 	Player player;
-	//Zombie zombieTest;
-	//NormalZombie normalZombie;
-	//RedZombie redZombie;
-	//BrownZombie brownZombie;
-	//BlackZombie blackZombie;
 	Bullet bullet;
 	Map gameMap;
 
+	//Zombie Texture
+	sf::Texture normalZombieTex;
+	sf::Texture redZombieTex;
+	sf::Texture blueZombieTex;
+	sf::Texture blackZombieTex;
+
+	//Light
 	ltbl::LightSystem ls;
 	ltbl::LightPointEmission* flashLight;
 	ltbl::LightPointEmission* gunLight;
-
 	sf::Texture flashLightTexture;
 	sf::Texture pointLightTexture;
-	sf::Texture normalZombieTex;
+
+	//GUI and Overlay
 	sf::RectangleShape nightOverlay;
 	sf::RectangleShape mist;
 	sf::Texture mistTex;
 	sf::View camera;
 	sf::View GUICamera;
+
+	//Container
 	std::vector<Obstacle*> obstacleContainer;
 	std::vector<Bullet> bulletContainer;
 	std::vector<sf::RectangleShape> shapes;

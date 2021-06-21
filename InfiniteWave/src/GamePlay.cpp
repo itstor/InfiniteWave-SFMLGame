@@ -8,9 +8,14 @@
 #include "Window.h"
 #include "AudioManager.h"
 
+#include "BlackZombie.h"
+#include "BlueZombie.h"
+#include "NormalZombie.h"
+#include "RedZombie.h"
+
 #define NORMAL_ZOMBIE 0
 #define RED_ZOMBIE 1
-#define BROWN_ZOMBIE 2
+#define BLUE_ZOMBIE 2
 #define BLACK_ZOMBIE 3
 
 
@@ -36,14 +41,25 @@ GamePlay::GamePlay(SharedObject& obj, bool replace) :BaseScene(obj, replace), ls
 	//mist.setSize(sf::Vector2f(1920, 1080));
 	//mist.setPosition(8118, 0);
 
-	normalZombieTex.loadFromFile("Assets/Texture/Sprites/Zombie/zombie-sprites.png");
+
+	//Load zombie Texture
+	normalZombieTex.loadFromFile("Assets/Texture/Sprites/Zombie/normal-zombie-sprites.png");
 	normalZombieTex.setSmooth(true);
+
+	redZombieTex.loadFromFile("Assets/Texture/Sprites/Zombie/red-zombie-sprites.png");
+	redZombieTex.setSmooth(true);
+
+	blueZombieTex.loadFromFile("Assets/Texture/Sprites/Zombie/blue-zombie-sprites.png");
+	blueZombieTex.setSmooth(true);
+
+	blackZombieTex.loadFromFile("Assets/Texture/Sprites/Zombie/black-zombie-sprites.png");
+	blackZombieTex.setSmooth(true);
 	
 	player.setPosition(sf::Vector2f(3602.19f, 4756.3f));
 
 	initLight();
-	initObstacles();
 	initMap();
+	initObstacles();
 	initGUI();
 }
 
@@ -307,16 +323,16 @@ void GamePlay::calculateTotalZombie()
 	
 	totalNormalZombie = floorf((powf(n, 2) + 15) / 4.0f);
 	totalRedZombie = floorf((powf(n, 2) - 3) / 4.0f);
-	totalBrownZombie = floorf((powf(n, 2) - 7) / 6.0f);
+	totalBlueZombie = floorf((powf(n, 2) - 7) / 6.0f);
 	totalBlackZombie = floorf((powf(n, 2) - 10) / 10.0f);
 
 	totalNormalZombie = totalNormalZombie > 0 ? totalNormalZombie : 0;
 	totalRedZombie = totalRedZombie > 0 ? totalRedZombie : 0;
-	totalBrownZombie = totalBrownZombie > 0 ? totalBrownZombie : 0;
+	totalBlueZombie = totalBlueZombie > 0 ? totalBlueZombie : 0;
 	totalBlackZombie = totalBlackZombie > 0 ? totalBlackZombie : 0;
 
 	//std::cout << totalNormalZombie << totalRedZombie << totalBrownZombie << totalBlackZombie;
-	currentActiveZombie = totalNormalZombie + totalRedZombie + totalBrownZombie + totalBlackZombie;
+	currentActiveZombie = totalNormalZombie + totalRedZombie + totalBlueZombie + totalBlackZombie;
 }
 
 bool GamePlay::spawnZombie(float deltaTime)
@@ -334,10 +350,10 @@ bool GamePlay::spawnZombie(float deltaTime)
 			totalRedZombie--;
 			spawn(RED_ZOMBIE, player.getPosition());
 		}
-		else if (totalBrownZombie > 0)
+		else if (totalBlueZombie > 0)
 		{
-			totalBrownZombie--;
-			spawn(BROWN_ZOMBIE, player.getPosition());
+			totalBlueZombie--;
+			spawn(BLUE_ZOMBIE, player.getPosition());
 		}
 		else if (totalBlackZombie > 0)
 		{
@@ -360,7 +376,10 @@ void GamePlay::spawn(int zombieType, const sf::Vector2f & playerPos)
 	////std::cout << xPos << " " << yPos << std::endl;
 	switch (zombieType)
 	{
-	case NORMAL_ZOMBIE: zombieContainer.push_back(new Zombie({ xPos,yPos }, normalZombieTex)); break;
+	case NORMAL_ZOMBIE: zombieContainer.push_back(new NormalZombie({ xPos,yPos }, normalZombieTex)); break;
+	case RED_ZOMBIE: zombieContainer.push_back(new RedZombie({ xPos,yPos }, redZombieTex)); break;
+	case BLUE_ZOMBIE: zombieContainer.push_back(new BlueZombie({ xPos,yPos }, blueZombieTex)); break;
+	case BLACK_ZOMBIE: zombieContainer.push_back(new BlackZombie({ xPos,yPos }, blackZombieTex)); break;
 	default: break;
 	}
 }

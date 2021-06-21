@@ -2,11 +2,8 @@
 
 #include <iostream>
 
-Zombie::Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex)
+Zombie::Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex): zombieTex(zombie_tex)
 {
-	health = 100.0f;
-	movementSpeed = 350.0f;
-
 	ColliderBody.setSize({288,311});
 	ColliderBody.setOrigin(ColliderBody.getSize() * 0.5f);
 	entityRect.setSize({ 288,311 });
@@ -14,9 +11,7 @@ Zombie::Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex)
 
 	//setup anim
 	//TODO change texture to load from memory
-	zombieTex = zombie_tex;
 	entityRect.setTexture(&zombieTex);
-
 	zombieAnim.Setup(&zombieTex, 2, 17);
 
 	setPosition(pos);
@@ -50,6 +45,11 @@ void Zombie::getHit()
 		std::cout << "DEAD AGAIN\n";
 		misDead = true;
 	}
+}
+
+sf::Vector2f Zombie::getPosition() const
+{
+	return entityRect.getPosition();
 }
 
 

@@ -22,6 +22,8 @@
     <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\AudioManager.cpp" />
     <ClCompile Include="src\BaseScene.cpp" />
+    <ClCompile Include="src\BlackZombie.cpp" />
+    <ClCompile Include="src\BlueZombie.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\Button.cpp" />
     <ClCompile Include="src\Entity.cpp" />
@@ -38,10 +40,12 @@
     <ClCompile Include="src\MainMenu.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Music.cpp" />
+    <ClCompile Include="src\NormalZombie.cpp" />
     <ClCompile Include="src\Obstacle.cpp" />
     <ClCompile Include="src\Physics.cpp" />
     <ClCompile Include="src\PickupItem.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\RedZombie.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\Sfx.cpp" />
     <ClCompile Include="src\SplashScreen.cpp" />
@@ -54,6 +58,8 @@
     <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\AudioManager.h" />
     <ClInclude Include="include\BaseScene.h" />
+    <ClInclude Include="include\BlackZombie.h" />
+    <ClInclude Include="include\BlueZombie.h" />
     <ClInclude Include="include\Bullet.h" />
     <ClInclude Include="include\Button.h" />
     <ClInclude Include="include\Config.h" />
@@ -66,10 +72,12 @@
     <ClInclude Include="include\MainMenu.h" />
     <ClInclude Include="include\Map.h" />
     <ClInclude Include="include\Music.h" />
+    <ClInclude Include="include\NormalZombie.h" />
     <ClInclude Include="include\Obstacle.h" />
     <ClInclude Include="include\Physics.h" />
     <ClInclude Include="include\PickupItem.h" />
     <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\RedZombie.h" />
     <ClInclude Include="include\SceneManager.h" />
     <ClInclude Include="include\Sfx.h" />
     <ClInclude Include="include\SharedObject.h" />

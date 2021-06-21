@@ -19,9 +19,8 @@ public:
 
 	sf::Vector2f getPosition() const;
 
-private:
-	sf::Texture zombieTex;
+protected:
+	sf::Texture& zombieTex;
 	Animation zombieAnim;
-	
 };
 
