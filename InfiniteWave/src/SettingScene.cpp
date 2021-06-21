@@ -1,7 +1,7 @@
 #include "SettingScene.h"
 
 //Related Scene
-#include "SplashScreen.h"
+#include "MainMenu.h"
 
 //Required Library
 #include <iostream>
@@ -10,7 +10,6 @@
 #include "Window.h"
 #include "SceneManager.h"
 #include "AudioManager.h"
-#include "MainMenu.h"
 #include "Config.h"
 
 SettingScene::SettingScene(SharedObject& obj, bool replace) :BaseScene(obj, replace)

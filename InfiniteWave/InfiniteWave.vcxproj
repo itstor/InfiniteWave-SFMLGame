@@ -26,6 +26,7 @@
     <ClCompile Include="src\BlueZombie.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\Button.cpp" />
+    <ClCompile Include="src\CreditScene.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
@@ -65,6 +66,7 @@
     <ClInclude Include="include\Bullet.h" />
     <ClInclude Include="include\Button.h" />
     <ClInclude Include="include\Config.h" />
+    <ClInclude Include="include\CreditScene.h" />
     <ClInclude Include="include\Entity.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />

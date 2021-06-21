@@ -8,6 +8,7 @@
 #include "Window.h"
 #include "SceneManager.h"
 #include "AudioManager.h"
+#include "CreditScene.h"
 #include "LoadingScreen.h"
 #include "SettingScene.h"
 
@@ -129,6 +130,10 @@ void MainMenu::Update(float deltaTime)
 	else if (btnSetting.isPressed())
 	{
 		mNext = SceneManager::build<SettingScene>(mObj, false);
+	}
+	else if (btnCredit.isPressed())
+	{
+		mNext = SceneManager::build<CreditScene>(mObj, false);
 	}
 }
 

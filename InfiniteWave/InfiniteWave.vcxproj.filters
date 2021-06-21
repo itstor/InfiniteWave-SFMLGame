@@ -156,6 +156,7 @@
     </ClCompile>
     <ClCompile Include="src\SettingScene.cpp" />
     <ClCompile Include="src\ToggleButton.cpp" />
+    <ClCompile Include="src\CreditScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AudioManager.h">
@@ -250,6 +251,7 @@
     </ClInclude>
     <ClInclude Include="include\SettingScene.h" />
     <ClInclude Include="include\ToggleButton.h" />
+    <ClInclude Include="include\CreditScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />
