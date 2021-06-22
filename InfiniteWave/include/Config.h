@@ -10,6 +10,6 @@ namespace conf
 	inline bool isMuted = false;
 	inline unsigned int windowWidth = 1920;
 	inline unsigned int windowHeight = 1080;
-	inline int maxFPS = 60; //set to 0 to disable limit
+	inline int maxFPS = 0; //set to 0 to disable limit
 	//bool useCustomController = false;
 };

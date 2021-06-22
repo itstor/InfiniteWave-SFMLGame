@@ -1,6 +1,7 @@
 #include "CreditScene.h"
 
 //Related Scene
+#include "MainMenu.h"
 
 //Required Library
 #include <iostream>
@@ -8,8 +9,6 @@
 #include "Window.h"
 #include "SceneManager.h"
 #include "AudioManager.h"
-#include "MainMenu.h"
-#include "Config.h"
 
 CreditScene::CreditScene(SharedObject& obj, bool replace) :BaseScene(obj, replace)
 {

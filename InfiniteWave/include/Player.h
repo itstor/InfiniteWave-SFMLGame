@@ -11,8 +11,8 @@ public:
 
 	void Update(float deltaTime);
 	void lookAt(const sf::Vector2f& mousePos);
-	void updateAllowShoot(float deltaTime);
 	void setPosition(const sf::Vector2f& pos);
+	void getHit();
 
 	//In-game function
 	void Move(int dir, float deltaTime) override;

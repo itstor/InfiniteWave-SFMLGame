@@ -252,9 +252,18 @@
     <ClInclude Include="include\SettingScene.h" />
     <ClInclude Include="include\ToggleButton.h" />
     <ClInclude Include="include\CreditScene.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="resource2.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />
     <None Include="..\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="InfiniteWave.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Texture\Icon\icon.png" />
   </ItemGroup>
 </Project>

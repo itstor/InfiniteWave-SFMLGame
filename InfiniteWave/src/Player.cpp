@@ -8,7 +8,8 @@
 Player::Player(): playerRect(entityRect)
 {
 	//setup player
-	movementSpeed = 350.0f;
+	movementSpeed = 400.0f;
+	health = 200.0f;
 	
 	//setup animation texture
 	bodyTex.loadFromFile("Assets/Texture/Sprites/Player/playerspites.png");
@@ -60,7 +61,7 @@ void Player::Move(int dir, float deltaTime)
 void Player::PlayerMove()
 {
 	if (movePos.x != 0 && movePos.y != 0) //If player move directional
-		movePos *= 0.6f;
+		movePos *= 0.7f;
 
 	entityRect.move(movePos);
 	ColliderBody.move(movePos);
@@ -136,6 +137,14 @@ void Player::Update(float deltaTime)
 
 	if (!(bodyAnimState == SHOOT_ANIM || bodyAnimState == RELOAD_ANIM) || bodyAnim.isFinish())
 		bodyAnimState = IDLE_ANIM;
+
+	//Update player shoot cooldown
+	elapsedShootTime += deltaTime;
+	if (elapsedShootTime >= shootCooldown && holdAmmo > 0)
+	{
+		allowShoot = true;
+		elapsedShootTime = 0;
+	}
 }
 
 void Player::lookAt(const sf::Vector2f& mousePos)
@@ -153,21 +162,19 @@ void Player::lookAt(const sf::Vector2f& mousePos)
 	playerFeetRect.setRotation(angle);
 }
 
-void Player::updateAllowShoot(float deltaTime)
-{
-	elapsedShootTime += deltaTime;
-	if (elapsedShootTime >= shootCooldown && holdAmmo > 0)
-	{
-		allowShoot = true;
-		elapsedShootTime = 0;
-	}
-}
-
 void Player::setPosition(const sf::Vector2f & pos)
 {
 	playerRect.setPosition(pos);
 	playerFeetRect.setPosition(pos);
 	ColliderBody.setPosition(pos);
+}
+
+void Player::getHit()
+{
+	const float damage = rand() % 10 + 5;
+	health -= damage;
+	std::cout << "UGHHH\n";
+	//TODO play blinking animation
 }
 
 sf::Vector2f Player::getPosition() const

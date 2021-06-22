@@ -44,7 +44,6 @@ private:
 	bool isGUIZoom = false;
 	bool showGUI = true;
 	
-	float zombieSpawnRadius;
 	float gunLightDelay;
 	float zoomGUIAmount = 1.0f;
 	float zoomGUITotalTime;
@@ -53,6 +52,7 @@ private:
 	bool nextWave = false;
 	float nextWaveDelay = 5.0f;
 	float spawnCooldown = 1.0f;
+	float zombieSpawnRadius;
 	unsigned int currentWave = 0;
 	int currentActiveZombie;
 	int totalNormalZombie;
@@ -90,7 +90,7 @@ private:
 	sf::View GUICamera;
 
 	//Container
-	std::vector<Obstacle*> obstacleContainer;
+	std::vector<Obstacle> obstacleContainer;
 	std::vector<Bullet> bulletContainer;
 	std::vector<sf::RectangleShape> shapes;
 	//std::vector<PickupItem> pickupItem;

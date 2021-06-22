@@ -127,91 +127,91 @@ void GamePlay::initMap()
 void GamePlay::initObstacles()
 {
 	//ROCKS
-	obstacleContainer.push_back(new Obstacle({5331, 4921}, {94, 100}));
-	obstacleContainer.push_back(new Obstacle({3154, 4236}, {94, 100}));
-	obstacleContainer.push_back(new Obstacle({2470.75f, 3011.46f}, {94, 100}));
-	obstacleContainer.push_back(new Obstacle({836.35f, 2876.25f}, {94, 100}));
-	obstacleContainer.push_back(new Obstacle({7645.07f, 4238.22f}, {94, 100}));
-	obstacleContainer.push_back(new Obstacle({7236.48f, 699.15f}, {94, 100}));
-	obstacleContainer.push_back(new Obstacle({2603.79f, 423.11f}, {94, 100}));
+	obstacleContainer.emplace_back(sf::Vector2f(5331, 4921), sf::Vector2f(94, 100));
+	obstacleContainer.emplace_back(sf::Vector2f(3154, 4236), sf::Vector2f(94, 100));
+	obstacleContainer.emplace_back(sf::Vector2f(2470.75f, 3011.46f), sf::Vector2f(94, 100));
+	obstacleContainer.emplace_back(sf::Vector2f(836.35f, 2876.25f), sf::Vector2f(94, 100));
+	obstacleContainer.emplace_back(sf::Vector2f(7645.07f, 4238.22f), sf::Vector2f(94, 100));
+	obstacleContainer.emplace_back(sf::Vector2f(7236.48f, 699.15f), sf::Vector2f(94, 100));
+	obstacleContainer.emplace_back(sf::Vector2f(2603.79f, 423.11f), sf::Vector2f(94, 100));
 	
 	//WALLS
 	/*left top room*/
-	obstacleContainer.push_back(new Obstacle({291, 1091}, {126, 126})); //left
-	obstacleContainer.push_back(new Obstacle({1501, 1091}, {126, 126})); //right
-	obstacleContainer.push_back(new Obstacle({ 2045, 2588 }, { 126, 126})); //right
+	obstacleContainer.emplace_back(sf::Vector2f(291, 1091), sf::Vector2f(126, 126)); //left
+	obstacleContainer.emplace_back(sf::Vector2f(1501, 1091), sf::Vector2f(126, 126)); //right
+	obstacleContainer.emplace_back(sf::Vector2f( 2045, 2588 ), sf::Vector2f( 126, 126)); //right
 
 
-	obstacleContainer.push_back(new Obstacle({0, 684}, {2175, 126})); //right
-	obstacleContainer.push_back(new Obstacle({0, 1501}, {1764, 126})); //right
-	obstacleContainer.push_back(new Obstacle({2042, 812}, {126, 968})); //right
-	obstacleContainer.push_back(new Obstacle({546, 1627}, {126, 967})); //right
-	obstacleContainer.push_back(new Obstacle({0, 2591}, {1764, 126})); //right
-	obstacleContainer.push_back(new Obstacle({ 1498, 1623 }, { 126, 273 })); //right
-	obstacleContainer.push_back(new Obstacle({ 1498, 2187 }, { 126, 404.5f })); //right
-	obstacleContainer.push_back(new Obstacle({ 2044, 2042 }, { 126, 270 })); //right
+	obstacleContainer.emplace_back(sf::Vector2f(0, 684), sf::Vector2f(2175, 126)); //right
+	obstacleContainer.emplace_back(sf::Vector2f(0, 1501), sf::Vector2f(1764, 126)); //right
+	obstacleContainer.emplace_back(sf::Vector2f(2042, 812), sf::Vector2f(126, 968)); //right
+	obstacleContainer.emplace_back(sf::Vector2f(546, 1627), sf::Vector2f(126, 967)); //right
+	obstacleContainer.emplace_back(sf::Vector2f(0, 2591), sf::Vector2f(1764, 126)); //right
+	obstacleContainer.emplace_back(sf::Vector2f( 1498, 1623 ), sf::Vector2f( 126, 273 )); //right
+	obstacleContainer.emplace_back(sf::Vector2f( 1498, 2187 ), sf::Vector2f( 126, 404.5f )); //right
+	obstacleContainer.emplace_back(sf::Vector2f( 2044, 2042 ), sf::Vector2f( 126, 270 )); //right
 
 
 	/*center room*/
-	obstacleContainer.push_back(new Obstacle({3134, 2588}, {126, 544}));
-	obstacleContainer.push_back(new Obstacle({3815, 2721}, {126, 411.5f})); //right
-	obstacleContainer.push_back(new Obstacle({3815, 2034}, {126, 411.5f})); //right
-	obstacleContainer.push_back(new Obstacle({3135, 2034}, {126, 281})); //right
-	obstacleContainer.push_back(new Obstacle({3135, 1908}, {811.5f, 126})); //right
-	obstacleContainer.push_back(new Obstacle({3265.61f, 3006.43f}, {126, 126})); //right
-	obstacleContainer.push_back(new Obstacle({ 3689.61f, 3006.43f }, { 126, 126 })); //right
+	obstacleContainer.emplace_back(sf::Vector2f(3134, 2588), sf::Vector2f(126, 544));
+	obstacleContainer.emplace_back(sf::Vector2f(3815, 2721), sf::Vector2f(126, 411.5f)); //right
+	obstacleContainer.emplace_back(sf::Vector2f(3815, 2034), sf::Vector2f(126, 411.5f)); //right
+	obstacleContainer.emplace_back(sf::Vector2f(3135, 2034), sf::Vector2f(126, 281)); //right
+	obstacleContainer.emplace_back(sf::Vector2f(3135, 1908), sf::Vector2f(811.5f, 126)); //right
+	obstacleContainer.emplace_back(sf::Vector2f(3265.61f, 3006.43f), sf::Vector2f(126, 126)); //right
+	obstacleContainer.emplace_back(sf::Vector2f( 3689.61f, 3006.43f ), sf::Vector2f( 126, 126 )); //right
 	
 	
 	/*right room*/
-	obstacleContainer.push_back(new Obstacle({ 6133, 2725 }, { 126, 126 })); //right
-	obstacleContainer.push_back(new Obstacle({ 6133, 3408 }, { 126, 126 })); //right
-	obstacleContainer.push_back(new Obstacle({ 6133, 4089 }, { 126, 126 })); //right
+	obstacleContainer.emplace_back(sf::Vector2f( 6133, 2725 ), sf::Vector2f( 126, 126 )); //right
+	obstacleContainer.emplace_back(sf::Vector2f( 6133, 3408 ), sf::Vector2f( 126, 126 )); //right
+	obstacleContainer.emplace_back(sf::Vector2f( 6133, 4089 ), sf::Vector2f( 126, 126 )); //right
 
 	
-	obstacleContainer.push_back(new Obstacle({4220, 4500}, {2721, 126})); //right
-	obstacleContainer.push_back(new Obstacle({4900, 2183}, {407, 126})); //right
-	obstacleContainer.push_back(new Obstacle({ 5580.16f, 2183 }, { 1361, 126 })); //right
-	obstacleContainer.push_back(new Obstacle({4220, 4088}, {126, 411.5f})); //right
-	obstacleContainer.push_back(new Obstacle({4220, 3397}, {126, 411.5f})); //right
-	obstacleContainer.push_back(new Obstacle({6808, 3132}, {126, 537})); //right
-	obstacleContainer.push_back(new Obstacle({6808, 2309}, {126, 537})); //right
-	obstacleContainer.push_back(new Obstacle({6808, 3962}, {126, 537})); //right
-	obstacleContainer.push_back(new Obstacle({4901, 2730}, {126, 537})); //right
-	obstacleContainer.push_back(new Obstacle({ 4899.45f, 2309.25f }, { 126, 126 })); //right
-	obstacleContainer.push_back(new Obstacle({ 5032, 2863 }, { 408, 126 })); //right
-	obstacleContainer.push_back(new Obstacle({ 5032, 3267.5f }, { 408, 126 })); //right
+	obstacleContainer.emplace_back(sf::Vector2f(4220, 4500), sf::Vector2f(2721, 126)); //right
+	obstacleContainer.emplace_back(sf::Vector2f(4900, 2183), sf::Vector2f(407, 126)); //right
+	obstacleContainer.emplace_back(sf::Vector2f( 5580.16f, 2183 ), sf::Vector2f( 1361, 126 )); //right
+	obstacleContainer.emplace_back(sf::Vector2f(4220, 4088), sf::Vector2f(126, 411.5f)); //right
+	obstacleContainer.emplace_back(sf::Vector2f(4220, 3397), sf::Vector2f(126, 411.5f)); //right
+	obstacleContainer.emplace_back(sf::Vector2f(6808, 3132), sf::Vector2f(126, 537)); //right
+	obstacleContainer.emplace_back(sf::Vector2f(6808, 2309), sf::Vector2f(126, 537)); //right
+	obstacleContainer.emplace_back(sf::Vector2f(6808, 3962), sf::Vector2f(126, 537)); //right
+	obstacleContainer.emplace_back(sf::Vector2f(4901, 2730), sf::Vector2f(126, 537)); //right
+	obstacleContainer.emplace_back(sf::Vector2f( 4899.45f, 2309.25f ), sf::Vector2f( 126, 126 )); //right
+	obstacleContainer.emplace_back(sf::Vector2f( 5032, 2863 ), sf::Vector2f( 408, 126 )); //right
+	obstacleContainer.emplace_back(sf::Vector2f( 5032, 3267.5f ), sf::Vector2f( 408, 126 )); //right
 
 
 
 
 	/*left bottom room*/
-	obstacleContainer.push_back(new Obstacle({1653.48f, 4236}, {94, 100}));
-	obstacleContainer.push_back(new Obstacle({1653.48f, 3829.75f}, {94, 100}));
+	obstacleContainer.emplace_back(sf::Vector2f(1653.48f, 4236), sf::Vector2f(94, 100));
+	obstacleContainer.emplace_back(sf::Vector2f(1653.48f, 3829.75f), sf::Vector2f(94, 100));
 	
-	obstacleContainer.push_back(new Obstacle({0.0f, 4638.04f}, {2175, 126.25f})); //bottom wall
-	obstacleContainer.push_back(new Obstacle({0.0f, 3408}, {2175, 126.25f})); //top wall
-	obstacleContainer.push_back(new Obstacle({2043.0f, 4226.48f}, {131, 411.56f})); //left bottom wall
-	obstacleContainer.push_back(new Obstacle({ 2043.0f, 3534.0 }, { 131, 411.56f })); //left top wall
+	obstacleContainer.emplace_back(sf::Vector2f(0.0f, 4638.04f), sf::Vector2f(2175, 126.25f)); //bottom wall
+	obstacleContainer.emplace_back(sf::Vector2f(0.0f, 3408), sf::Vector2f(2175, 126.25f)); //top wall
+	obstacleContainer.emplace_back(sf::Vector2f(2043.0f, 4226.48f), sf::Vector2f(131, 411.56f)); //left bottom wall
+	obstacleContainer.emplace_back(sf::Vector2f( 2043.0f, 3534.0 ), sf::Vector2f( 131, 411.56f )); //left top wall
 
 	//Add light obstacle
 	for (auto &obs:obstacleContainer)
 	{
-		ls.createLightShape(*obs->getCollider())->setRenderLightOver(false);
+		ls.createLightShape(*obs.getCollider())->setRenderLightOver(false);
 	}
 	
 	//MAP BOUNDARIES
-	obstacleContainer.push_back(new Obstacle({0.0f, 0.0f}, {-1.0f, 6536.0f}));
-	obstacleContainer.push_back(new Obstacle({8018.0f, 0.0f}, {1.0f, 6536.0f}));
-	obstacleContainer.push_back(new Obstacle({0.0f, 6536.0f}, {8018.0f, 1.0f}));
-	obstacleContainer.push_back(new Obstacle({0.0f, 0.0f}, {8018.0f, -1.0f}));
+	obstacleContainer.emplace_back(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(-1.0f, 6536.0f));
+	obstacleContainer.emplace_back(sf::Vector2f(8018.0f, 0.0f), sf::Vector2f(1.0f, 6536.0f));
+	obstacleContainer.emplace_back(sf::Vector2f(0.0f, 6536.0f), sf::Vector2f(8018.0f, 1.0f));
+	obstacleContainer.emplace_back(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(8018.0f, -1.0f));
 	
 	//STAIRS
-	obstacleContainer.push_back(new Obstacle({269, 3538}, {822.28f, 272})); //left bottom room
-	obstacleContainer.push_back(new Obstacle({4494, 3394}, {948, 272})); //right room, top
-	obstacleContainer.push_back(new Obstacle({4494, 4227}, {948, 272})); //right room, bottom
+	obstacleContainer.emplace_back(sf::Vector2f(269, 3538), sf::Vector2f(822.28f, 272)); //left bottom room
+	obstacleContainer.emplace_back(sf::Vector2f(4494, 3394), sf::Vector2f(948, 272)); //right room, top
+	obstacleContainer.emplace_back(sf::Vector2f(4494, 4227), sf::Vector2f(948, 272)); //right room, bottom
 
 	//OUTDOOR LADDER
-	obstacleContainer.push_back(new Obstacle({2700, 4479}, {182.81f, 176.56f})); //right room, bottom
+	obstacleContainer.emplace_back(sf::Vector2f(2700, 4479), sf::Vector2f(182.81f, 176.56f)); //right room, bottom
 
 
 }
@@ -530,50 +530,61 @@ void GamePlay::Update(float deltaTime)
 		//camera.move(400.0f*deltaTime, 0*deltaTime);
 	}
 
-	//Update player anim
+	//Update zombie and player
 	player.Update(deltaTime);
 	for (auto &zombie : zombieContainer) {
 		zombie->Update(deltaTime, player.getPosition());
 	}
 
-	player.updateAllowShoot(deltaTime);
-
 	//All object collision check here
 	//On Collision with obstacle or wall
 	for (auto &obs : obstacleContainer)
 	{
-		player.checkCollision(*obs);
-		for (size_t j = 0; j < zombieContainer.size(); j++) {
-			
-			for (size_t i = 0; i < bulletContainer.size(); i++)
+		player.checkCollision(obs);
+		for (size_t i = 0; i < bulletContainer.size(); i++)
+		{	
+			//Check if bullet collided with obstacle or out of radius, delete
+			if (bulletContainer[i].onCollision(obs) || pow(bulletContainer[i].startPosition.x - bulletContainer[i].getPosition().x, 2)
+				+ pow(bulletContainer[i].startPosition.y - bulletContainer[i].getPosition().y, 2)
+				> pow(3000, 2))
 			{
-				//Check if collided with zombie delete
-				if (bulletContainer[i].onCollision(*zombieContainer[j]))
-				{
-					zombieContainer[j]->getHit();
-					bulletContainer.erase(bulletContainer.begin() + i);
-					if (zombieContainer[j]->isDead())
-					{
-						killCount++;
-						currentActiveZombie--;
-						gameScore += 1000;
-						killText.setString(std::to_string(killCount));
-						scoreTotalText.setString(std::to_string(gameScore));
-						zombieContainer.erase(zombieContainer.begin() + j);
-					}
-				}
-				
-				//Check if bullet collided with obstacle or out of radius, delete
-				else if (bulletContainer[i].onCollision(*obs) || pow(bulletContainer[i].startPosition.x - bulletContainer[i].getPosition().x, 2)
-					+ pow(bulletContainer[i].startPosition.y - bulletContainer[i].getPosition().y, 2)
-					> pow(3000, 2))
-				{
-					bulletContainer.erase(bulletContainer.begin() + i);
-				}
+				bulletContainer.erase(bulletContainer.begin() + i);
 			}
 		}
 	}
 
+	
+	for (size_t j = 0; j < zombieContainer.size(); j++) {
+		//Check player attack
+		if (player.onCollision(*zombieContainer[j]) && zombieContainer[j]->isAllowAttack())
+		{
+			zombieContainer[j]->Attack();
+			player.getHit();
+		}
+		//Move Zombie
+		//Update path finding?
+		for (size_t i = 0; i < bulletContainer.size(); i++)
+		{
+			//Check if collided with zombie delete
+			if (bulletContainer[i].onCollision(*zombieContainer[j]))
+			{
+				zombieContainer[j]->getHit();
+				bulletContainer.erase(bulletContainer.begin() + i);
+				if (zombieContainer[j]->isDead())
+				{
+					killCount++;
+					currentActiveZombie--;
+					gameScore += 1000;
+					killText.setString(std::to_string(killCount));
+					scoreTotalText.setString(std::to_string(gameScore));
+					
+					delete zombieContainer[j];
+					zombieContainer.erase(zombieContainer.begin() + j);
+				}
+			}
+		}
+	}
+	
 	//Move everything here
 	player.PlayerMove(); // Move Player
 	for (auto &bul:bulletContainer) //move bullet
@@ -608,6 +619,10 @@ void GamePlay::Update(float deltaTime)
 			}
 		}
 	}
+
+	//Update Health bar
+	const float xHealthBar = (player.getHealth() / 200.0f) * 318;
+	healthBar.setSize({ xHealthBar, healthBar.getSize().y });
 }
 
 void GamePlay::Draw()

@@ -17,10 +17,17 @@ public:
 	void Attack();
 	void getHit();
 
+	bool isAllowAttack() const;
+
 	sf::Vector2f getPosition() const;
 
 protected:
 	sf::Texture& zombieTex;
 	Animation zombieAnim;
+
+	unsigned short int animState;
+	bool allowAttack = true;
+	float attackCooldown = 5.0f;
+	float attackElapsedTime = 0.0f;
 };
 
