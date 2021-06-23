@@ -13,7 +13,7 @@ public:
 	void updateAllowAttack(float deltaTime);
 	void setPosition(const sf::Vector2f& pos);
 
-	void Move(int dir, float deltaTime) override;
+	void Move(MoveDir dir, float deltaTime) override;
 	void Attack();
 	void getHit();
 

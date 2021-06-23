@@ -51,7 +51,7 @@ void Zombie::setPosition(const sf::Vector2f& pos)
 	ColliderBody.setPosition(pos);
 }
 
-void Zombie::Move(int dir, float deltaTime)
+void Zombie::Move(MoveDir dir, float deltaTime)
 {
 	
 }

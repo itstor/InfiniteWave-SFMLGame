@@ -4,6 +4,7 @@
 #include "BaseScene.h"
 #include "Bullet.h"
 #include "Button.h" //GUI Optional
+#include "Grid.h"
 #include "Map.h"
 #include "Player.h"
 #include "Obstacle.h"
@@ -41,6 +42,8 @@ private:
 
 	
 	//Define scene component here
+	Grid mPathFindingGrid;
+	
 	bool isGUIZoom = false;
 	bool showGUI = true;
 	

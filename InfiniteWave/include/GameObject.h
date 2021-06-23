@@ -7,6 +7,7 @@ public:
 	virtual ~GameObject() = default;
 	
 	virtual bool onCollision(GameObject& other) const;
+	bool onCollision(const sf::RectangleShape& other) const;
 	sf::RectangleShape* getCollider();
 protected:
 	sf::RectangleShape ColliderBody;

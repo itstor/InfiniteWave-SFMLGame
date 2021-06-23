@@ -15,4 +15,15 @@ bool GameObject::onCollision(GameObject & other) const
 	}
 	
 	return false;
-}	
+}
+
+bool GameObject::onCollision(const sf::RectangleShape & other) const
+{
+	const sf::FloatRect otherBounds = other.getGlobalBounds();
+	if (const sf::FloatRect selfBounds = ColliderBody.getGlobalBounds(); selfBounds.intersects(otherBounds))
+	{
+		return true;
+	}
+
+	return false;
+}

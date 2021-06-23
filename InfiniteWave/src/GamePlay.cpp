@@ -19,7 +19,7 @@
 #define BLACK_ZOMBIE 3
 
 
-GamePlay::GamePlay(SharedObject& obj, bool replace) :BaseScene(obj, replace), ls(false)
+GamePlay::GamePlay(SharedObject& obj, bool replace) :BaseScene(obj, replace), ls(false), mPathFindingGrid(obstacleContainer)
 {
 #ifdef _DEBUG
 	std::cout << "GamePlay Created" << std::endl;
@@ -30,6 +30,9 @@ GamePlay::GamePlay(SharedObject& obj, bool replace) :BaseScene(obj, replace), ls
 	//init view
 	camera.reset(sf::FloatRect(0, 0, 3840, 2160));
 	GUICamera.reset(sf::FloatRect(8118, 0, 1920, 1080));
+
+	//init pathfinding grid
+	mPathFindingGrid.Setup(sf::Vector2f(8019, 6547), sf::Vector2f(136, 136));
 
 	////init overlay
 	//const sf::Color nightOverlayColor(0,0,0,200);
@@ -61,6 +64,7 @@ GamePlay::GamePlay(SharedObject& obj, bool replace) :BaseScene(obj, replace), ls
 	initMap();
 	initObstacles();
 	initGUI();
+	mPathFindingGrid.CreateGrid();
 }
 
 GamePlay::~GamePlay()
@@ -145,7 +149,7 @@ void GamePlay::initObstacles()
 	obstacleContainer.emplace_back(sf::Vector2f(0, 684), sf::Vector2f(2175, 126)); //right
 	obstacleContainer.emplace_back(sf::Vector2f(0, 1501), sf::Vector2f(1764, 126)); //right
 	obstacleContainer.emplace_back(sf::Vector2f(2042, 812), sf::Vector2f(126, 968)); //right
-	obstacleContainer.emplace_back(sf::Vector2f(546, 1627), sf::Vector2f(126, 967)); //right
+	obstacleContainer.emplace_back(sf::Vector2f(0, 1630), sf::Vector2f(675.68f, 960.7f)); //right
 	obstacleContainer.emplace_back(sf::Vector2f(0, 2591), sf::Vector2f(1764, 126)); //right
 	obstacleContainer.emplace_back(sf::Vector2f( 1498, 1623 ), sf::Vector2f( 126, 273 )); //right
 	obstacleContainer.emplace_back(sf::Vector2f( 1498, 2187 ), sf::Vector2f( 126, 404.5f )); //right
@@ -371,8 +375,12 @@ bool GamePlay::spawnZombie(float deltaTime)
 
 void GamePlay::spawn(int zombieType, const sf::Vector2f & playerPos)
 {
-	const float xPos = rand() % 8019;
-	const float yPos = rand() % 6547;
+	float yPos = 1091.0f;
+	float xPos = 291.0f;
+	while (mPathFindingGrid.GetNodeType(mPathFindingGrid.GetGridIndexFromPosition({ xPos,yPos })) != NodeType::WALKABLE_NODE) {
+		xPos = rand() % 8019;
+		yPos = rand() % 6547;
+	}
 	////std::cout << xPos << " " << yPos << std::endl;
 	switch (zombieType)
 	{
@@ -623,6 +631,8 @@ void GamePlay::Update(float deltaTime)
 	//Update Health bar
 	const float xHealthBar = (player.getHealth() / 200.0f) * 318;
 	healthBar.setSize({ xHealthBar, healthBar.getSize().y });
+
+	mPathFindingGrid.UpdatePlayerNode(player.getPosition());
 }
 
 void GamePlay::Draw()
@@ -647,6 +657,8 @@ void GamePlay::Draw()
 	//mWindow.Draw(*player.getCollider());
 
 	ls.render(*mWindow.GetRenderWindow());
+	//mWindow.GetRenderWindow()->setView(mWindow.GetRenderWindow()->getDefaultView());
+	//mPathFindingGrid.Draw(mWindow.GetRenderWindow());
 
 	//GUI Here
 	if (showGUI) {

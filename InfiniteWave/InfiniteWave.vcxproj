@@ -31,6 +31,7 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\GamePlay.cpp" />
+    <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\Image.cpp" />
     <ClCompile Include="src\LightDirectionEmission.cpp" />
     <ClCompile Include="src\LightPointEmission.cpp" />
@@ -41,6 +42,7 @@
     <ClCompile Include="src\MainMenu.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Music.cpp" />
+    <ClCompile Include="src\Node.cpp" />
     <ClCompile Include="src\NormalZombie.cpp" />
     <ClCompile Include="src\Obstacle.cpp" />
     <ClCompile Include="src\Physics.cpp" />
@@ -71,11 +73,13 @@
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\GamePlay.h" />
+    <ClInclude Include="include\Grid.h" />
     <ClInclude Include="include\Image.h" />
     <ClInclude Include="include\LoadingScreen.h" />
     <ClInclude Include="include\MainMenu.h" />
     <ClInclude Include="include\Map.h" />
     <ClInclude Include="include\Music.h" />
+    <ClInclude Include="include\Node.h" />
     <ClInclude Include="include\NormalZombie.h" />
     <ClInclude Include="include\Obstacle.h" />
     <ClInclude Include="include\Physics.h" />

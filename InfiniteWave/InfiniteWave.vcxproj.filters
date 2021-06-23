@@ -52,6 +52,12 @@
     <Filter Include="Include\GameObject\Zombie">
       <UniqueIdentifier>{1e895cb4-7581-4bc5-ba15-8196ed95f263}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{35d6066d-4299-4c5f-82bc-9866750d9782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pathfinding">
+      <UniqueIdentifier>{e4364761-1823-41f2-957e-103220a40146}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
@@ -154,9 +160,21 @@
     <ClCompile Include="src\BlackZombie.cpp">
       <Filter>Source\GameObject\Zombie</Filter>
     </ClCompile>
-    <ClCompile Include="src\SettingScene.cpp" />
-    <ClCompile Include="src\ToggleButton.cpp" />
-    <ClCompile Include="src\CreditScene.cpp" />
+    <ClCompile Include="src\CreditScene.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SettingScene.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ToggleButton.cpp">
+      <Filter>Source\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Node.cpp">
+      <Filter>Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Grid.cpp">
+      <Filter>Pathfinding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AudioManager.h">
@@ -249,21 +267,43 @@
     <ClInclude Include="include\BlackZombie.h">
       <Filter>Include\GameObject\Zombie</Filter>
     </ClInclude>
-    <ClInclude Include="include\SettingScene.h" />
-    <ClInclude Include="include\ToggleButton.h" />
-    <ClInclude Include="include\CreditScene.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="resource1.h" />
-    <ClInclude Include="resource2.h" />
+    <ClInclude Include="include\CreditScene.h">
+      <Filter>Include\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SettingScene.h">
+      <Filter>Include\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ToggleButton.h">
+      <Filter>Include\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="resource2.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Node.h">
+      <Filter>Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Grid.h">
+      <Filter>Pathfinding</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />
     <None Include="..\README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="InfiniteWave.rc" />
+    <ResourceCompile Include="InfiniteWave.rc">
+      <Filter>Resource</Filter>
+    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\Texture\Icon\icon.png" />
+    <Image Include="Assets\Texture\Icon\icon.png">
+      <Filter>Resource</Filter>
+    </Image>
   </ItemGroup>
 </Project>

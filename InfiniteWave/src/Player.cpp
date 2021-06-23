@@ -33,7 +33,7 @@ Player::Player(): playerRect(entityRect)
 	feetAnim.Setup(&feetTex, 1, 21);
 }
 
-void Player::Move(int dir, float deltaTime)
+void Player::Move(MoveDir dir, float deltaTime)
 {
 	feetAnimState = WALK_ANIM;
 	//Restrict from anim changing
@@ -144,6 +144,12 @@ void Player::Update(float deltaTime)
 	{
 		allowShoot = true;
 		elapsedShootTime = 0;
+	}
+
+	//death
+	if (health <= 0.0f)
+	{
+		misDead = true;
 	}
 }
 
