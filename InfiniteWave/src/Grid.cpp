@@ -27,9 +27,35 @@ std::vector<Node>* Grid::getGrid()
 	return &mGrid;
 }
 
+std::vector<Node> Grid::GetNeighbors(const Node & node)
+{
+	std::vector<Node> neighbors;
+
+	for (int i = -1; i <= 1; i++)
+	{
+		for (int j = -1; j <= 1; j++)
+		{
+			if (i == 0 && j == 0)
+			{
+				continue;
+			}
+
+			const int checkX = node.GetGridIndex().x + i;
+			const int checkY = node.GetGridIndex().y + j;
+
+			if (checkX >= 0 && checkX < mNodeTotal.x && checkY >= 0 &&checkY < mNodeTotal.y)
+			{
+				neighbors.push_back(mGrid[checkY * mNodeTotal.x + checkX]);
+			}
+		}	
+	}
+	return neighbors;
+}
+
 void Grid::CreateGrid()
 {
 	//std::cout << mObstacleContainer.size() << std::endl;
+	int id = 0;
 	for (int y = 0; y < mNodeTotal.y; y++)
 	{
 		for (int x = 0; x < mNodeTotal.x; x++)
@@ -43,34 +69,23 @@ void Grid::CreateGrid()
 				if (obs.onCollision(tempNode))
 				{
 					//std::cout << "Obstacle\n";
-					mGrid.emplace_back(NodeType::OBSTACLE_NODE, sf::Vector2f(x*mNodeSize.x, y*mNodeSize.y), mNodeSize);
+					mGrid.emplace_back(NodeType::OBSTACLE_NODE, sf::Vector2f(x*mNodeSize.x, y*mNodeSize.y), mNodeSize, sf::Vector2i(x, y), id++);
 					walkable = false;
 					break;
 				}
 			}
-			if (walkable) mGrid.emplace_back(NodeType::WALKABLE_NODE, sf::Vector2f(x*mNodeSize.x, y*mNodeSize.y), mNodeSize);
+			if (walkable) mGrid.emplace_back(NodeType::WALKABLE_NODE, sf::Vector2f(x*mNodeSize.x, y*mNodeSize.y), mNodeSize, sf::Vector2i(x, y), id++);
 		}
 	}
 }
 
-void Grid::UpdatePlayerNode(sf::Vector2f player_position)
+void Grid::UpdatePlayerNode(const sf::Vector2f& player_position)
 {
-	float xLoc = player_position.x / mGridSize.x;
-	float yLoc = player_position.y / mGridSize.y;
-	
-	xLoc = std::clamp(xLoc, 0.0f, 1.0f);
-	yLoc = std::clamp(yLoc, 0.0f, 1.0f);
-
-	int x = round((mNodeTotal.x - 1) * xLoc);
-	int y = round((mNodeTotal.y - 1) * yLoc);
-
-	const int vectIndex = y * mNodeTotal.x + x;
-
-	if (vectIndex != mPrevStep)
+	if (const int vectIndex = GetGridIndexFromPosition(player_position); vectIndex != mPrevIndexPlayerNode)
 	{
 		mGrid[vectIndex].ChangeType(NodeType::PLAYER_NODE);
-		mGrid[mPrevStep].ChangeType(NodeType::WALKABLE_NODE);
-		mPrevStep = vectIndex;
+		mGrid[mPrevIndexPlayerNode].ChangeType(NodeType::WALKABLE_NODE);
+		mPrevIndexPlayerNode = vectIndex;
 	}
 }
 
@@ -86,6 +101,11 @@ int Grid::GetGridIndexFromPosition(sf::Vector2f position) const
 	int y = round((mNodeTotal.y - 1) * yLoc);
 
 	return y * mNodeTotal.x + x;
+}
+
+int Grid::GetPlayerIndexNode() const
+{
+	return mPrevIndexPlayerNode;
 }
 
 NodeType Grid::GetNodeType(int index)

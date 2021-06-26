@@ -4,6 +4,6 @@
 class BlueZombie final :public Zombie
 {
 public:
-	BlueZombie(const sf::Vector2f& pos, sf::Texture& zombie_tex);
+	BlueZombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, PathRequestManager& path_request);
 };
 

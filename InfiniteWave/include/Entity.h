@@ -9,7 +9,6 @@ enum AnimState { IDLE_ANIM = 0, WALK_ANIM = 1, SHOOT_ANIM = 2, RELOAD_ANIM = 3, 
 class Entity : public GameObject
 {
 public:
-	virtual void Move(MoveDir dir, float deltaTime) = 0;
 	void checkCollision(Obstacle& obs);
 	float getHealth() const;
 	bool isDead() const;

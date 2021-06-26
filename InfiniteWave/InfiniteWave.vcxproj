@@ -45,6 +45,8 @@
     <ClCompile Include="src\Node.cpp" />
     <ClCompile Include="src\NormalZombie.cpp" />
     <ClCompile Include="src\Obstacle.cpp" />
+    <ClCompile Include="src\PathFinding.cpp" />
+    <ClCompile Include="src\PathRequestManager.cpp" />
     <ClCompile Include="src\Physics.cpp" />
     <ClCompile Include="src\PickupItem.cpp" />
     <ClCompile Include="src\Player.cpp" />
@@ -82,6 +84,8 @@
     <ClInclude Include="include\Node.h" />
     <ClInclude Include="include\NormalZombie.h" />
     <ClInclude Include="include\Obstacle.h" />
+    <ClInclude Include="include\PathFinding.h" />
+    <ClInclude Include="include\PathRequestManager.h" />
     <ClInclude Include="include\Physics.h" />
     <ClInclude Include="include\PickupItem.h" />
     <ClInclude Include="include\Player.h" />

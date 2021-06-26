@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Obstacle.h"
 #include "LightSystem.hpp"
+#include "PathFinding.h"
 #include "Zombie.h"
 
 class Zombie;
@@ -39,17 +40,20 @@ private:
 	bool spawnZombie(float deltaTime);
 	void spawn(int zombieType, const sf::Vector2f& playerPos);
 	void calculateTotalZombie();
-
+	void zombiePathFinding();
 	
 	//Define scene component here
 	Grid mPathFindingGrid;
+	PathFinding mPathFinding;
+	PathRequestManager mRequestManager;
 	
 	bool isGUIZoom = false;
 	bool showGUI = true;
+	bool allowUpdatePath = false;
 	
-	float gunLightDelay;
+	float gunLightDelay = 0.0f;
 	float zoomGUIAmount = 1.0f;
-	float zoomGUITotalTime;
+	float zoomGUITotalTime = 0.0f;
 
 	//Wave system here
 	bool nextWave = false;
@@ -57,12 +61,12 @@ private:
 	float spawnCooldown = 1.0f;
 	float zombieSpawnRadius;
 	unsigned int currentWave = 0;
-	int currentActiveZombie;
-	int totalNormalZombie;
-	int totalRedZombie;
-	int totalBlueZombie;
-	int totalBlackZombie;
-	int totalActiveZombie;
+	int currentActiveZombie = 0;
+	int totalNormalZombie = 0;
+	int totalRedZombie = 0;
+	int totalBlueZombie = 0;
+	int totalBlackZombie = 0;
+	int totalActiveZombie= 0;
 
 
 	int killCount = 0;

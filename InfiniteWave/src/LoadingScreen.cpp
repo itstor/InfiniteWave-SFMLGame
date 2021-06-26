@@ -80,11 +80,11 @@ LoadingScreen::LoadingScreen(SharedObject& obj, bool replace) :BaseScene(obj, re
 	mouseAnim.Setup(&mouseTex, 1, 2);
 
 	//setup rectangle
-	keyWRect.setSize(sf::Vector2f(keyWTex.getSize().x/2, keyWTex.getSize().y));
-	keyARect.setSize(sf::Vector2f(keyATex.getSize().x/2, keyATex.getSize().y));
-	keySRect.setSize(sf::Vector2f(keySTex.getSize().x/2, keySTex.getSize().y));
-	keyDRect.setSize(sf::Vector2f(keyDTex.getSize().x/2, keyDTex.getSize().y));
-	keyRRect.setSize(sf::Vector2f(keyRTex.getSize().x/2, keyRTex.getSize().y));
+	keyWRect.setSize(sf::Vector2f(static_cast<float>(keyWTex.getSize().x)/2, static_cast<float>(keyWTex.getSize().y)));
+	keyARect.setSize(sf::Vector2f(static_cast<float>(keyATex.getSize().x)/2, static_cast<float>(keyATex.getSize().y)));
+	keySRect.setSize(sf::Vector2f(static_cast<float>(keySTex.getSize().x)/2, static_cast<float>(keySTex.getSize().y)));
+	keyDRect.setSize(sf::Vector2f(static_cast<float>(keyDTex.getSize().x)/2, static_cast<float>(keyDTex.getSize().y)));
+	keyRRect.setSize(sf::Vector2f(static_cast<float>(keyRTex.getSize().x)/2, static_cast<float>(keyRTex.getSize().y)));
 	mouseRect.setSize(sf::Vector2f(113, 132));
 
 	keyWRect.setScale(1.57f, 1.57f);

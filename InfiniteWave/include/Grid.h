@@ -12,14 +12,16 @@ public:
 
 	void Setup(const sf::Vector2f& grid_size, const sf::Vector2f& node_size);
 	void CreateGrid();
-	void UpdatePlayerNode(sf::Vector2f player_position);
+	void UpdatePlayerNode(const sf::Vector2f& player_position);
 	[[nodiscard]] int GetGridIndexFromPosition(sf::Vector2f position) const;
+	[[nodiscard]] int GetPlayerIndexNode() const;
 	NodeType GetNodeType(int index);
 
 	Node * GetNode(int index);
 
 	void Draw(sf::RenderWindow* target);
 	std::vector<Node>* getGrid();
+	std::vector<Node> GetNeighbors(const Node& node);
 private:
 	
 	std::vector<Node> mGrid;
@@ -29,6 +31,6 @@ private:
 	sf::Vector2f mNodeSize;
 	sf::Vector2i mNodeTotal;
 
-	int mPrevStep;
+	int mPrevIndexPlayerNode;
 };
 

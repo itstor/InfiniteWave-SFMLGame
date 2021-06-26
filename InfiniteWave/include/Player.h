@@ -15,7 +15,7 @@ public:
 	void getHit();
 
 	//In-game function
-	void Move(MoveDir dir, float deltaTime) override;
+	void Move(MoveDir dir, float deltaTime);
 	void PlayerMove();
 	bool Shoot();
 	void Reload();

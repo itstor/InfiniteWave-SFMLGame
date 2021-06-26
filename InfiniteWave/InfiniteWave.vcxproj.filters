@@ -175,6 +175,8 @@
     <ClCompile Include="src\Grid.cpp">
       <Filter>Pathfinding</Filter>
     </ClCompile>
+    <ClCompile Include="src\PathFinding.cpp" />
+    <ClCompile Include="src\PathRequestManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AudioManager.h">
@@ -291,6 +293,8 @@
     <ClInclude Include="include\Grid.h">
       <Filter>Pathfinding</Filter>
     </ClInclude>
+    <ClInclude Include="include\PathFinding.h" />
+    <ClInclude Include="include\PathRequestManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />

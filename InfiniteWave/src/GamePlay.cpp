@@ -19,19 +19,20 @@
 #define BLACK_ZOMBIE 3
 
 
-GamePlay::GamePlay(SharedObject& obj, bool replace) :BaseScene(obj, replace), ls(false), mPathFindingGrid(obstacleContainer)
+GamePlay::GamePlay(SharedObject& obj, bool replace) : BaseScene(obj, replace),
+                                                      mPathFindingGrid(obstacleContainer),
+                                                      mPathFinding(mPathFindingGrid), mRequestManager(mPathFinding), ls(false)
 {
 #ifdef _DEBUG
 	std::cout << "GamePlay Created" << std::endl;
 #endif
 	//stop main menu music
 	mAudio.stopAll();
-
 	//init view
 	camera.reset(sf::FloatRect(0, 0, 3840, 2160));
 	GUICamera.reset(sf::FloatRect(8118, 0, 1920, 1080));
 
-	//init pathfinding grid
+	//init path finding grid
 	mPathFindingGrid.Setup(sf::Vector2f(8019, 6547), sf::Vector2f(136, 136));
 
 	////init overlay
@@ -65,6 +66,8 @@ GamePlay::GamePlay(SharedObject& obj, bool replace) :BaseScene(obj, replace), ls
 	initObstacles();
 	initGUI();
 	mPathFindingGrid.CreateGrid();
+
+	//pfThread.launch();
 }
 
 GamePlay::~GamePlay()
@@ -238,7 +241,7 @@ void GamePlay::initLight()
 	pointLightTexture.setSmooth(true);
 
 	flashLight = ls.createLightPointEmission();
-	flashLight->setOrigin(sf::Vector2f(flashLightTexture.getSize().x, flashLightTexture.getSize().y * 0.5f));
+	flashLight->setOrigin(sf::Vector2f(static_cast<float>(flashLightTexture.getSize().x), static_cast<float>(flashLightTexture.getSize().y) * 0.5f));
 	flashLight->setTexture(flashLightTexture);
 	flashLight->setScale(-5.f, 5.f);
 	flashLight->setColor(sf::Color::White);
@@ -325,10 +328,10 @@ void GamePlay::calculateTotalZombie()
 {
 	const auto n = static_cast<float>(currentWave);
 	
-	totalNormalZombie = floorf((powf(n, 2) + 15) / 4.0f);
-	totalRedZombie = floorf((powf(n, 2) - 3) / 4.0f);
-	totalBlueZombie = floorf((powf(n, 2) - 7) / 6.0f);
-	totalBlackZombie = floorf((powf(n, 2) - 10) / 10.0f);
+	totalNormalZombie = static_cast<int>(floor((powf(n, 2) + 15) / 4.0f));
+	totalRedZombie = static_cast<int>(floor((powf(n, 2) - 3) / 4.0f));
+	totalBlueZombie = static_cast<int>(floor((powf(n, 2) - 7) / 6.0f));
+	totalBlackZombie = static_cast<int>(floor((powf(n, 2) - 10) / 10.0f));
 
 	totalNormalZombie = totalNormalZombie > 0 ? totalNormalZombie : 0;
 	totalRedZombie = totalRedZombie > 0 ? totalRedZombie : 0;
@@ -375,19 +378,19 @@ bool GamePlay::spawnZombie(float deltaTime)
 
 void GamePlay::spawn(int zombieType, const sf::Vector2f & playerPos)
 {
-	float yPos = 1091.0f;
-	float xPos = 291.0f;
+	float yPos = 1091.0f; //Obstacle
+	float xPos = 291.0f; //Obstacle
 	while (mPathFindingGrid.GetNodeType(mPathFindingGrid.GetGridIndexFromPosition({ xPos,yPos })) != NodeType::WALKABLE_NODE) {
-		xPos = rand() % 8019;
-		yPos = rand() % 6547;
+		xPos = static_cast<float>(rand() % 8019);
+		yPos = static_cast<float>(rand() % 6547);
 	}
 	////std::cout << xPos << " " << yPos << std::endl;
 	switch (zombieType)
 	{
-	case NORMAL_ZOMBIE: zombieContainer.push_back(new NormalZombie({ xPos,yPos }, normalZombieTex)); break;
-	case RED_ZOMBIE: zombieContainer.push_back(new RedZombie({ xPos,yPos }, redZombieTex)); break;
-	case BLUE_ZOMBIE: zombieContainer.push_back(new BlueZombie({ xPos,yPos }, blueZombieTex)); break;
-	case BLACK_ZOMBIE: zombieContainer.push_back(new BlackZombie({ xPos,yPos }, blackZombieTex)); break;
+	case NORMAL_ZOMBIE: zombieContainer.push_back(new NormalZombie({ xPos,yPos }, normalZombieTex, mRequestManager)); break;
+	case RED_ZOMBIE: zombieContainer.push_back(new RedZombie({ xPos,yPos }, redZombieTex, mRequestManager)); break;
+	case BLUE_ZOMBIE: zombieContainer.push_back(new BlueZombie({ xPos,yPos }, blueZombieTex, mRequestManager)); break;
+	case BLACK_ZOMBIE: zombieContainer.push_back(new BlackZombie({ xPos,yPos }, blackZombieTex, mRequestManager)); break;
 	default: break;
 	}
 }
@@ -537,7 +540,7 @@ void GamePlay::Update(float deltaTime)
 		player.Move(RIGHT, deltaTime);
 		//camera.move(400.0f*deltaTime, 0*deltaTime);
 	}
-
+	//allowUpdatePath = false;
 	//Update zombie and player
 	player.Update(deltaTime);
 	for (auto &zombie : zombieContainer) {
@@ -599,7 +602,10 @@ void GamePlay::Update(float deltaTime)
 	{
 		bul.Move(deltaTime);
 	}
-	
+	for (auto &zombie:zombieContainer)
+	{
+		zombie->Move(deltaTime);
+	}
 	//Zombie PathFinding
 
 	//Thunder Random
@@ -633,6 +639,12 @@ void GamePlay::Update(float deltaTime)
 	healthBar.setSize({ xHealthBar, healthBar.getSize().y });
 
 	mPathFindingGrid.UpdatePlayerNode(player.getPosition());
+
+	//mRequestManager.TryNext();
+
+	//pfThread.launch();
+	//allowUpdatePath = true;
+	//mRequestManager.TryNext();
 }
 
 void GamePlay::Draw()

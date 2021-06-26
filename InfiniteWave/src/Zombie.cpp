@@ -1,8 +1,9 @@
 #include "Zombie.h"
 
 #include <iostream>
+#include <utility>
 
-Zombie::Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex): zombieTex(zombie_tex)
+Zombie::Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, PathRequestManager& request_manager): mRequestManager(request_manager), zombieTex(zombie_tex)
 {
 	ColliderBody.setSize({288,311});
 	ColliderBody.setOrigin(ColliderBody.getSize() * 0.5f);
@@ -43,6 +44,26 @@ void Zombie::Update(float deltaTime, const sf::Vector2f& distance)
 		allowAttack = true;
 		attackElapsedTime = 0;
 	}
+
+	//Update walk path every 2 second
+	pathUpdateDelay -= deltaTime;
+	if (pathUpdateDelay <= 0.0f)
+	{
+		mRequestManager.AddRequest(*this, this->getPosition());
+		pathUpdateDelay = 2.0f;
+	}
+
+	if (!mWalkPath.empty()) {
+		nextPosition = mWalkPath.top().GetNodePosition();
+		lookAt(nextPosition);
+		//Check if zombie arrived to next point
+		if (mRequestManager.getGrid()->GetGridIndexFromPosition(entityRect.getPosition()) 
+			== mRequestManager.getGrid()->GetGridIndexFromPosition(nextPosition))
+		{
+			mWalkPath.pop();
+		}
+	}
+	
 }
 
 void Zombie::setPosition(const sf::Vector2f& pos)
@@ -51,9 +72,17 @@ void Zombie::setPosition(const sf::Vector2f& pos)
 	ColliderBody.setPosition(pos);
 }
 
-void Zombie::Move(MoveDir dir, float deltaTime)
+void Zombie::setWalkPath(std::stack<Node> walk_path)
 {
-	
+	mWalkPath = std::move(walk_path);
+}
+
+void Zombie::Move(float deltaTime)
+{
+		movePos = mDirVect * movementSpeed * deltaTime;
+		entityRect.move(movePos);
+		ColliderBody.move(movePos);
+		movePos.x = 0.0f; movePos.y = 0.0f;
 }
 
 void Zombie::Attack()
@@ -83,6 +112,20 @@ bool Zombie::isAllowAttack() const
 sf::Vector2f Zombie::getPosition() const
 {
 	return entityRect.getPosition();
+}
+
+void Zombie::lookAt(const sf::Vector2f & target_position)
+{
+	const float PI = 3.14159265f;
+
+	const sf::Vector2f dir(target_position.x - entityRect.getPosition().x,
+		target_position.y - entityRect.getPosition().y);
+	
+	angle = (atan2(dir.y, dir.x)) * 180 / PI;
+
+	mDirVect = dir / sqrt(pow(dir.x, 2) + pow(dir.y, 2));
+
+	entityRect.setRotation(angle);
 }
 
 
