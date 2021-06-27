@@ -17,4 +17,5 @@ public:
 	void setPitch(float pitch);
 	void pause();
 	void stop();
+	sf::SoundBuffer* getSoundBuffer();
 };

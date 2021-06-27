@@ -18,7 +18,6 @@ private:
 	[[nodiscard]] bool isContains(const std::vector<Node>& node_container, const Node& node_to_check) const;
 	[[nodiscard]] bool isContains(const std::unordered_set<Node, NodeHash>& node_container, const Node& node_to_check) const;
 	[[nodiscard]] int GetDistance(const Node& nodeA, const Node& nodeB) const;
-	std::stack<Node> GetWalkPath(const Node& start_node, const Node& end_node, const std::vector<Node>& open_set);
 	
 	Grid& mGrid;
 };

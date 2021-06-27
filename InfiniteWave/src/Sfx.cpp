@@ -38,3 +38,8 @@ void SFX::stop()
 {
 	sound.stop();
 }
+
+sf::SoundBuffer* SFX::getSoundBuffer()
+{
+	return &buffer;
+}

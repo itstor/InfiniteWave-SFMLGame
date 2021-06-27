@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Animate.cpp" />
     <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\AudioManager.cpp" />
     <ClCompile Include="src\BaseScene.cpp" />
@@ -47,7 +48,6 @@
     <ClCompile Include="src\Obstacle.cpp" />
     <ClCompile Include="src\PathFinding.cpp" />
     <ClCompile Include="src\PathRequestManager.cpp" />
-    <ClCompile Include="src\Physics.cpp" />
     <ClCompile Include="src\PickupItem.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\RedZombie.cpp" />
@@ -62,6 +62,7 @@
     <ClCompile Include="src\Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Animate.h" />
     <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\AudioManager.h" />
     <ClInclude Include="include\BaseScene.h" />
@@ -86,7 +87,6 @@
     <ClInclude Include="include\Obstacle.h" />
     <ClInclude Include="include\PathFinding.h" />
     <ClInclude Include="include\PathRequestManager.h" />
-    <ClInclude Include="include\Physics.h" />
     <ClInclude Include="include\PickupItem.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\RedZombie.h" />

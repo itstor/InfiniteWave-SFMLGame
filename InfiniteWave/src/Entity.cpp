@@ -4,7 +4,7 @@
 
 #include "Obstacle.h"
 
-void Entity::checkCollision(Obstacle& obs)
+void Entity::CheckCollision(Obstacle& obs)
 {
 	const sf::FloatRect entityBounds = ColliderBody.getGlobalBounds();
 	const sf::FloatRect obstacleBounds = obs.getCollider()->getGlobalBounds();

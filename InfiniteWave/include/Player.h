@@ -15,34 +15,36 @@ public:
 	void getHit();
 
 	//In-game function
-	void Move(MoveDir dir, float deltaTime);
+	void MoveDirection(MoveDir dir, float deltaTime);
 	void PlayerMove();
 	bool Shoot();
 	void Reload();
 
+	//Getter
 	int getAmmo() const;
-	sf::Vector2f getPosition() const;
 	float getAngle() const;
+	sf::Vector2f getPosition() const;
 	sf::Vector2f* getDirVect();
 	sf::RectangleShape* getFeetDraw();
 
 private:
-	unsigned short int bodyAnimState;
-	unsigned short int feetAnimState;
-	unsigned short int holdAmmo = 18;
-	float elapsedShootTime = 0.0f;
-	float shootCooldown = 0.5f;
-	float playerSeekRadius = 500.0f;
-	float radiusGetHit = 100.0f; //zobie attack hit
-	bool allowShoot = true;
-	sf::Vector2f dirVect;
-
+	sf::RectangleShape& playerRect;
+	sf::RectangleShape playerFeetRect;
+	
 	Animation bodyAnim;
 	Animation feetAnim;
 	sf::Texture bodyTex;
 	sf::Texture feetTex;
+	AnimState bodyAnimState;
+	AnimState feetAnimState;
 
-	sf::RectangleShape& playerRect;
-	sf::RectangleShape playerFeetRect;
+	sf::Vector2f dirVect;
+
+	bool allowShoot = true;
+	
+	unsigned short int holdAmmo = 18;
+	
+	float elapsedShootTime = 0.0f;
+	float shootCooldown = 0.5f;
 };
 

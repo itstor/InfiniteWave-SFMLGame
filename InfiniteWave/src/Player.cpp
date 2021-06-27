@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <SFML/Audio/Listener.hpp>
 #include <SFML/Window/Mouse.hpp>
 
 
@@ -26,6 +27,7 @@ Player::Player(): playerRect(entityRect)
 	playerRect.setOrigin(98, 119);
 	playerFeetRect.setSize(sf::Vector2f(172, 124));
 	playerFeetRect.setOrigin(86, 62);
+	sf::Listener::setPosition(playerRect.getPosition().x, 0, playerRect.getPosition().y);
 	
 
 	//init animation
@@ -33,26 +35,26 @@ Player::Player(): playerRect(entityRect)
 	feetAnim.Setup(&feetTex, 1, 21);
 }
 
-void Player::Move(MoveDir dir, float deltaTime)
+void Player::MoveDirection(MoveDir dir, float deltaTime)
 {
-	feetAnimState = WALK_ANIM;
+	feetAnimState = AnimState::WALK_ANIM;
 	//Restrict from anim changing
-	if (!(bodyAnimState == SHOOT_ANIM || bodyAnimState == RELOAD_ANIM) || bodyAnim.isFinish())
-		bodyAnimState = WALK_ANIM;
+	if (!(bodyAnimState == AnimState::SHOOT_ANIM || bodyAnimState == AnimState::RELOAD_ANIM) || bodyAnim.isFinish())
+		bodyAnimState = AnimState::WALK_ANIM;
 	
-	if (dir == LEFT) //Left
+	if (dir == MoveDir::LEFT) //Left
 	{
 		movePos.x = -movementSpeed * deltaTime;
 	}
-	if (dir == RIGHT) //Right
+	if (dir == MoveDir::RIGHT) //Right
 	{
 		movePos.x = movementSpeed * deltaTime;
 	}
-	if (dir == UP) //Up
+	if (dir == MoveDir::UP) //Up
 	{
 		movePos.y = -movementSpeed * deltaTime;
 	}
-	if (dir == DOWN) //Down
+	if (dir == MoveDir::DOWN) //Down
 	{
 		movePos.y = movementSpeed * deltaTime;
 	}
@@ -66,6 +68,7 @@ void Player::PlayerMove()
 	entityRect.move(movePos);
 	ColliderBody.move(movePos);
 	playerFeetRect.setPosition(entityRect.getPosition().x, entityRect.getPosition().y + 20);
+	sf::Listener::setPosition(playerRect.getPosition().x, 0, playerRect.getPosition().y);
 	movePos.x = 0.0f; movePos.y = 0.0f;
 }
 
@@ -75,7 +78,7 @@ bool Player::Shoot()
 	{
 		holdAmmo--;
 		allowShoot = false;
-		bodyAnimState = SHOOT_ANIM;
+		bodyAnimState = AnimState::SHOOT_ANIM;
 		return true;
 	}
 	
@@ -90,7 +93,7 @@ int Player::getAmmo() const
 void Player::Reload()
 {
 	holdAmmo = 18;
-	bodyAnimState = RELOAD_ANIM;
+	bodyAnimState = AnimState::RELOAD_ANIM;
 }
 
 
@@ -99,44 +102,44 @@ void Player::Update(float deltaTime)
 	//Change animation based on state
 
 	//body
-	if (bodyAnimState == IDLE_ANIM)
+	if (bodyAnimState == AnimState::IDLE_ANIM)
 	{
 		bodyAnim.Update(deltaTime, 0, 0.1f, 0, 20);
 		playerRect.setTextureRect(*bodyAnim.getTexture());
 	}
-	else if(bodyAnimState == WALK_ANIM)
+	else if(bodyAnimState == AnimState::WALK_ANIM)
 	{
 		bodyAnim.Update(deltaTime, 1, 0.05f,0, 20);
 		playerRect.setTextureRect(*bodyAnim.getTexture());
 	}
-	else if(bodyAnimState == SHOOT_ANIM)
+	else if(bodyAnimState == AnimState::SHOOT_ANIM)
 	{
 		bodyAnim.Update(deltaTime, 2, 0.05f, 16, 18);
 		playerRect.setTextureRect(*bodyAnim.getTexture());
 	}
-	else if(bodyAnimState == RELOAD_ANIM)
+	else if(bodyAnimState == AnimState::RELOAD_ANIM)
 	{
 		bodyAnim.Update(deltaTime, 2, 0.05f,0, 15);
 		playerRect.setTextureRect(*bodyAnim.getTexture());
 	}
 
 	//feet
-	if (feetAnimState == IDLE_ANIM)
+	if (feetAnimState == AnimState::IDLE_ANIM)
 	{
 		feetAnim.Hide();
 		playerFeetRect.setTextureRect(*feetAnim.getTexture());
 	}
-	else if (feetAnimState == WALK_ANIM)
+	else if (feetAnimState == AnimState::WALK_ANIM)
 	{
 		feetAnim.Update(deltaTime, 0, 0.05f,0, 20);
 		playerFeetRect.setTextureRect(*feetAnim.getTexture());
 	}
 
 	//Set back
-	feetAnimState = IDLE_ANIM;
+	feetAnimState = AnimState::IDLE_ANIM;
 
-	if (!(bodyAnimState == SHOOT_ANIM || bodyAnimState == RELOAD_ANIM) || bodyAnim.isFinish())
-		bodyAnimState = IDLE_ANIM;
+	if (!(bodyAnimState == AnimState::SHOOT_ANIM || bodyAnimState == AnimState::RELOAD_ANIM) || bodyAnim.isFinish())
+		bodyAnimState = AnimState::IDLE_ANIM;
 
 	//Update player shoot cooldown
 	elapsedShootTime += deltaTime;
@@ -173,6 +176,7 @@ void Player::setPosition(const sf::Vector2f & pos)
 	playerRect.setPosition(pos);
 	playerFeetRect.setPosition(pos);
 	ColliderBody.setPosition(pos);
+	sf::Listener::setPosition(playerRect.getPosition().x, 0, playerRect.getPosition().y);
 }
 
 void Player::getHit()

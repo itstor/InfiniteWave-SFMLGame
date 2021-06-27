@@ -104,3 +104,8 @@ void AudioManager::changeSFXPitch(const std::string& sfx_name, float pitch)
 {
 	SFXContainer[sfx_name]->setPitch(pitch);
 }
+
+sf::SoundBuffer* AudioManager::getSoundBuffer(const std::string& sfx_name)
+{
+	return &*SFXContainer[sfx_name]->getSoundBuffer();
+}

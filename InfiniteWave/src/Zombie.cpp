@@ -3,7 +3,7 @@
 #include <iostream>
 #include <utility>
 
-Zombie::Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, PathRequestManager& request_manager): mRequestManager(request_manager), zombieTex(zombie_tex)
+Zombie::Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, PathRequestManager& request_manager, sf::SoundBuffer& sound_buffer): mZombieSoundBuffer(sound_buffer), mRequestManager(request_manager), zombieTex(zombie_tex)
 {
 	ColliderBody.setSize({288,311});
 	ColliderBody.setOrigin(ColliderBody.getSize() * 0.5f);
@@ -15,7 +15,15 @@ Zombie::Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, PathRequestMana
 	entityRect.setTexture(&zombieTex);
 	zombieAnim.Setup(&zombieTex, 2, 17);
 
+	//setup zombie sfx
+	mZombieSound.setBuffer(mZombieSoundBuffer);
+	mZombieSound.setLoop(false);
+	mZombieSound.setPosition(entityRect.getPosition().x, 0, entityRect.getPosition().y);
+	mZombieSound.setMinDistance(200.0f);
+	zombieSoundDelay = static_cast<float>(rand() % 8) + 7.0f;
+
 	setPosition(pos);
+	
 }
 
 Zombie::~Zombie(){
@@ -24,25 +32,25 @@ Zombie::~Zombie(){
 
 void Zombie::Update(float deltaTime, const sf::Vector2f& distance)
 {
-	if (!(animState == ATTACK_ANIM) || zombieAnim.isFinish())
-		animState = WALK_ANIM;
+	if (!(animState == AnimState::ATTACK_ANIM) || zombieAnim.isFinish())
+		animState = AnimState::WALK_ANIM;
 	
-	if (animState == WALK_ANIM)
+	if (animState == AnimState::WALK_ANIM)
 	{
 		zombieAnim.Update(deltaTime, 0, 0.05f, 0, 17);
 		entityRect.setTextureRect(*zombieAnim.getTexture());
 	}
-	else if(animState == ATTACK_ANIM)
+	else if(animState == AnimState::ATTACK_ANIM)
 	{
 		zombieAnim.Update(deltaTime, 1, 0.1f,0, 9);
 		entityRect.setTextureRect(*zombieAnim.getTexture());
 	}
 
-	attackElapsedTime += deltaTime;
-	if (attackElapsedTime >= attackCooldown)
+	attackCooldown -= deltaTime;
+	if (attackCooldown <= 0.0f)
 	{
 		allowAttack = true;
-		attackElapsedTime = 0;
+		attackCooldown = 5.0f;
 	}
 
 	//Update walk path every 2 second
@@ -63,6 +71,13 @@ void Zombie::Update(float deltaTime, const sf::Vector2f& distance)
 			mWalkPath.pop();
 		}
 	}
+
+	zombieSoundDelay -= deltaTime;
+	if (zombieSoundDelay <= 0.0f)
+	{
+		mZombieSound.play();
+		zombieSoundDelay = static_cast<float>(rand() % 8) + 7.0f;
+	}
 	
 }
 
@@ -82,14 +97,15 @@ void Zombie::Move(float deltaTime)
 		movePos = mDirVect * movementSpeed * deltaTime;
 		entityRect.move(movePos);
 		ColliderBody.move(movePos);
-		movePos.x = 0.0f; movePos.y = 0.0f;
+		mZombieSound.setPosition(entityRect.getPosition().x, 0, entityRect.getPosition().y); //Move sound source position
+		mDirVect.x = 0.0f; mDirVect.y = 0.0f;
 }
 
 void Zombie::Attack()
 {
 	allowAttack = false;
 	std::cout << "HRGHHH\n";
-	animState = ATTACK_ANIM;
+	animState = AnimState::ATTACK_ANIM;
 	//play attack anim
 }
 

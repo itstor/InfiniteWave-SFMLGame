@@ -4,6 +4,6 @@
 class RedZombie final: public Zombie
 {
 public:
-	RedZombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, PathRequestManager& path_request);
+	RedZombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, PathRequestManager& path_request, sf::SoundBuffer& sound_buffer);
 };
 

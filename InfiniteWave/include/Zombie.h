@@ -8,11 +8,12 @@
 #include "Animation.h"
 #include "Node.h"
 #include "PathRequestManager.h"
+#include <SFML/Audio/Sound.hpp>
 
 class Zombie: public Entity
 {
 public:
-	Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, PathRequestManager& mRequestManager);
+	Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, PathRequestManager& request_manager, sf::SoundBuffer& sound_buffer);
 	~Zombie() override;
 
 	void Update(float deltaTime, const sf::Vector2f& distance);
@@ -29,21 +30,26 @@ public:
 
 	bool allowUpdatePath = true;
 
-protected:
-	PathRequestManager& mRequestManager;
+private:
 	void lookAt(const sf::Vector2f& target_position);
+
+	PathRequestManager& mRequestManager;
+
+	sf::Sound mZombieSound;
+	sf::SoundBuffer& mZombieSoundBuffer;
 	
 	sf::Texture& zombieTex;
 	Animation zombieAnim;
+	AnimState animState;
+
 	sf::Vector2f mDirVect;
 	sf::Vector2f nextPosition;
 	std::stack<Node> mWalkPath;
-	unsigned short int animState;
+	
 	bool allowAttack = true;
-	bool isWalkPathChanged = false;
+
+	float zombieSoundDelay = 0.0f;
 	float attackCooldown = 5.0f;
-	float attackElapsedTime = 0.0f;
 	float pathUpdateDelay = 2.0f;
 };
-
 #endif

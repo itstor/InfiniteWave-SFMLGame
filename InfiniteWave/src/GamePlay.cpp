@@ -384,13 +384,12 @@ void GamePlay::spawn(int zombieType, const sf::Vector2f & playerPos)
 		xPos = static_cast<float>(rand() % 8019);
 		yPos = static_cast<float>(rand() % 6547);
 	}
-	////std::cout << xPos << " " << yPos << std::endl;
 	switch (zombieType)
 	{
-	case NORMAL_ZOMBIE: zombieContainer.push_back(new NormalZombie({ xPos,yPos }, normalZombieTex, mRequestManager)); break;
-	case RED_ZOMBIE: zombieContainer.push_back(new RedZombie({ xPos,yPos }, redZombieTex, mRequestManager)); break;
-	case BLUE_ZOMBIE: zombieContainer.push_back(new BlueZombie({ xPos,yPos }, blueZombieTex, mRequestManager)); break;
-	case BLACK_ZOMBIE: zombieContainer.push_back(new BlackZombie({ xPos,yPos }, blackZombieTex, mRequestManager)); break;
+	case NORMAL_ZOMBIE: zombieContainer.push_back(new NormalZombie({ xPos,yPos }, normalZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1"))); break;
+	case RED_ZOMBIE: zombieContainer.push_back(new RedZombie({ xPos,yPos }, redZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1"))); break;
+	case BLUE_ZOMBIE: zombieContainer.push_back(new BlueZombie({ xPos,yPos }, blueZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1"))); break;
+	case BLACK_ZOMBIE: zombieContainer.push_back(new BlackZombie({ xPos,yPos }, blackZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1"))); break;
 	default: break;
 	}
 }
@@ -519,25 +518,25 @@ void GamePlay::Update(float deltaTime)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		player.Move(UP, deltaTime);
+		player.MoveDirection(MoveDir::UP, deltaTime);
 		//camera.move(0*deltaTime, -400.f*deltaTime);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) 
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		player.Move(LEFT, deltaTime);
+		player.MoveDirection(MoveDir::LEFT, deltaTime);
 		//camera.move(-400.0f*deltaTime, 0*deltaTime);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) 
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
-		player.Move(DOWN, deltaTime);
+		player.MoveDirection(MoveDir::DOWN, deltaTime);
 		//camera.move(0*deltaTime, 400.f*deltaTime);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) 
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		player.Move(RIGHT, deltaTime);
+		player.MoveDirection(MoveDir::RIGHT, deltaTime);
 		//camera.move(400.0f*deltaTime, 0*deltaTime);
 	}
 	//allowUpdatePath = false;
@@ -551,7 +550,7 @@ void GamePlay::Update(float deltaTime)
 	//On Collision with obstacle or wall
 	for (auto &obs : obstacleContainer)
 	{
-		player.checkCollision(obs);
+		player.CheckCollision(obs);
 		for (size_t i = 0; i < bulletContainer.size(); i++)
 		{	
 			//Check if bullet collided with obstacle or out of radius, delete

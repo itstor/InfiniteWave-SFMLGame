@@ -3,6 +3,7 @@
 #define AUDIOMANAGER_H
 
 #include <unordered_map>
+#include <SFML/Audio/Sound.hpp>
 
 class SFX;
 class Music;
@@ -25,6 +26,7 @@ public:
 	void play(const std::string& music_name);
 	void playSFX(const std::string& sfx_name);
 	void changeSFXPitch(const std::string& sfx_name, float pitch);
+	sf::SoundBuffer* getSoundBuffer(const std::string& sfx_name);
 	void toggleMute();
 	void stopAll();
 };
