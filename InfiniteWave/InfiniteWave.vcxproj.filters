@@ -61,6 +61,12 @@
     <Filter Include="Include\GameSystem\Path Finding">
       <UniqueIdentifier>{b42ae965-28c6-4d1d-9090-f7e716b2b733}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\GameSystem\Animation">
+      <UniqueIdentifier>{11ef3b8e-b0b5-4539-9eea-7d59280c034d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\GameSystem\Animation">
+      <UniqueIdentifier>{9fa4ef9a-803c-4930-9921-8a5835233dbb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
@@ -99,9 +105,6 @@
     </ClCompile>
     <ClCompile Include="src\AudioManager.cpp">
       <Filter>Source\GameSystem\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Animation.cpp">
-      <Filter>Source\GameSystem</Filter>
     </ClCompile>
     <ClCompile Include="src\TemplateScene.cpp">
       <Filter>Source\Scene\Template</Filter>
@@ -169,7 +172,6 @@
     <ClCompile Include="src\ToggleButton.cpp">
       <Filter>Source\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="src\Animate.cpp" />
     <ClCompile Include="src\PathFinding.cpp">
       <Filter>Source\GameSystem\Path Finding</Filter>
     </ClCompile>
@@ -182,6 +184,16 @@
     <ClCompile Include="src\Node.cpp">
       <Filter>Source\GameSystem\Path Finding</Filter>
     </ClCompile>
+    <ClCompile Include="src\SpriteAnimation.cpp">
+      <Filter>Source\GameSystem\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AnimationManager.cpp">
+      <Filter>Source\GameSystem\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Animation.cpp">
+      <Filter>Source\GameSystem\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameoverScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AudioManager.h">
@@ -225,9 +237,6 @@
     </ClInclude>
     <ClInclude Include="include\Image.h">
       <Filter>Include\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Animation.h">
-      <Filter>Include\GameSystem</Filter>
     </ClInclude>
     <ClInclude Include="include\TemplateScene.h">
       <Filter>Include\Scene\Template</Filter>
@@ -286,7 +295,6 @@
     <ClInclude Include="resource2.h">
       <Filter>Resource</Filter>
     </ClInclude>
-    <ClInclude Include="include\Animate.h" />
     <ClInclude Include="include\Map.h">
       <Filter>Include\GameSystem</Filter>
     </ClInclude>
@@ -302,6 +310,16 @@
     <ClInclude Include="include\Grid.h">
       <Filter>Include\GameSystem\Path Finding</Filter>
     </ClInclude>
+    <ClInclude Include="include\SpriteAnimation.h">
+      <Filter>Include\GameSystem\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AnimationManager.h">
+      <Filter>Include\GameSystem\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Animation.h">
+      <Filter>Include\GameSystem\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameoverScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />

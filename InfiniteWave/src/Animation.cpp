@@ -1,60 +1,93 @@
 #include "Animation.h"
 
-#include <iostream>
+#include <SFML/Graphics/Transformable.hpp>
+#include <cmath>
+#include <utility>
 
-
-Animation::Animation() = default;
-
-
-void Animation::Setup(sf::Texture* animTex, unsigned int row, unsigned int maxImageCount)
+Animation::Animation(AnimType anim_type, const sf::Vector2f& start, const sf::Vector2f& end, float time,
+                     sf::Transformable& object, bool back = false, float back_delay = 0.0f): mObject(nullptr)
 {
-	maxImage = maxImageCount;
-	uvRect.width = animTex->getSize().x / maxImageCount;
-	uvRect.height = animTex->getSize().y / row;
+	mAnimType = anim_type;
+	mStart = start;
+	mEnd = end;
+	mBack = back;
+	mObject = &object;
+	mBackDelay = back_delay;
+	totalFrame.x = mEnd.x - mStart.x;
+	totalFrame.y = mEnd.y - mStart.y;
+
+	//calculate progress increment
+	if (mAnimType == AnimType::MOVE)
+	{
+		const float maxTotalFrame = std::max(totalFrame.x, totalFrame.y);
+		res = powf(0.1f, round(log10(maxTotalFrame)) - 1);
+		res = res >= 1.0f ? 0.1f : res;
+	}
+	else if (mAnimType == AnimType::ZOOM)
+	{
+		res = powf(0.01f, round(log10(totalFrame.x)) - 1);
+		res = res >= 1.0f ? 0.01f : res;
+	}
+
+	timePerFrame = time * res;
 }
 
-void Animation::Update(float deltaTime, int row, float switchTime, unsigned int startFrame, unsigned int endFrame)
+void Animation::Update(float deltaTime)
 {
-	//Reset current frame to start frame
-	if (row != prevRow)
-	{
-		prevRow = row;
-		totalTime = 0;
-		currentImage = 0 + startFrame;
-	}
-	
-	totalTime += deltaTime;
-	if (totalTime >= switchTime)
-	{
-		finish = false;
-		totalTime = 0;
-		currentImage++;
+	elapsedTime += deltaTime;
 
-		if (currentImage >= endFrame)
+	if (mAnimType == AnimType::MOVE)
+	{
+		if (elapsedTime >= timePerFrame)
 		{
-			finish = true;
-			currentImage = 0;
+			const float posChangeY = mStart.y + totalFrame.y * easeInOutCubic(progress);
+			const float posChangeX = mStart.x + totalFrame.x * easeInOutCubic(progress);
+
+			mObject->setPosition(posChangeX, posChangeY);
+			progress += res;
+
+			elapsedTime = 0.0f;
+
+			if (progress >= 1.0f && !mBack || progress < 0.0f && mBack)
+			{
+				misFinished = true;
+			}
+			else if (progress >= 1.0f)
+			{
+				res *= -1;
+			}
 		}
 	}
+	else if (mAnimType == AnimType::ZOOM)
+	{
+		if (elapsedTime >= timePerFrame)
+		{
+			const float scaleChangeX = mStart.x + totalFrame.x * easeInOutCubic(progress);
 
-	uvRect.left = currentImage * uvRect.width;
-	uvRect.top = row * uvRect.height;
+			mObject->setScale(scaleChangeX, scaleChangeX);
+			progress += res;
+
+			elapsedTime = 0.0f;
+
+			if (progress >= 1.0f && !mBack || progress < 0.0f && mBack)
+			{
+				misFinished = true;
+			}
+			else if (progress >= 1.0f)
+			{
+				res *= -1;
+				elapsedTime -= mBackDelay;
+			}
+		}
+	}
 }
 
-void Animation::Hide()
+bool Animation::isFinished() const
 {
-	uvRect.left = (maxImage + 1) * uvRect.width;
+	return misFinished;
 }
 
-sf::IntRect* Animation::getTexture()
+float Animation::easeInOutCubic(float x) const
 {
-	return &uvRect;
+	return x < 0.5 ? 4 * pow(x,3) : 1 - pow(-2 * x + 2, 3) / 2;
 }
-
-
-bool Animation::isFinish() const
-{
-	return finish;
-}
-
-

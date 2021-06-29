@@ -10,8 +10,10 @@
 
 #include "BlackZombie.h"
 #include "BlueZombie.h"
+#include "GameoverScene.h"
 #include "NormalZombie.h"
 #include "RedZombie.h"
+#include "SceneManager.h"
 
 #define NORMAL_ZOMBIE 0
 #define RED_ZOMBIE 1
@@ -73,6 +75,7 @@ GamePlay::GamePlay(SharedObject& obj, bool replace) : BaseScene(obj, replace),
 GamePlay::~GamePlay()
 {
 	std::cout << "GamePlay Deleted" << std::endl;
+	mWindow.GetRenderWindow()->setView(mWindow.GetRenderWindow()->getDefaultView());
 }
 
 void GamePlay::initMap()
@@ -265,6 +268,7 @@ void GamePlay::initGUI()
 	scoreTotalText.setFont(pixelFont);
 	waveTitleText.setFont(pixelFont);
 	waveCurrentText.setFont(pixelFont);
+	waveCompleteText.setFont(pixelFont);
 
 	ammoText.setString("18/18");
 	killText.setString("0");
@@ -272,6 +276,7 @@ void GamePlay::initGUI()
 	scoreTotalText.setString("0");
 	waveTitleText.setString("Wave:");
 	waveCurrentText.setString("1/~");
+	waveCompleteText.setString("Wave Complete");
 
 	healthIconTex.loadFromFile("Assets/Texture/GUI/health.png");
 	killIconTex.loadFromFile("Assets/Texture/GUI/kill.png");
@@ -287,6 +292,7 @@ void GamePlay::initGUI()
 	scoreTotalText.setFillColor(sf::Color::White);
 	waveTitleText.setFillColor(sf::Color::White);
 	waveCurrentText.setFillColor(sf::Color::White);
+	waveCompleteText.setFillColor(sf::Color::White);
 	
 	healthIconRect.setSize(static_cast<const sf::Vector2f>(healthIconTex.getSize()));
 	killIconRect.setSize(static_cast<const sf::Vector2f>(killIconTex.getSize()));
@@ -298,6 +304,7 @@ void GamePlay::initGUI()
 	scoreTotalText.setScale(1.5f, 1.5f);
 	waveTitleText.setScale(1, 1);
 	waveCurrentText.setScale(1.8f, 1.8f);
+	waveCompleteText.setScale(0.0f, 0.0f);
 
 	healthIconRect.setPosition(9581.59f, 38.3f);
 	killIconRect.setPosition(9631.25f, 118.71f);
@@ -309,9 +316,9 @@ void GamePlay::initGUI()
 	scoreTotalText.setPosition(8155.36f, 978.27f);
 	waveTitleText.setPosition(9889.69f, 926.52f);
 	waveCurrentText.setPosition(9889.69f, 970.61f);
-
-	
-
+	waveCompleteText.setOrigin(waveCompleteText.getLocalBounds().left + waveCompleteText.getLocalBounds().width * 0.5f,
+	                           waveCompleteText.getLocalBounds().top + waveCompleteText.getLocalBounds().height * 0.5f);
+	waveCompleteText.setPosition(9078.31f, 540.0f);
 }
 
 void GamePlay::Pause()
@@ -415,6 +422,7 @@ void GamePlay::Update(float deltaTime)
 			} break;
 			case sf::Keyboard::F1: showGUI = !showGUI; break;
 			case sf::Keyboard::F11: mWindow.ToggleFullScreen(); break;
+			case sf::Keyboard::Space: mNext = SceneManager::build<GameoverScene>(mObj, true); break;
 			default: break;
 			}
 			break;
@@ -619,7 +627,7 @@ void GamePlay::Update(float deltaTime)
 		waveCurrentText.setString(std::to_string(currentWave).append("/~"));
 		calculateTotalZombie();
 		//Play next wave animation
-		
+		if (currentWave > 1) mAnimManager.playAnimation(AnimType::ZOOM, {0.0f,0.0f},{2.8f,0.0f},1.0f,waveCompleteText,true, 2.0f);
 	}
 	if (nextWave)
 	{
@@ -637,13 +645,10 @@ void GamePlay::Update(float deltaTime)
 	const float xHealthBar = (player.getHealth() / 200.0f) * 318;
 	healthBar.setSize({ xHealthBar, healthBar.getSize().y });
 
+	//update player position on grid
 	mPathFindingGrid.UpdatePlayerNode(player.getPosition());
 
-	//mRequestManager.TryNext();
-
-	//pfThread.launch();
-	//allowUpdatePath = true;
-	//mRequestManager.TryNext();
+	mAnimManager.Update(deltaTime);
 }
 
 void GamePlay::Draw()
@@ -665,10 +670,8 @@ void GamePlay::Draw()
 	for (auto &zombie : zombieContainer) {
 		mWindow.Draw(*zombie->getDraw());
 	}
-	//mWindow.Draw(*player.getCollider());
 
 	ls.render(*mWindow.GetRenderWindow());
-	//mWindow.GetRenderWindow()->setView(mWindow.GetRenderWindow()->getDefaultView());
 	//mPathFindingGrid.Draw(mWindow.GetRenderWindow());
 
 	//GUI Here
@@ -684,6 +687,7 @@ void GamePlay::Draw()
 		mWindow.Draw(scoreTotalText);
 		mWindow.Draw(waveTitleText);
 		mWindow.Draw(waveCurrentText);
+		mWindow.Draw(waveCompleteText);
 		//Reset view back
 		mWindow.GetRenderWindow()->setView(camera);
 	}

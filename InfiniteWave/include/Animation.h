@@ -1,26 +1,38 @@
 #pragma once
-#include <SFML/Graphics/Texture.hpp>
+#include <functional>
+#include <SFML/System/Vector2.hpp>
+
+enum class AnimType { ZOOM, MOVE };
+
+namespace sf {
+	class Transformable;
+}
 
 class Animation
 {
 public:
-	Animation();
+	Animation(AnimType anim_type, const sf::Vector2f& start, const sf::Vector2f& end, float time, sf::Transformable & object, bool back, float back_delay);
+	~Animation() = default;
 
-	void Setup(sf::Texture* animTex, unsigned row, unsigned maxImageCount);
-	void Update(float deltaTime, int row, float switchTime, unsigned startFrame, unsigned endFrame);
-	void Hide();
-	sf::IntRect* getTexture();
-	void Reset();
-	
-	[[nodiscard]] bool isFinish() const;
-	sf::IntRect uvRect;
-	
+	void Update(float deltaTime);
+
+	[[nodiscard]] bool isFinished() const;
+
 private:
-	unsigned int currentImage = 0;
-	unsigned int maxImage = 0;
-	int prevRow = -1;
-	bool finish = false;
-	float totalTime = 0.0f;
+	[[nodiscard]] float easeInOutCubic(float x) const;
 	
+	bool misFinished = false;
+	bool mBack = false;
+	float res = 0.0;
+	float elapsedTime = 0.0f;
+	float progress = 0.0f;
+	float timePerFrame;
+	float mBackDelay = 0.0f;
+
+	AnimType mAnimType;
+	sf::Vector2f mEnd;
+	sf::Vector2f mStart;
+	sf::Vector2f totalFrame;
+	sf::Transformable* mObject;
 };
 

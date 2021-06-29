@@ -2,9 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Animation.h"
 #include "BaseScene.h"
 #include "Button.h" //GUI Optional
+#include "SpriteAnimation.h"
 
 class SceneManager;
 
@@ -49,11 +49,11 @@ private:
 	sf::Texture keyRTex;
 	sf::Texture mouseTex;
 
-	Animation keyWAnim;
-	Animation keyAAnim;
-	Animation keySAnim;
-	Animation keyDAnim;
-	Animation keyRAnim;
-	Animation mouseAnim;
+	SpriteAnimation keyWAnim;
+	SpriteAnimation keyAAnim;
+	SpriteAnimation keySAnim;
+	SpriteAnimation keyDAnim;
+	SpriteAnimation keyRAnim;
+	SpriteAnimation mouseAnim;
 };
 

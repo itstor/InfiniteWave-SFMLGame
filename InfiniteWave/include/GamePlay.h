@@ -1,6 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+
+#include "AnimationManager.h"
 #include "BaseScene.h"
 #include "Bullet.h"
 #include "Button.h" //GUI Optional
@@ -46,6 +48,7 @@ private:
 	Grid mPathFindingGrid;
 	PathFinding mPathFinding;
 	PathRequestManager mRequestManager;
+	AnimationManager mAnimManager;
 	
 	bool isGUIZoom = false;
 	bool showGUI = true;
@@ -120,4 +123,5 @@ private:
 	sf::Text scoreTotalText;
 	sf::Text waveTitleText;
 	sf::Text waveCurrentText;
+	sf::Text waveCompleteText;
 };

@@ -1,8 +1,8 @@
 #pragma once
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Texture.hpp>
-#include "Animation.h"
 #include "Entity.h"
+#include "SpriteAnimation.h"
 
 class Player final: public Entity
 {
@@ -31,8 +31,8 @@ private:
 	sf::RectangleShape& playerRect;
 	sf::RectangleShape playerFeetRect;
 	
-	Animation bodyAnim;
-	Animation feetAnim;
+	SpriteAnimation bodyAnim;
+	SpriteAnimation feetAnim;
 	sf::Texture bodyTex;
 	sf::Texture feetTex;
 	AnimState bodyAnimState;

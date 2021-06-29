@@ -1,5 +1,7 @@
 #include "Map.h"
 
+#include <SFML/Graphics/RenderTarget.hpp>
+
 void Map::load(const std::string& mapFile, sf::Vector2u tileSize, const int* tiles, unsigned width, unsigned height)
 {
 	tileSet.loadFromFile(mapFile);

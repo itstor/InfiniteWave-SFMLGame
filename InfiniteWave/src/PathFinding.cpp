@@ -35,16 +35,7 @@ std::stack<Node> PathFinding::FindPath(sf::Vector2f start_position)
 				//std::cout << clock.getElapsedTime().asSeconds() << std::endl;
 				
 				//create walk path
-				openSet.push_back(currentNode);
 				std::stack<Node> walkPath;
-				for (const auto& node : openSet)
-				{
-					if (node == targetNode)
-					{
-						currentNode = node;
-						break;
-					}
-				}
 
 				while (currentNode != startNode)
 				{

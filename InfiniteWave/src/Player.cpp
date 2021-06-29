@@ -1,9 +1,12 @@
+#define _USE_MATH_DEFINES
+
 #include "Player.h"
 
 #include <cmath>
 #include <iostream>
 #include <SFML/Audio/Listener.hpp>
 #include <SFML/Window/Mouse.hpp>
+
 
 
 Player::Player(): playerRect(entityRect)
@@ -158,12 +161,10 @@ void Player::Update(float deltaTime)
 
 void Player::lookAt(const sf::Vector2f& mousePos)
 {
-	const float PI = 3.14159265f;
-
 	const sf::Vector2f dir(mousePos.x - playerRect.getPosition().x,
 		mousePos.y - playerRect.getPosition().y);
 	
-	angle = (atan2(dir.y, dir.x)) * 180 / PI;
+	angle = (atan2(dir.y, dir.x)) * 180 / static_cast<float>(M_PI);
 
 	dirVect = dir / sqrt(pow(dir.x, 2) + pow(dir.y, 2));
 

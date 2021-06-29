@@ -5,10 +5,11 @@
 #include <stack>
 
 #include "Entity.h"
-#include "Animation.h"
 #include "Node.h"
 #include "PathRequestManager.h"
 #include <SFML/Audio/Sound.hpp>
+
+#include "SpriteAnimation.h"
 
 class Zombie: public Entity
 {
@@ -39,7 +40,7 @@ private:
 	sf::SoundBuffer& mZombieSoundBuffer;
 	
 	sf::Texture& zombieTex;
-	Animation zombieAnim;
+	SpriteAnimation zombieAnim;
 	AnimState animState;
 
 	sf::Vector2f mDirVect;
