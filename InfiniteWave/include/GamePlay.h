@@ -40,7 +40,7 @@ private:
 	void initLight();
 	void initGUI();
 	bool spawnZombie(float deltaTime);
-	void spawn(int zombieType, const sf::Vector2f& playerPos);
+	void spawn(ZombieType zombieType, const sf::Vector2f& playerPos);
 	void calculateTotalZombie();
 	void zombiePathFinding();
 	

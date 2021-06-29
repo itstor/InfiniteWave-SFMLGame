@@ -4,4 +4,6 @@ BlackZombie::BlackZombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, PathR
 {
 	health = 350.0f;
 	movementSpeed = 250.0f;
+	mZombieType = ZombieType::BLACK_ZOMBIE;
+
 }

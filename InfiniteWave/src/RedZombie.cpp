@@ -4,4 +4,5 @@ RedZombie::RedZombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, PathReque
 {
 	health = 150.0f;
 	movementSpeed = 250.0f;
+	mZombieType = ZombieType::RED_ZOMBIE;
 }

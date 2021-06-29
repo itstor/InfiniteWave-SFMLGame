@@ -2,10 +2,12 @@
 #include <functional>
 #include <SFML/System/Vector2.hpp>
 
-enum class AnimType { ZOOM, MOVE };
+enum class AnimType { ZOOM, MOVE, OPACITY};
 enum class TransitionType {LINEAR, EASE_IN_OUT_CUBIC, EASE_IN_OUT_BACK};
 
 namespace sf {
+	class Color;
+	class Drawable;
 	class Transformable;
 }
 
@@ -20,6 +22,8 @@ public:
 	[[nodiscard]] bool isFinished() const;
 
 private:
+	void Setup();
+	
 	bool misFinished = false;
 	bool mBack = false;
 	float res = 0.0;

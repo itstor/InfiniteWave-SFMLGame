@@ -11,6 +11,8 @@
 
 #include "SpriteAnimation.h"
 
+enum class ZombieType {NORMAL_ZOMBIE, RED_ZOMBIE, BLUE_ZOMBIE, BLACK_ZOMBIE};
+
 class Zombie: public Entity
 {
 public:
@@ -28,6 +30,7 @@ public:
 	bool isAllowAttack() const;
 
 	sf::Vector2f getPosition() const;
+	ZombieType getZombieType() const;
 
 	bool allowUpdatePath = true;
 
@@ -52,5 +55,8 @@ private:
 	float zombieSoundDelay = 0.0f;
 	float attackCooldown = 5.0f;
 	float pathUpdateDelay = 2.0f;
+
+protected:
+	ZombieType mZombieType;
 };
 #endif

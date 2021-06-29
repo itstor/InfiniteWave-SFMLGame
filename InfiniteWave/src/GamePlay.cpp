@@ -15,11 +15,6 @@
 #include "RedZombie.h"
 #include "SceneManager.h"
 
-#define NORMAL_ZOMBIE 0
-#define RED_ZOMBIE 1
-#define BLUE_ZOMBIE 2
-#define BLACK_ZOMBIE 3
-
 
 GamePlay::GamePlay(SharedObject& obj, bool replace) : BaseScene(obj, replace),
                                                       mPathFindingGrid(obstacleContainer),
@@ -357,22 +352,22 @@ bool GamePlay::spawnZombie(float deltaTime)
 		if (totalNormalZombie > 0)
 		{
 			totalNormalZombie--;
-			spawn(NORMAL_ZOMBIE, player.getPosition());
+			spawn(ZombieType::NORMAL_ZOMBIE, player.getPosition());
 		}
 		else if (totalRedZombie > 0)
 		{
 			totalRedZombie--;
-			spawn(RED_ZOMBIE, player.getPosition());
+			spawn(ZombieType::RED_ZOMBIE, player.getPosition());
 		}
 		else if (totalBlueZombie > 0)
 		{
 			totalBlueZombie--;
-			spawn(BLUE_ZOMBIE, player.getPosition());
+			spawn(ZombieType::BLUE_ZOMBIE, player.getPosition());
 		}
 		else if (totalBlackZombie > 0)
 		{
 			totalBlackZombie--;
-			spawn(BLACK_ZOMBIE, player.getPosition());
+			spawn(ZombieType::BLACK_ZOMBIE, player.getPosition());
 		}
 		else
 		{
@@ -383,7 +378,7 @@ bool GamePlay::spawnZombie(float deltaTime)
 	return false;
 }
 
-void GamePlay::spawn(int zombieType, const sf::Vector2f & playerPos)
+void GamePlay::spawn(ZombieType zombieType, const sf::Vector2f & playerPos)
 {
 	float yPos = 1091.0f; //Obstacle
 	float xPos = 291.0f; //Obstacle
@@ -393,10 +388,10 @@ void GamePlay::spawn(int zombieType, const sf::Vector2f & playerPos)
 	}
 	switch (zombieType)
 	{
-	case NORMAL_ZOMBIE: zombieContainer.push_back(new NormalZombie({ xPos,yPos }, normalZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1"))); break;
-	case RED_ZOMBIE: zombieContainer.push_back(new RedZombie({ xPos,yPos }, redZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1"))); break;
-	case BLUE_ZOMBIE: zombieContainer.push_back(new BlueZombie({ xPos,yPos }, blueZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1"))); break;
-	case BLACK_ZOMBIE: zombieContainer.push_back(new BlackZombie({ xPos,yPos }, blackZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1"))); break;
+	case ZombieType::NORMAL_ZOMBIE: zombieContainer.push_back(new NormalZombie({ xPos,yPos }, normalZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1"))); break;
+	case ZombieType::RED_ZOMBIE: zombieContainer.push_back(new RedZombie({ xPos,yPos }, redZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1"))); break;
+	case ZombieType::BLUE_ZOMBIE: zombieContainer.push_back(new BlueZombie({ xPos,yPos }, blueZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1"))); break;
+	case ZombieType::BLACK_ZOMBIE: zombieContainer.push_back(new BlackZombie({ xPos,yPos }, blackZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1"))); break;
 	default: break;
 	}
 }
@@ -592,9 +587,21 @@ void GamePlay::Update(float deltaTime)
 				{
 					killCount++;
 					currentActiveZombie--;
-					gameScore += 1000;
 					killText.setString(std::to_string(killCount));
 					scoreTotalText.setString(std::to_string(gameScore));
+
+					int score = 0;
+					
+					switch (zombieContainer[j]->getZombieType())
+					{
+					case ZombieType::NORMAL_ZOMBIE: score = 500; break;
+					case ZombieType::RED_ZOMBIE: score = 1000; break;
+					case ZombieType::BLUE_ZOMBIE: score = 1500; break;
+					case ZombieType::BLACK_ZOMBIE: score = 2000; break;
+					default: break;
+					}
+
+					gameScore += score;
 					
 					delete zombieContainer[j];
 					zombieContainer.erase(zombieContainer.begin() + j);

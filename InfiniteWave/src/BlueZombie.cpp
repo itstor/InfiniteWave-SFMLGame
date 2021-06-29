@@ -4,5 +4,7 @@ BlueZombie::BlueZombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, PathReq
 {
 	health = 200.0f;
 	movementSpeed = 400.0f;
+	mZombieType = ZombieType::BLUE_ZOMBIE;
+
 }
 

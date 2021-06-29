@@ -130,6 +130,11 @@ sf::Vector2f Zombie::getPosition() const
 	return entityRect.getPosition();
 }
 
+ZombieType Zombie::getZombieType() const
+{
+	return mZombieType;
+}
+
 void Zombie::lookAt(const sf::Vector2f & target_position)
 {
 	const float PI = 3.14159265f;

@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics/Transformable.hpp>
 #include <cmath>
-#include <utility>
+#include <SFML/Graphics/Text.hpp>
 
 Animation::Animation(AnimType anim_type, TransitionType transition_type, const sf::Vector2f& start,
                      const sf::Vector2f& end, float time, sf::Transformable& object, bool back = false,
@@ -41,6 +41,7 @@ Animation::Animation(AnimType anim_type, TransitionType transition_type, const s
 	if (mAnimType == AnimType::MOVE)
 	{
 		const float maxTotalFrame = std::max(totalFrame.x, totalFrame.y);
+		
 		res = powf(0.1f, round(log10(maxTotalFrame)) - 1);
 		res = res >= 1.0f ? 0.1f : res;
 	}

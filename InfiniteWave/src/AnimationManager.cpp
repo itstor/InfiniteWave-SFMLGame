@@ -10,12 +10,13 @@ void AnimationManager::Update(float deltaTime)
 {
 	if (!animationContainer.empty())
 	{
-		for (auto &animation:animationContainer)
+		for (size_t i = 0; i < animationContainer.size(); i++)
 		{
-			animation->Update(deltaTime);
-			if (animation->isFinished())
+			animationContainer[i]->Update(deltaTime);
+			if (animationContainer[i]->isFinished())
 			{
-				animationContainer.erase(std::find(animationContainer.begin(), animationContainer.end(), animation));
+				delete &animationContainer[i];
+				animationContainer.erase(animationContainer.begin() + i);
 			}
 		}
 	}
