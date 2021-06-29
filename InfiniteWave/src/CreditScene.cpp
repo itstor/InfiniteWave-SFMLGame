@@ -15,8 +15,8 @@ CreditScene::CreditScene(SharedObject& obj, bool replace) :BaseScene(obj, replac
 #ifdef _DEBUG
 	std::cout << "CreditScene Created" << std::endl;
 #endif
-	headlineFont.loadFromFile("Assets/Font/HeadlinerNo.45.ttf");
-	dccFont.loadFromFile("Assets/Font/DCC.otf");
+	headlineFont.loadFromFile("data/Font/HeadlinerNo.45.ttf");
+	dccFont.loadFromFile("data/Font/DCC.otf");
 
 	creditText.setFont(headlineFont);
 	createdbyText.setFont(dccFont);
@@ -59,9 +59,9 @@ CreditScene::~CreditScene()
 void CreditScene::initButton()
 {
 	//Initialize button here
-	btnBack.Setup("Assets/Texture/GUI/Buttons/Back_BTN.png",
-				"Assets/Texture/GUI/Buttons/Back_BTN.png",
-				"Assets/Texture/GUI/Buttons/Back_BTN.png",
+	btnBack.Setup("data/Texture/GUI/Buttons/Back_BTN.png",
+				"data/Texture/GUI/Buttons/Back_BTN.png",
+				"data/Texture/GUI/Buttons/Back_BTN.png",
 				1.0f, sf::Vector2f(123.27f, 463.19f));
 
 }
@@ -69,7 +69,7 @@ void CreditScene::initButton()
 void CreditScene::initBg()
 {
 	//Initialize background here
-	menuBgTex.loadFromFile("Assets/Texture/GUI/main-menu_background2.png");
+	menuBgTex.loadFromFile("data/Texture/GUI/main-menu_background2.png");
 	menuBgSpi.setTexture(menuBgTex);
 	menuBgSpi.setScale(1.f, 1.f);
 	menuBgSpi.setPosition(0, 0);

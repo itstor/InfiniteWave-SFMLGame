@@ -16,7 +16,7 @@ int main()
 	const std::string windowTitle = "Infinite Wave";
 	const sf::Vector2u windowSize(conf::windowWidth, conf::windowHeight);
 
-	if (!icon.loadFromFile("Assets/Texture/Icon/icon.png"))
+	if (!icon.loadFromFile("data/Texture/Icon/icon.png"))
 	{
 #ifdef _DEBUG
 		std::cout << "icon not found" << std::endl;

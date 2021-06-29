@@ -29,34 +29,34 @@ MainMenu::~MainMenu()
 
 void MainMenu::initButton()
 {
-	btnPlay.Setup("Assets/Texture/GUI/Buttons/Start_BTN.png",
-	              "Assets/Texture/GUI/Buttons/Start_BTN_HOV.png",
-	              "Assets/Texture/GUI/Buttons/Start_BTN_ACT.png",
+	btnPlay.Setup("data/Texture/GUI/Buttons/Start_BTN.png",
+	              "data/Texture/GUI/Buttons/Start_BTN_HOV.png",
+	              "data/Texture/GUI/Buttons/Start_BTN_ACT.png",
 	              1.0f, sf::Vector2f(204.47f,499.09f));
 	btnContainer.push_back(&btnPlay);
 
-	btnSetting.Setup("Assets/Texture/GUI/Buttons/Settings_BTN.png",
-	                 "Assets/Texture/GUI/Buttons/Settings_BTN_HOV.png",
-	                 "Assets/Texture/GUI/Buttons/Settings_BTN_ACT.png",
+	btnSetting.Setup("data/Texture/GUI/Buttons/Settings_BTN.png",
+	                 "data/Texture/GUI/Buttons/Settings_BTN_HOV.png",
+	                 "data/Texture/GUI/Buttons/Settings_BTN_ACT.png",
 	                 1.0f, sf::Vector2f(204.47f, 579.9f));
 	btnContainer.push_back(&btnSetting);
 
-	btnCredit.Setup("Assets/Texture/GUI/Buttons/Credit_BTN.png",
-	                 "Assets/Texture/GUI/Buttons/Credit_BTN_HOV.png",
-	                 "Assets/Texture/GUI/Buttons/Credit_BTN_ACT.png",
+	btnCredit.Setup("data/Texture/GUI/Buttons/Credit_BTN.png",
+	                 "data/Texture/GUI/Buttons/Credit_BTN_HOV.png",
+	                 "data/Texture/GUI/Buttons/Credit_BTN_ACT.png",
 	                 1.0f, sf::Vector2f(204.47f, 660.73f));
 	btnContainer.push_back(&btnCredit);
 
-	btnExit.Setup("Assets/Texture/GUI/Buttons/Close_BTN.png",
-	              "Assets/Texture/GUI/Buttons/Close_BTN_HOV.png",
-	              "Assets/Texture/GUI/Buttons/Close_BTN_ACT.png",
+	btnExit.Setup("data/Texture/GUI/Buttons/Close_BTN.png",
+	              "data/Texture/GUI/Buttons/Close_BTN_HOV.png",
+	              "data/Texture/GUI/Buttons/Close_BTN_ACT.png",
 	              1.0f, sf::Vector2f(204.47f,746.77f));
 	btnContainer.push_back(&btnExit);
 }
 
 void MainMenu::initBg()
 {
-	menuBgTex.loadFromFile("Assets/Texture/GUI/main-menu_background2.png");
+	menuBgTex.loadFromFile("data/Texture/GUI/main-menu_background2.png");
 	menuBgSpi.setTexture(menuBgTex);
 	menuBgSpi.setScale(1.f, 1.f);
 	menuBgSpi.setPosition(0, 0);

@@ -29,7 +29,7 @@ LoadingScreen::LoadingScreen(SharedObject& obj, bool replace) :BaseScene(obj, re
 	loadingBar.setSize(sf::Vector2f(22, 30));
 	
 	//load font
-	pixelFont.loadFromFile("Assets/Font/Minecraft.ttf");
+	pixelFont.loadFromFile("data/Font/Minecraft.ttf");
 
 	//setup text
 	moveText.setFont(pixelFont);
@@ -64,12 +64,12 @@ LoadingScreen::LoadingScreen(SharedObject& obj, bool replace) :BaseScene(obj, re
 	loadingText.setPosition(887.22f, 1050.0f - 664.63f);
 
 	//setup texture
-	keyWTex.loadFromFile("Assets/Texture/Sprites/Loading/W-Key.png");
-	keyATex.loadFromFile("Assets/Texture/Sprites/Loading/A-Key.png");
-	keySTex.loadFromFile("Assets/Texture/Sprites/Loading/S-Key.png");
-	keyDTex.loadFromFile("Assets/Texture/Sprites/Loading/D-Key.png");
-	keyRTex.loadFromFile("Assets/Texture/Sprites/Loading/R-Key.png");
-	mouseTex.loadFromFile("Assets/Texture/Sprites/Loading/mouse-sprite.png");
+	keyWTex.loadFromFile("data/Texture/Sprites/Loading/W-Key.png");
+	keyATex.loadFromFile("data/Texture/Sprites/Loading/A-Key.png");
+	keySTex.loadFromFile("data/Texture/Sprites/Loading/S-Key.png");
+	keyDTex.loadFromFile("data/Texture/Sprites/Loading/D-Key.png");
+	keyRTex.loadFromFile("data/Texture/Sprites/Loading/R-Key.png");
+	mouseTex.loadFromFile("data/Texture/Sprites/Loading/mouse-sprite.png");
 
 	//setup anim
 	keyWAnim.Setup(&keyWTex, 1, 2);

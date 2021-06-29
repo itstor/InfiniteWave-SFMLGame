@@ -42,15 +42,15 @@ void Game::run()
 
 void Game::initSFX()
 {
-	obj.AudioManager->addSFX("button", "Assets/Audio/SFX/Button_9.wav");
-	obj.AudioManager->addSFX("pistol_shoot", "Assets/Audio/SFX/pistol-shoot.wav");
-	obj.AudioManager->addSFX("pistol_reload", "Assets/Audio/SFX/pistol-reload.wav");
-	obj.AudioManager->addSFX("pistol_click", "Assets/Audio/SFX/pistol-click.wav");
-	obj.AudioManager->addSFX("zombie_1", "Assets/Audio/SFX/zombie-alive1.wav");
+	obj.AudioManager->addSFX("button", "data/Audio/SFX/Button_9.wav");
+	obj.AudioManager->addSFX("pistol_shoot", "data/Audio/SFX/pistol-shoot.wav");
+	obj.AudioManager->addSFX("pistol_reload", "data/Audio/SFX/pistol-reload.wav");
+	obj.AudioManager->addSFX("pistol_click", "data/Audio/SFX/pistol-click.wav");
+	obj.AudioManager->addSFX("zombie_1", "data/Audio/SFX/zombie-alive1.wav");
 }
 
 void Game::initMusic()
 {
-	obj.AudioManager->addMusic("Loading", "Assets/Audio/Backsound/backsound.wav", true);
+	obj.AudioManager->addMusic("Loading", "data/Audio/Backsound/backsound.wav", true);
 }
 

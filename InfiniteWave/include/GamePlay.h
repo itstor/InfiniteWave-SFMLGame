@@ -34,7 +34,6 @@ public:
 
 private:
 	void initObstacles();
-	void initBg();
 	void initButton();
 	void initMap();
 	void initLight();
@@ -42,7 +41,6 @@ private:
 	bool spawnZombie(float deltaTime);
 	void spawn(ZombieType zombieType, const sf::Vector2f& playerPos);
 	void calculateTotalZombie();
-	void zombiePathFinding();
 	
 	//Define scene component here
 	Grid mPathFindingGrid;
@@ -50,30 +48,20 @@ private:
 	PathRequestManager mRequestManager;
 	AnimationManager mAnimManager;
 	
-	bool isGUIZoom = false;
-	bool showGUI = true;
-	bool allowUpdatePath = false;
-	
 	float gunLightDelay = 0.0f;
-	float zoomGUIAmount = 1.0f;
-	float zoomGUITotalTime = 0.0f;
 
-	//Wave system here
+	//Wave system
 	bool nextWave = false;
 	float nextWaveDelay = 5.0f;
 	float spawnCooldown = 1.0f;
-	float zombieSpawnRadius;
 	unsigned int currentWave = 0;
+	int killCount = 0;
+	int gameScore = 0;
 	int currentActiveZombie = 0;
 	int totalNormalZombie = 0;
 	int totalRedZombie = 0;
 	int totalBlueZombie = 0;
 	int totalBlackZombie = 0;
-	int totalActiveZombie= 0;
-
-
-	int killCount = 0;
-	int gameScore = 0;
 	
 	Player player;
 	Bullet bullet;
@@ -92,13 +80,6 @@ private:
 	sf::Texture flashLightTexture;
 	sf::Texture pointLightTexture;
 
-	//GUI and Overlay
-	sf::RectangleShape nightOverlay;
-	sf::RectangleShape mist;
-	sf::Texture mistTex;
-	sf::View camera;
-	sf::View GUICamera;
-
 	//Container
 	std::vector<Obstacle> obstacleContainer;
 	std::vector<Bullet> bulletContainer;
@@ -107,6 +88,11 @@ private:
 	std::vector<Zombie*> zombieContainer;
 
 	//GUI
+	bool showGUI = true;
+	
+	sf::View camera;
+	sf::View GUICamera;
+
 	sf::Texture healthIconTex;
 	sf::Texture killIconTex;
 	sf::Texture ammoIconTex;

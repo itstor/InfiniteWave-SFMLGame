@@ -16,11 +16,11 @@ Player::Player(): playerRect(entityRect)
 	health = 200.0f;
 	
 	//setup animation texture
-	bodyTex.loadFromFile("Assets/Texture/Sprites/Player/playerspites.png");
+	bodyTex.loadFromFile("data/Texture/Sprites/Player/playerspites.png");
 	bodyTex.setSmooth(true);
 	playerRect.setTexture(&bodyTex);
 
-	feetTex.loadFromFile("Assets/Texture/Sprites/Player/feetplayer.png");
+	feetTex.loadFromFile("data/Texture/Sprites/Player/feetplayer.png");
 	feetTex.setSmooth(true);
 	playerFeetRect.setTexture(&feetTex);
 

@@ -22,11 +22,11 @@ SplashScreen::SplashScreen(SharedObject& obj, bool replace) :BaseScene(obj, repl
 	rectMask.setFillColor(alphaMask);
 	rectMask.setSize(sf::Vector2f(mWindow.GetWindowSize().x, mWindow.GetWindowSize().y));
 
-	logoITS.Setup("Assets/Texture/GUI/splash_whiteits.png",
+	logoITS.Setup("data/Texture/GUI/splash_whiteits.png",
 		sf::Vector2f(static_cast<float>(conf::windowWidth) / 2, static_cast<float>(conf::windowHeight) / 2),
 		sf::Vector2f(500, 500));
 	
-	logoGame.Setup("Assets/Texture/GUI/splash_logogame.png",
+	logoGame.Setup("data/Texture/GUI/splash_logogame.png",
 		sf::Vector2f(static_cast<float>(conf::windowWidth) / 2, static_cast<float>(conf::windowHeight) / 2),
 		sf::Vector2f(500, 548));
 	

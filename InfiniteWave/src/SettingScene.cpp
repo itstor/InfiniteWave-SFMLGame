@@ -17,7 +17,7 @@ SettingScene::SettingScene(SharedObject& obj, bool replace) :BaseScene(obj, repl
 #ifdef _DEBUG
 	std::cout << "SettingScene Created" << std::endl;
 #endif
-	headlineFont.loadFromFile("Assets/Font/HeadlinerNo.45.ttf");
+	headlineFont.loadFromFile("data/Font/HeadlinerNo.45.ttf");
 
 
 	settingText.setFont(headlineFont);
@@ -49,17 +49,17 @@ SettingScene::~SettingScene()
 void SettingScene::initButton()
 {
 	//Initialize button here
-	btnBack.Setup("Assets/Texture/GUI/Buttons/Back_BTN.png",
-				"Assets/Texture/GUI/Buttons/Back_BTN.png",
-				"Assets/Texture/GUI/Buttons/Back_BTN.png",
+	btnBack.Setup("data/Texture/GUI/Buttons/Back_BTN.png",
+				"data/Texture/GUI/Buttons/Back_BTN.png",
+				"data/Texture/GUI/Buttons/Back_BTN.png",
 				1.0f, sf::Vector2f(123.27f, 463.19f));
 
-	btnFullscreen.Setup("Assets/Texture/GUI/Buttons/BTN_ONOFF_FIRST.png",
-		"Assets/Texture/GUI/Buttons/BTN_ONOFF_SECOND.png",
+	btnFullscreen.Setup("data/Texture/GUI/Buttons/BTN_ONOFF_FIRST.png",
+		"data/Texture/GUI/Buttons/BTN_ONOFF_SECOND.png",
 		1.0f, sf::Vector2f(330.48f, 569.0f), conf::isFullscreen ? FIRST_STATE : SECOND_STATE);
 
-	btnMute.Setup("Assets/Texture/GUI/Buttons/BTN_ONOFF_FIRST.png",
-		"Assets/Texture/GUI/Buttons/BTN_ONOFF_SECOND.png",
+	btnMute.Setup("data/Texture/GUI/Buttons/BTN_ONOFF_FIRST.png",
+		"data/Texture/GUI/Buttons/BTN_ONOFF_SECOND.png",
 		1.0f, sf::Vector2f(330.48f, 632.75f), conf::isMuted ? SECOND_STATE: FIRST_STATE);
 
 }
@@ -67,7 +67,7 @@ void SettingScene::initButton()
 void SettingScene::initBg()
 {
 	//Initialize background here
-	menuBgTex.loadFromFile("Assets/Texture/GUI/main-menu_background2.png");
+	menuBgTex.loadFromFile("data/Texture/GUI/main-menu_background2.png");
 	menuBgSpi.setTexture(menuBgTex);
 	menuBgSpi.setScale(1.f, 1.f);
 	menuBgSpi.setPosition(0, 0);
