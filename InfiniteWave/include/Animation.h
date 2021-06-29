@@ -3,6 +3,7 @@
 #include <SFML/System/Vector2.hpp>
 
 enum class AnimType { ZOOM, MOVE };
+enum class TransitionType {LINEAR, EASE_IN_OUT_CUBIC, EASE_IN_OUT_BACK};
 
 namespace sf {
 	class Transformable;
@@ -11,7 +12,7 @@ namespace sf {
 class Animation
 {
 public:
-	Animation(AnimType anim_type, const sf::Vector2f& start, const sf::Vector2f& end, float time, sf::Transformable & object, bool back, float back_delay);
+	Animation(AnimType anim_type, TransitionType transition_type, const sf::Vector2f& start, const sf::Vector2f& end, float time, sf::Transformable & object, bool back, float back_delay);
 	~Animation() = default;
 
 	void Update(float deltaTime);
@@ -19,8 +20,6 @@ public:
 	[[nodiscard]] bool isFinished() const;
 
 private:
-	[[nodiscard]] float easeInOutCubic(float x) const;
-	
 	bool misFinished = false;
 	bool mBack = false;
 	float res = 0.0;
@@ -34,5 +33,6 @@ private:
 	sf::Vector2f mStart;
 	sf::Vector2f totalFrame;
 	sf::Transformable* mObject;
+	std::function<float(float)> mTransitionFunc;
 };
 

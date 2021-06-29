@@ -65,7 +65,7 @@ void GameoverScene::Update(float deltaTime)
 	}
 	if (once)
 	{
-		mAnimManager.playAnimation(AnimType::ZOOM, { 0.0f,0.0f }, { 20.0f,0.0f }, 2.0f, rectangle, true, 2.0f);
+		mAnimManager.playAnimation(AnimType::MOVE, TransitionType::EASE_IN_OUT_BACK, { 100.0f,100.0f }, { 1000.0f,500.0f }, 2.0f, rectangle, true, 2.0f);
 		once = false;
 	}
 	mAnimManager.Update(deltaTime);

@@ -627,7 +627,7 @@ void GamePlay::Update(float deltaTime)
 		waveCurrentText.setString(std::to_string(currentWave).append("/~"));
 		calculateTotalZombie();
 		//Play next wave animation
-		if (currentWave > 1) mAnimManager.playAnimation(AnimType::ZOOM, {0.0f,0.0f},{2.8f,0.0f},1.0f,waveCompleteText,true, 2.0f);
+		if (currentWave > 1) mAnimManager.playAnimation(AnimType::ZOOM, TransitionType::EASE_IN_OUT_CUBIC,{0.0f,0.0f}, {2.8f,0.0f},1.0f,waveCompleteText, true, 2.0f);
 	}
 	if (nextWave)
 	{

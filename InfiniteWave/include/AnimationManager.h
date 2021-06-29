@@ -10,7 +10,8 @@ public:
 	~AnimationManager() = default;
 
 	//To anim size set y properties to 0.0f
-	void playAnimation(AnimType type, const sf::Vector2f& start, const sf::Vector2f& end, float time, sf::Transformable& object, bool back, float
+	void playAnimation(AnimType type, TransitionType transition_type, const sf::Vector2f& start, const sf::Vector2f& end, float time, sf::
+	                   Transformable& object, bool back, float
 	                   back_delay = 0.0f);
 
 	void Update(float deltaTime);
