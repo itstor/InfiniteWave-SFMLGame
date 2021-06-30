@@ -10,7 +10,6 @@ public:
 	void Update(float deltaTime, int row, float switchTime, unsigned startFrame, unsigned endFrame);
 	void Hide();
 	sf::IntRect* getTexture();
-	void Reset();
 	
 	[[nodiscard]] bool isFinish() const;
 	sf::IntRect uvRect;

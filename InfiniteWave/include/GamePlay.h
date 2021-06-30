@@ -36,6 +36,7 @@ private:
 	void initMap();
 	void initLight();
 	void initGUI();
+	void initTexture();
 	bool spawnZombie(float deltaTime);
 	void spawn(ZombieType zombieType, const sf::Vector2f& playerPos);
 	void calculateTotalZombie();
@@ -47,6 +48,7 @@ private:
 	AnimationManager mAnimManager;
 	
 	float gunLightDelay = 0.0f;
+	bool isHeartBeatPlayed = false;
 
 	//Wave system
 	bool nextWave = false;
@@ -54,7 +56,6 @@ private:
 	float spawnCooldown = 1.0f;
 	unsigned int currentWave = 0;
 	int killCount = 0;
-	int gameScore = 0;
 	int currentActiveZombie = 0;
 	int totalNormalZombie = 0;
 	int totalRedZombie = 0;
@@ -70,6 +71,7 @@ private:
 	sf::Texture redZombieTex;
 	sf::Texture blueZombieTex;
 	sf::Texture blackZombieTex;
+	sf::Texture bloodSplash;
 
 	//Light
 	ltbl::LightSystem ls;
@@ -100,6 +102,7 @@ private:
 	sf::RectangleShape killIconRect;
 	sf::RectangleShape ammoIconRect;
 	sf::RectangleShape healthBar;
+	sf::RectangleShape dyingOverlay;
 
 	sf::Font pixelFont;
 	sf::Text killText;

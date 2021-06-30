@@ -3,7 +3,7 @@
 #include <iostream>
 #include <utility>
 
-Zombie::Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, PathRequestManager& request_manager, sf::SoundBuffer& sound_buffer): mZombieSoundBuffer(sound_buffer), mRequestManager(request_manager), zombieTex(zombie_tex)
+Zombie::Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, sf::Texture& blood_tex, PathRequestManager& request_manager, sf::SoundBuffer& sound_buffer): mRequestManager(request_manager), mZombieSoundBuffer(sound_buffer), zombieTex(zombie_tex), bloodSplashTex(blood_tex)
 {
 	ColliderBody.setSize({288,311});
 	ColliderBody.setOrigin(ColliderBody.getSize() * 0.5f);
@@ -14,6 +14,14 @@ Zombie::Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, PathRequestMana
 	//TODO change texture to load from memory
 	entityRect.setTexture(&zombieTex);
 	zombieAnim.Setup(&zombieTex, 2, 17);
+
+	//setup blood
+	bloodRect.setTexture(&bloodSplashTex);
+	bloodRect.setSize({200.0f,200.0f});
+	bloodRect.setOrigin(100.0f, 100.0f);
+	bloodAnim.Setup(&bloodSplashTex, 1, 14);
+	bloodAnim.Hide();
+	bloodRect.setTextureRect(*bloodAnim.getTexture());
 
 	//setup zombie sfx
 	mZombieSound.setBuffer(mZombieSoundBuffer);
@@ -44,6 +52,16 @@ void Zombie::Update(float deltaTime, const sf::Vector2f& distance)
 	{
 		zombieAnim.Update(deltaTime, 1, 0.1f,0, 9);
 		entityRect.setTextureRect(*zombieAnim.getTexture());
+	}
+
+	if (showBlood)
+	{
+		bloodAnim.Update(deltaTime, 0, 0.03f, 0,13);
+		bloodRect.setTextureRect(*bloodAnim.getTexture());
+		if (bloodAnim.isFinish())
+		{
+			showBlood = false;
+		}
 	}
 
 	attackCooldown -= deltaTime;
@@ -98,6 +116,7 @@ void Zombie::Move(float deltaTime)
 		entityRect.move(movePos);
 		ColliderBody.move(movePos);
 		mZombieSound.setPosition(entityRect.getPosition().x, 0, entityRect.getPosition().y); //Move sound source position
+		bloodRect.setPosition(entityRect.getPosition());
 		mDirVect.x = 0.0f; mDirVect.y = 0.0f;
 }
 
@@ -112,6 +131,7 @@ void Zombie::Attack()
 void Zombie::getHit()
 {
 	health -= 20;
+	showBlood = true;
 	std::cout << "ARGHH\n";
 	if (health <= 0)
 	{
@@ -135,6 +155,11 @@ ZombieType Zombie::getZombieType() const
 	return mZombieType;
 }
 
+sf::RectangleShape* Zombie::getBloodDraw()
+{
+	return &bloodRect;
+}
+
 void Zombie::lookAt(const sf::Vector2f & target_position)
 {
 	const float PI = 3.14159265f;
@@ -148,5 +173,3 @@ void Zombie::lookAt(const sf::Vector2f & target_position)
 
 	entityRect.setRotation(angle);
 }
-
-

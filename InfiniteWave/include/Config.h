@@ -12,5 +12,6 @@ namespace conf
 	inline unsigned int windowHeight = 1080;
 	inline int maxFPS = 60; //set to 0 to disable limit
 	inline int highScore = 0;
+	inline int gameScore = 0;
 	//bool useCustomController = false;
 };

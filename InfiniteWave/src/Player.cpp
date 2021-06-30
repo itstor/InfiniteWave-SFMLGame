@@ -13,7 +13,7 @@ Player::Player(): playerRect(entityRect)
 {
 	//setup player
 	movementSpeed = 400.0f;
-	health = 200.0f;
+	health = 200;
 	
 	//setup animation texture
 	bodyTex.loadFromFile("data/Texture/Sprites/Player/playerspites.png");
@@ -180,9 +180,13 @@ void Player::setPosition(const sf::Vector2f & pos)
 	sf::Listener::setPosition(playerRect.getPosition().x, 0, playerRect.getPosition().y);
 }
 
-void Player::increaseHealth()
+void Player::increaseHealth(int amount)
 {
-	health += 15;
+	health += amount;
+	if (health > 200)
+	{
+		health = 200;
+	}
 }
 
 void Player::getHit()

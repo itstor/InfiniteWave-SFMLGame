@@ -15,6 +15,7 @@
 #include "NormalZombie.h"
 #include "RedZombie.h"
 #include "SceneManager.h"
+#include "Config.h"
 
 
 GamePlay::GamePlay(SharedObject& obj, bool replace) : BaseScene(obj, replace),
@@ -26,6 +27,9 @@ GamePlay::GamePlay(SharedObject& obj, bool replace) : BaseScene(obj, replace),
 #endif
 	//stop main menu music
 	mAudio.stopAll();
+
+	//reset game score
+	conf::gameScore = 0;
 	
 	//init view
 	camera.reset(sf::FloatRect(0, 0, 3840, 2160));
@@ -33,25 +37,10 @@ GamePlay::GamePlay(SharedObject& obj, bool replace) : BaseScene(obj, replace),
 
 	//init path finding grid
 	mPathFindingGrid.Setup(sf::Vector2f(8019, 6547), sf::Vector2f(136, 136));
-
-	//Load zombie Texture
-	normalZombieTex.loadFromFile("data/Texture/Sprites/Zombie/normal-zombie-sprites.png");
-	normalZombieTex.setSmooth(true);
-
-	redZombieTex.loadFromFile("data/Texture/Sprites/Zombie/red-zombie-sprites.png");
-	redZombieTex.setSmooth(true);
-
-	blueZombieTex.loadFromFile("data/Texture/Sprites/Zombie/blue-zombie-sprites.png");
-	blueZombieTex.setSmooth(true);
-
-	blackZombieTex.loadFromFile("data/Texture/Sprites/Zombie/black-zombie-sprites.png");
-	blackZombieTex.setSmooth(true);
-
-	pickupHealthTex.loadFromFile("data/Texture/Sprites/Pickup/health.png");
-	pickupHealthTex.setSmooth(true);
 	
 	player.setPosition(sf::Vector2f(3602.19f, 4756.3f));
 
+	initTexture();
 	initLight();
 	initMap();
 	initObstacles();
@@ -245,6 +234,7 @@ void GamePlay::initGUI()
 	waveTitleText.setFillColor(sf::Color::White);
 	waveCurrentText.setFillColor(sf::Color::White);
 	waveCompleteText.setFillColor(sf::Color::White);
+	dyingOverlay.setFillColor(sf::Color(255, 0, 0, 0));
 	
 	healthIconRect.setSize(static_cast<const sf::Vector2f>(healthIconTex.getSize()));
 	killIconRect.setSize(static_cast<const sf::Vector2f>(killIconTex.getSize()));
@@ -257,6 +247,7 @@ void GamePlay::initGUI()
 	waveTitleText.setScale(1, 1);
 	waveCurrentText.setScale(1.8f, 1.8f);
 	waveCompleteText.setScale(0.0f, 0.0f);
+	dyingOverlay.setSize({ 1920.0f,1080.0f });
 
 	healthIconRect.setPosition(9581.59f, 38.3f);
 	killIconRect.setPosition(9631.25f, 118.71f);
@@ -271,6 +262,29 @@ void GamePlay::initGUI()
 	waveCompleteText.setOrigin(waveCompleteText.getLocalBounds().left + waveCompleteText.getLocalBounds().width * 0.5f,
 	                           waveCompleteText.getLocalBounds().top + waveCompleteText.getLocalBounds().height * 0.5f);
 	waveCompleteText.setPosition(9078.31f, 540.0f);
+	dyingOverlay.setPosition(8118.0f, 0.0f);
+}
+
+void GamePlay::initTexture()
+{
+	//Load zombie Texture
+	normalZombieTex.loadFromFile("data/Texture/Sprites/Zombie/normal-zombie-sprites.png");
+	normalZombieTex.setSmooth(true);
+
+	redZombieTex.loadFromFile("data/Texture/Sprites/Zombie/red-zombie-sprites.png");
+	redZombieTex.setSmooth(true);
+
+	blueZombieTex.loadFromFile("data/Texture/Sprites/Zombie/blue-zombie-sprites.png");
+	blueZombieTex.setSmooth(true);
+
+	blackZombieTex.loadFromFile("data/Texture/Sprites/Zombie/black-zombie-sprites.png");
+	blackZombieTex.setSmooth(true);
+
+	pickupHealthTex.loadFromFile("data/Texture/Sprites/Pickup/health.png");
+	pickupHealthTex.setSmooth(true);
+
+	bloodSplash.loadFromFile("data/Texture/Sprites/Zombie/blood-splash.png");
+	bloodSplash.setSmooth(true);
 }
 
 void GamePlay::Pause()
@@ -350,16 +364,16 @@ void GamePlay::spawn(ZombieType zombieType, const sf::Vector2f & playerPos)
 	switch (zombieType)
 	{
 	case ZombieType::NORMAL_ZOMBIE: zombieContainer.push_back(
-			new NormalZombie({xPos, yPos}, normalZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1")));
+			new NormalZombie({xPos, yPos}, normalZombieTex, bloodSplash, mRequestManager, *mAudio.getSoundBuffer("zombie_1")));
 		break;
 	case ZombieType::RED_ZOMBIE: zombieContainer.push_back(
-			new RedZombie({xPos, yPos}, redZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1")));
+			new RedZombie({xPos, yPos}, redZombieTex,bloodSplash, mRequestManager, *mAudio.getSoundBuffer("zombie_1")));
 		break;
 	case ZombieType::BLUE_ZOMBIE: zombieContainer.push_back(
-			new BlueZombie({xPos, yPos}, blueZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1")));
+			new BlueZombie({xPos, yPos}, blueZombieTex,bloodSplash, mRequestManager, *mAudio.getSoundBuffer("zombie_1")));
 		break;
 	case ZombieType::BLACK_ZOMBIE: zombieContainer.push_back(
-			new BlackZombie({xPos, yPos}, blackZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1")));
+			new BlackZombie({xPos, yPos}, blackZombieTex,bloodSplash,mRequestManager, *mAudio.getSoundBuffer("zombie_1")));
 		break;
 	default: break;
 	}
@@ -533,7 +547,7 @@ void GamePlay::Update(float deltaTime)
 					killCount++;
 					currentActiveZombie--;
 					killText.setString(std::to_string(killCount));
-					scoreTotalText.setString(std::to_string(gameScore));
+					scoreTotalText.setString(std::to_string(conf::gameScore));
 
 					int score = 0;
 					
@@ -546,13 +560,13 @@ void GamePlay::Update(float deltaTime)
 					default: break;
 					}
 
-					gameScore += score;
+					conf::gameScore += score;
 
 					if (const int randomNum = rand() % 100; randomNum % 5 == 0) { //20% rate
 						pickupHealthContainer.emplace_back(new PickupItem(
 							pickupHealthTex,
-							sf::Vector2f(zombieContainer[i]->getPosition().x, zombieContainer[i]->getPosition().y),
-							sf::Vector2f(50.0f, 50.0f), 10.0f));
+							sf::Vector2f(zombieContainer[j]->getPosition().x, zombieContainer[j]->getPosition().y),
+							sf::Vector2f(100.0f, 100.0f), 15.0f));
 					}
 					
 					delete zombieContainer[j];
@@ -567,7 +581,8 @@ void GamePlay::Update(float deltaTime)
 		pickupHealthContainer[i]->Update(deltaTime);
 		if (player.onCollision(*pickupHealthContainer[i]))
 		{
-			player.increaseHealth();
+			player.increaseHealth(15);
+			mAudio.playSFX("health_pickup");
 			pickupHealthContainer.erase(pickupHealthContainer.begin() + i);
 		}
 		else if (pickupHealthContainer[i]->isExpired())
@@ -610,6 +625,24 @@ void GamePlay::Update(float deltaTime)
 		}
 	}
 
+	//Update Dying Overlay
+	if (player.getHealth() <= 75)
+	{
+		if (!isHeartBeatPlayed) {
+			mAudio.play("HeartBeat");
+			isHeartBeatPlayed = true;
+		}
+		const float progressOverlay = (75 - player.getHealth()) / 75;
+		const float progressMusic = (75 - player.getHealth()) / 75;
+		const sf::Uint8 a = 40 * progressOverlay;
+		mAudio.setMusicVolume("HeartBeat", 100 * progressMusic);
+		dyingOverlay.setFillColor(sf::Color(255, 0, 0, a));
+	}
+	else if (isHeartBeatPlayed)
+	{
+		mAudio.stopMusic("HeartBeat");
+	}
+	
 	//Update Health bar
 	const float xHealthBar = (player.getHealth() / 200.0f) * 318;
 	healthBar.setSize({ xHealthBar, healthBar.getSize().y });
@@ -629,29 +662,31 @@ void GamePlay::Draw()
 	mWindow.GetRenderWindow()->setView(camera);
 	
 	mWindow.Draw(gameMap);
-	for (auto &bul:bulletContainer)
+	/*for (auto &bul:bulletContainer)
 	{
 		mWindow.Draw(*bul.getDraw());
-	}
+	}*/
 
+	for (auto health:pickupHealthContainer)
+	{
+		mWindow.Draw(*health);
+	}
+	
 	mWindow.Draw(*player.getFeetDraw());
 	mWindow.Draw(*player.getDraw());
 
 	for (auto zombie : zombieContainer) {
 		mWindow.Draw(*zombie->getDraw());
-	}
-
-	for (auto health:pickupHealthContainer)
-	{
-		mWindow.Draw(*health);
+		mWindow.Draw(*zombie->getBloodDraw());
 	}
 
 	ls.render(*mWindow.GetRenderWindow());
 	//mPathFindingGrid.Draw(mWindow.GetRenderWindow());
 
 	//GUI Here
+	mWindow.GetRenderWindow()->setView(GUICamera);
+	mWindow.Draw(dyingOverlay);
 	if (showGUI) {
-		mWindow.GetRenderWindow()->setView(GUICamera);
 		mWindow.Draw(healthIconRect);
 		mWindow.Draw(killIconRect);
 		mWindow.Draw(ammoIconRect);
@@ -664,8 +699,9 @@ void GamePlay::Draw()
 		mWindow.Draw(waveCurrentText);
 		mWindow.Draw(waveCompleteText);
 		//Reset view back
-		mWindow.GetRenderWindow()->setView(camera);
 	}
+	mWindow.GetRenderWindow()->setView(camera);
+
 	
 	mWindow.EndDraw();
 }

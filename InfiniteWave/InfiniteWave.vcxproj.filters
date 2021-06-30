@@ -193,7 +193,10 @@
     <ClCompile Include="src\Animation.cpp">
       <Filter>Source\GameSystem\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameoverScene.cpp" />
+    <ClCompile Include="src\Mist.cpp" />
+    <ClCompile Include="src\GameoverScene.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AudioManager.h">
@@ -319,7 +322,10 @@
     <ClInclude Include="include\Animation.h">
       <Filter>Include\GameSystem\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="include\GameoverScene.h" />
+    <ClInclude Include="include\Mist.h" />
+    <ClInclude Include="include\GameoverScene.h">
+      <Filter>Include\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />

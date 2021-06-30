@@ -20,7 +20,7 @@ protected:
 	sf::Vector2f movePos;
 	float movementSpeed = 0;
 	
-	float health = 0;
+	int health = 0;
 	float angle = 0;
 	bool misDead = false;
 };

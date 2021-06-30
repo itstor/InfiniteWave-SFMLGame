@@ -56,6 +56,16 @@ void AudioManager::stopAll()
 	}
 }
 
+void AudioManager::stopMusic(const std::string & music_name)
+{
+	musicContainer[music_name]->stop();
+}
+
+void AudioManager::setMusicVolume(const std::string& music_name, float volume)
+{
+	musicContainer[music_name]->setVolume(volume);
+}
+
 
 void AudioManager::increase_volume()
 {
@@ -76,7 +86,7 @@ void AudioManager::updateVolume()
 }
 
 
-void AudioManager::updateVolume(float& newVolume)
+void AudioManager::updateVolume(float newVolume)
 {
 	for (auto&[name, music] : musicContainer)
 	{

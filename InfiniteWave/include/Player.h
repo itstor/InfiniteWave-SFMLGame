@@ -12,7 +12,7 @@ public:
 	void Update(float deltaTime);
 	void lookAt(const sf::Vector2f& mousePos);
 	void setPosition(const sf::Vector2f& pos);
-	void increaseHealth();
+	void increaseHealth(int amount);
 	void getHit();
 
 	//In-game function

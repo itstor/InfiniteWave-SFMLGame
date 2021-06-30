@@ -47,10 +47,12 @@ void Game::initSFX()
 	obj.AudioManager->addSFX("pistol_reload", "data/Audio/SFX/pistol-reload.wav");
 	obj.AudioManager->addSFX("pistol_click", "data/Audio/SFX/pistol-click.wav");
 	obj.AudioManager->addSFX("zombie_1", "data/Audio/SFX/zombie-alive1.wav");
+	obj.AudioManager->addSFX("health_pickup", "data/Audio/SFX/health-pickup.wav");
 }
 
 void Game::initMusic()
 {
 	obj.AudioManager->addMusic("Loading", "data/Audio/Backsound/backsound.wav", true);
+	obj.AudioManager->addMusic("HeartBeat", "data/Audio/SFX/heartbeat.wav", true);
 }
 

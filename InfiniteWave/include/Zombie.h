@@ -16,7 +16,7 @@ enum class ZombieType {NORMAL_ZOMBIE, RED_ZOMBIE, BLUE_ZOMBIE, BLACK_ZOMBIE};
 class Zombie: public Entity
 {
 public:
-	Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, PathRequestManager& request_manager, sf::SoundBuffer& sound_buffer);
+	Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, sf::Texture& blood_tex, PathRequestManager& request_manager, sf::SoundBuffer& sound_buffer);
 	~Zombie() override;
 
 	void Update(float deltaTime, const sf::Vector2f& distance);
@@ -31,6 +31,8 @@ public:
 
 	sf::Vector2f getPosition() const;
 	ZombieType getZombieType() const;
+	sf::RectangleShape* getBloodDraw();
+
 
 	bool allowUpdatePath = true;
 
@@ -43,14 +45,19 @@ private:
 	sf::SoundBuffer& mZombieSoundBuffer;
 	
 	sf::Texture& zombieTex;
+	sf::Texture& bloodSplashTex;
 	SpriteAnimation zombieAnim;
+	SpriteAnimation bloodAnim;
 	AnimState animState;
+
+	sf::RectangleShape bloodRect;
 
 	sf::Vector2f mDirVect;
 	sf::Vector2f nextPosition;
 	std::stack<Node> mWalkPath;
 	
 	bool allowAttack = true;
+	bool showBlood = false;
 
 	float zombieSoundDelay = 0.0f;
 	float attackCooldown = 5.0f;

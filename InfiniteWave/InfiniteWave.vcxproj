@@ -22,6 +22,7 @@
     <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\AnimationManager.cpp" />
     <ClCompile Include="src\GameoverScene.cpp" />
+    <ClCompile Include="src\Mist.cpp" />
     <ClCompile Include="src\SpriteAnimation.cpp" />
     <ClCompile Include="src\AudioManager.cpp" />
     <ClCompile Include="src\BaseScene.cpp" />
@@ -67,6 +68,7 @@
     <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\AnimationManager.h" />
     <ClInclude Include="include\GameoverScene.h" />
+    <ClInclude Include="include\Mist.h" />
     <ClInclude Include="include\SpriteAnimation.h" />
     <ClInclude Include="include\AudioManager.h" />
     <ClInclude Include="include\BaseScene.h" />
