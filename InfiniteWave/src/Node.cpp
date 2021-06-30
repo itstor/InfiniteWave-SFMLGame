@@ -37,7 +37,7 @@ bool Node::operator!=(const Node & node) const
 
 bool Node::operator<(const Node & node) const
 {
-	return this->GetfCost() < node.GetfCost(); //reversed, min heap
+	return this->GetfCost() < node.GetfCost();
 }
 
 bool Node::operator>(const Node & node) const

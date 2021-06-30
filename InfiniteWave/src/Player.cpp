@@ -180,6 +180,11 @@ void Player::setPosition(const sf::Vector2f & pos)
 	sf::Listener::setPosition(playerRect.getPosition().x, 0, playerRect.getPosition().y);
 }
 
+void Player::increaseHealth()
+{
+	health += 15;
+}
+
 void Player::getHit()
 {
 	const float damage = rand() % 10 + 5;

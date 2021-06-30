@@ -26,6 +26,7 @@ GamePlay::GamePlay(SharedObject& obj, bool replace) : BaseScene(obj, replace),
 #endif
 	//stop main menu music
 	mAudio.stopAll();
+	
 	//init view
 	camera.reset(sf::FloatRect(0, 0, 3840, 2160));
 	GUICamera.reset(sf::FloatRect(8118, 0, 1920, 1080));
@@ -45,6 +46,9 @@ GamePlay::GamePlay(SharedObject& obj, bool replace) : BaseScene(obj, replace),
 
 	blackZombieTex.loadFromFile("data/Texture/Sprites/Zombie/black-zombie-sprites.png");
 	blackZombieTex.setSmooth(true);
+
+	pickupHealthTex.loadFromFile("data/Texture/Sprites/Pickup/health.png");
+	pickupHealthTex.setSmooth(true);
 	
 	player.setPosition(sf::Vector2f(3602.19f, 4756.3f));
 
@@ -53,8 +57,6 @@ GamePlay::GamePlay(SharedObject& obj, bool replace) : BaseScene(obj, replace),
 	initObstacles();
 	initGUI();
 	mPathFindingGrid.CreateGrid();
-
-	//pfThread.launch();
 }
 
 GamePlay::~GamePlay()
@@ -347,10 +349,18 @@ void GamePlay::spawn(ZombieType zombieType, const sf::Vector2f & playerPos)
 	}
 	switch (zombieType)
 	{
-	case ZombieType::NORMAL_ZOMBIE: zombieContainer.push_back(new NormalZombie({ xPos,yPos }, normalZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1"))); break;
-	case ZombieType::RED_ZOMBIE: zombieContainer.push_back(new RedZombie({ xPos,yPos }, redZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1"))); break;
-	case ZombieType::BLUE_ZOMBIE: zombieContainer.push_back(new BlueZombie({ xPos,yPos }, blueZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1"))); break;
-	case ZombieType::BLACK_ZOMBIE: zombieContainer.push_back(new BlackZombie({ xPos,yPos }, blackZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1"))); break;
+	case ZombieType::NORMAL_ZOMBIE: zombieContainer.push_back(
+			new NormalZombie({xPos, yPos}, normalZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1")));
+		break;
+	case ZombieType::RED_ZOMBIE: zombieContainer.push_back(
+			new RedZombie({xPos, yPos}, redZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1")));
+		break;
+	case ZombieType::BLUE_ZOMBIE: zombieContainer.push_back(
+			new BlueZombie({xPos, yPos}, blueZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1")));
+		break;
+	case ZombieType::BLACK_ZOMBIE: zombieContainer.push_back(
+			new BlackZombie({xPos, yPos}, blackZombieTex, mRequestManager, *mAudio.getSoundBuffer("zombie_1")));
+		break;
 	default: break;
 	}
 }
@@ -491,10 +501,10 @@ void GamePlay::Update(float deltaTime)
 		player.CheckCollision(obs);
 		for (size_t i = 0; i < bulletContainer.size(); i++)
 		{	
-			//Check if bullet collided with obstacle or out of radius, delete
-			if (bulletContainer[i].onCollision(obs) || pow(bulletContainer[i].startPosition.x - bulletContainer[i].getPosition().x, 2)
-				+ pow(bulletContainer[i].startPosition.y - bulletContainer[i].getPosition().y, 2)
-				> pow(3000, 2))
+			//Check if bullet collided with obstacle or out of distance, delete
+			if (bulletContainer[i].onCollision(obs) || sqrt(
+				pow(bulletContainer[i].getPosition().x - bulletContainer[i].startPosition.x, 2) + pow(
+					bulletContainer[i].getPosition().y - bulletContainer[i].startPosition.y, 2)) > 1920)
 			{
 				bulletContainer.erase(bulletContainer.begin() + i);
 			}
@@ -537,11 +547,32 @@ void GamePlay::Update(float deltaTime)
 					}
 
 					gameScore += score;
+
+					if (const int randomNum = rand() % 100; randomNum % 5 == 0) { //20% rate
+						pickupHealthContainer.emplace_back(new PickupItem(
+							pickupHealthTex,
+							sf::Vector2f(zombieContainer[i]->getPosition().x, zombieContainer[i]->getPosition().y),
+							sf::Vector2f(50.0f, 50.0f), 10.0f));
+					}
 					
 					delete zombieContainer[j];
 					zombieContainer.erase(zombieContainer.begin() + j);
 				}
 			}
+		}
+	}
+
+	for (size_t i = 0; i < pickupHealthContainer.size(); i++)
+	{
+		pickupHealthContainer[i]->Update(deltaTime);
+		if (player.onCollision(*pickupHealthContainer[i]))
+		{
+			player.increaseHealth();
+			pickupHealthContainer.erase(pickupHealthContainer.begin() + i);
+		}
+		else if (pickupHealthContainer[i]->isExpired())
+		{
+			pickupHealthContainer.erase(pickupHealthContainer.begin() + i);
 		}
 	}
 	
@@ -564,7 +595,8 @@ void GamePlay::Update(float deltaTime)
 		waveCurrentText.setString(std::to_string(currentWave).append("/~"));
 		calculateTotalZombie();
 		//Play next wave animation
-		if (currentWave > 1) mAnimManager.playAnimation(AnimType::ZOOM, TransitionType::EASE_IN_OUT_CUBIC,{0.0f,0.0f}, {2.8f,0.0f},1.0f,waveCompleteText, true, 2.0f);
+		if (currentWave > 1) mAnimManager.playAnimation(AnimType::ZOOM, TransitionType::EASE_IN_OUT_CUBIC, {0.0f, 0.0f},
+		                                                {2.8f, 0.0f}, 1.0f, waveCompleteText, true, 2.0f);
 	}
 	if (nextWave)
 	{
@@ -605,8 +637,13 @@ void GamePlay::Draw()
 	mWindow.Draw(*player.getFeetDraw());
 	mWindow.Draw(*player.getDraw());
 
-	for (auto &zombie : zombieContainer) {
+	for (auto zombie : zombieContainer) {
 		mWindow.Draw(*zombie->getDraw());
+	}
+
+	for (auto health:pickupHealthContainer)
+	{
+		mWindow.Draw(*health);
 	}
 
 	ls.render(*mWindow.GetRenderWindow());

@@ -12,12 +12,10 @@
 #include "Obstacle.h"
 #include "LightSystem.hpp"
 #include "PathFinding.h"
+#include "PickupItem.h"
 #include "Zombie.h"
 
-class Zombie;
-class Bullet;
 class SceneManager;
-class PickupItem;
 
 
 class GamePlay final : public BaseScene
@@ -62,7 +60,7 @@ private:
 	int totalRedZombie = 0;
 	int totalBlueZombie = 0;
 	int totalBlackZombie = 0;
-	
+
 	Player player;
 	Bullet bullet;
 	Map gameMap;
@@ -75,16 +73,16 @@ private:
 
 	//Light
 	ltbl::LightSystem ls;
-	ltbl::LightPointEmission* flashLight;
-	ltbl::LightPointEmission* gunLight;
+	ltbl::LightPointEmission* flashLight{};
+	ltbl::LightPointEmission* gunLight{};
 	sf::Texture flashLightTexture;
 	sf::Texture pointLightTexture;
 
 	//Container
 	std::vector<Obstacle> obstacleContainer;
 	std::vector<Bullet> bulletContainer;
-	std::vector<sf::RectangleShape> shapes;
-	//std::vector<PickupItem> pickupItem;
+	std::vector<sf::RectangleShape> lightObstacles;
+	std::vector<PickupItem*> pickupHealthContainer;
 	std::vector<Zombie*> zombieContainer;
 
 	//GUI
@@ -96,6 +94,7 @@ private:
 	sf::Texture healthIconTex;
 	sf::Texture killIconTex;
 	sf::Texture ammoIconTex;
+	sf::Texture pickupHealthTex;
 
 	sf::RectangleShape healthIconRect;
 	sf::RectangleShape killIconRect;
