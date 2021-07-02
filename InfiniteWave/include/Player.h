@@ -13,7 +13,7 @@ public:
 	void lookAt(const sf::Vector2f& mousePos);
 	void setPosition(const sf::Vector2f& pos);
 	void increaseHealth(int amount);
-	void getHit();
+	void getHit(int damage);
 
 	//In-game function
 	void MoveDirection(MoveDir dir, float deltaTime);

@@ -103,6 +103,8 @@ private:
 	sf::RectangleShape ammoIconRect;
 	sf::RectangleShape healthBar;
 	sf::RectangleShape dyingOverlay;
+	sf::RectangleShape fadeToBlack;
+	sf::RectangleShape pauseOverlay;
 
 	sf::Font pixelFont;
 	sf::Text killText;
@@ -112,4 +114,7 @@ private:
 	sf::Text waveTitleText;
 	sf::Text waveCurrentText;
 	sf::Text waveCompleteText;
+
+	Button resumeButton;
+	Button backMainMenuButton;
 };

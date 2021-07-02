@@ -15,6 +15,7 @@ class Animation
 {
 public:
 	Animation(AnimType anim_type, TransitionType transition_type, const sf::Vector2f& start, const sf::Vector2f& end, float time, sf::Transformable & object, bool back, float back_delay);
+	
 	~Animation() = default;
 
 	void Update(float deltaTime);

@@ -12,11 +12,6 @@ namespace sf
 
 class SceneManager
 {
-private:
-	std::stack<std::unique_ptr<BaseScene>> mScene;
-
-	bool mIsResume;
-
 public:
 	SceneManager();
 
@@ -28,6 +23,10 @@ public:
 
 	template <typename T>
 	static std::unique_ptr<T> build(SharedObject& obj, bool replace = true);
+private:
+	std::stack<std::unique_ptr<BaseScene>> mScene;
+
+	bool mIsResume;
 };
 
 template <typename T>

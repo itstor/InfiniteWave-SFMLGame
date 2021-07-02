@@ -31,6 +31,7 @@ public:
 	void stopAll();
 	void stopMusic(const std::string& music_name);
 	void setMusicVolume(const std::string& music_name, float volume);
+	sf::Sound::Status getStatus(const std::string& music_name);
 };
 
 #endif

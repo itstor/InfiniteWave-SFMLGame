@@ -9,6 +9,7 @@
 #include "SceneManager.h"
 #include "AudioManager.h"
 #include "CreditScene.h"
+#include "GameoverScene.h"
 #include "LoadingScreen.h"
 #include "SettingScene.h"
 
@@ -20,6 +21,11 @@ MainMenu::MainMenu(SharedObject& obj, bool replace) :BaseScene(obj, replace)
 #endif
 	initBg();
 	initButton();
+
+	if(!mAudio.getStatus("Loading"))
+	{
+		mAudio.play("Loading");
+	}
 }
 
 MainMenu::~MainMenu()
@@ -93,6 +99,8 @@ void MainMenu::Update(float deltaTime)
 			case sf::Keyboard::Add: mAudio.increase_volume(); break;
 			case sf::Keyboard::Hyphen: mAudio.decrease_volume(); break;
 			case sf::Keyboard::F11: mWindow.ToggleFullScreen(); break;
+			case sf::Keyboard::G: mNext = SceneManager::build<GameoverScene>(mObj, true);
+				break; 
 			default: break;
 			}
 			break;

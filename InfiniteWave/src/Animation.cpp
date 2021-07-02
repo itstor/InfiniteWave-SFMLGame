@@ -42,8 +42,8 @@ Animation::Animation(AnimType anim_type, TransitionType transition_type, const s
 	{
 		const float maxTotalFrame = std::max(totalFrame.x, totalFrame.y);
 		
-		res = powf(0.1f, round(log10(maxTotalFrame)) - 1);
-		res = res >= 1.0f ? 0.1f : res;
+		res = powf(0.01f, round(log10(maxTotalFrame)) - 1);
+		res = res >= 1.0f ? 0.01f : res;
 	}
 	else if (mAnimType == AnimType::ZOOM)
 	{

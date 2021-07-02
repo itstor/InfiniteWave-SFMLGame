@@ -66,6 +66,11 @@ void AudioManager::setMusicVolume(const std::string& music_name, float volume)
 	musicContainer[music_name]->setVolume(volume);
 }
 
+sf::Sound::Status AudioManager::getStatus(const std::string & music_name)
+{
+	return musicContainer[music_name]->getStatus();
+}
+
 
 void AudioManager::increase_volume()
 {

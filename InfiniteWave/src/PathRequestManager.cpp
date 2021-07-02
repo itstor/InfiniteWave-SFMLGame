@@ -40,14 +40,5 @@ void PathRequestManager::AddRequest(Zombie& zombie_obj, const sf::Vector2f& star
 	requestQueue.emplace(zombie_obj, start_position);
 }
 
-void PathRequestManager::TryNext()
-{
-	if (!isBusy && !requestQueue.empty())
-	{
-		currentRequest = &requestQueue.front();
-		isBusy = true;
-	}
-}
-
 
 

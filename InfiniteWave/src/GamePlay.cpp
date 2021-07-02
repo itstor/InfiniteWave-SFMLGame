@@ -235,6 +235,7 @@ void GamePlay::initGUI()
 	waveCurrentText.setFillColor(sf::Color::White);
 	waveCompleteText.setFillColor(sf::Color::White);
 	dyingOverlay.setFillColor(sf::Color(255, 0, 0, 0));
+	fadeToBlack.setFillColor(sf::Color(0, 0, 0, 0));
 	
 	healthIconRect.setSize(static_cast<const sf::Vector2f>(healthIconTex.getSize()));
 	killIconRect.setSize(static_cast<const sf::Vector2f>(killIconTex.getSize()));
@@ -248,6 +249,7 @@ void GamePlay::initGUI()
 	waveCurrentText.setScale(1.8f, 1.8f);
 	waveCompleteText.setScale(0.0f, 0.0f);
 	dyingOverlay.setSize({ 1920.0f,1080.0f });
+	fadeToBlack.setSize({ 1920.0f,1080.0f });
 
 	healthIconRect.setPosition(9581.59f, 38.3f);
 	killIconRect.setPosition(9631.25f, 118.71f);
@@ -263,6 +265,7 @@ void GamePlay::initGUI()
 	                           waveCompleteText.getLocalBounds().top + waveCompleteText.getLocalBounds().height * 0.5f);
 	waveCompleteText.setPosition(9078.31f, 540.0f);
 	dyingOverlay.setPosition(8118.0f, 0.0f);
+	fadeToBlack.setPosition(8118.0f, 0.0f);
 }
 
 void GamePlay::initTexture()
@@ -437,221 +440,236 @@ void GamePlay::Update(float deltaTime)
 		}
 	}
 
-	if (gunLight->isTurnedOn()) {
-		gunLightDelay += deltaTime;
+	if (!player.isDead()) {
+		if (gunLight->isTurnedOn()) {
+			gunLightDelay += deltaTime;
 
-		if (gunLightDelay >= 0.1f)
-			gunLight->setTurnedOn(false);
-	}
-	
-	/*UPDATE CAMERA CENTER*/
-	if ((player.getPosition().x - camera.getSize().x / 2 < 0 ||
-		player.getPosition().x + camera.getSize().x / 2 > 8018) &&
-		(player.getPosition().y - camera.getSize().y / 2 < 0 ||
-		player.getPosition().y + camera.getSize().y / 2 > 6536))
-	{
-		camera.setCenter(camera.getCenter().x, camera.getCenter().y);
-	}
-	else if (player.getPosition().x - camera.getSize().x / 2 < 0 ||
-		player.getPosition().x + camera.getSize().x / 2 > 8018)
-	{
-		camera.setCenter(camera.getCenter().x, player.getPosition().y);
-	}
-	else if (player.getPosition().y - camera.getSize().y / 2 < 0 ||
-		player.getPosition().y + camera.getSize().y / 2 > 6536)
-	{
-		camera.setCenter(player.getPosition().x, camera.getCenter().y);
-	}
-	else
-	{
-		camera.setCenter(player.getPosition());
-	}
-	
-	//Update player face dir and light dir
-	const sf::Vector2i mousePos = sf::Mouse::getPosition(*mWindow.GetRenderWindow());
-	const sf::Vector2f worldMousePos = mWindow.GetRenderWindow()->mapPixelToCoords(mousePos);
-	player.lookAt(worldMousePos);
-
-	flashLight->setPosition(player.getPosition());
-	gunLight->setPosition(player.getPosition());
-	flashLight->setRotation(player.getAngle());
-	
-	//Player keyboard input
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
-		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-	{
-		player.MoveDirection(MoveDir::UP, deltaTime);
-		//camera.move(0*deltaTime, -400.f*deltaTime);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) 
-		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-	{
-		player.MoveDirection(MoveDir::LEFT, deltaTime);
-		//camera.move(-400.0f*deltaTime, 0*deltaTime);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) 
-		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-	{
-		player.MoveDirection(MoveDir::DOWN, deltaTime);
-		//camera.move(0*deltaTime, 400.f*deltaTime);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) 
-		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-	{
-		player.MoveDirection(MoveDir::RIGHT, deltaTime);
-		//camera.move(400.0f*deltaTime, 0*deltaTime);
-	}
-	
-	//Update zombie and player
-	player.Update(deltaTime);
-	for (auto &zombie : zombieContainer) {
-		zombie->Update(deltaTime, player.getPosition());
-	}
-
-	//All object collision check here
-	//On Collision with obstacle or wall
-	for (auto &obs : obstacleContainer)
-	{
-		player.CheckCollision(obs);
-		for (size_t i = 0; i < bulletContainer.size(); i++)
-		{	
-			//Check if bullet collided with obstacle or out of distance, delete
-			if (bulletContainer[i].onCollision(obs) || sqrt(
-				pow(bulletContainer[i].getPosition().x - bulletContainer[i].startPosition.x, 2) + pow(
-					bulletContainer[i].getPosition().y - bulletContainer[i].startPosition.y, 2)) > 1920)
-			{
-				bulletContainer.erase(bulletContainer.begin() + i);
-			}
+			if (gunLightDelay >= 0.1f)
+				gunLight->setTurnedOn(false);
 		}
-	}
 
-	
-	for (size_t j = 0; j < zombieContainer.size(); j++) {
-		//Check player attack
-		if (player.onCollision(*zombieContainer[j]) && zombieContainer[j]->isAllowAttack())
+		/*UPDATE CAMERA CENTER*/
+		if ((player.getPosition().x - camera.getSize().x / 2 < 0 ||
+			player.getPosition().x + camera.getSize().x / 2 > 8018) &&
+			(player.getPosition().y - camera.getSize().y / 2 < 0 ||
+				player.getPosition().y + camera.getSize().y / 2 > 6536))
 		{
-			zombieContainer[j]->Attack();
-			player.getHit();
+			camera.setCenter(camera.getCenter().x, camera.getCenter().y);
 		}
-		//Update path finding?
-		for (size_t i = 0; i < bulletContainer.size(); i++)
+		else if (player.getPosition().x - camera.getSize().x / 2 < 0 ||
+			player.getPosition().x + camera.getSize().x / 2 > 8018)
 		{
-			//Check if collided with zombie delete
-			if (bulletContainer[i].onCollision(*zombieContainer[j]))
+			camera.setCenter(camera.getCenter().x, player.getPosition().y);
+		}
+		else if (player.getPosition().y - camera.getSize().y / 2 < 0 ||
+			player.getPosition().y + camera.getSize().y / 2 > 6536)
+		{
+			camera.setCenter(player.getPosition().x, camera.getCenter().y);
+		}
+		else
+		{
+			camera.setCenter(player.getPosition());
+		}
+
+		//Update player face dir and light dir
+		const sf::Vector2i mousePos = sf::Mouse::getPosition(*mWindow.GetRenderWindow());
+		const sf::Vector2f worldMousePos = mWindow.GetRenderWindow()->mapPixelToCoords(mousePos);
+		player.lookAt(worldMousePos);
+
+		flashLight->setPosition(player.getPosition());
+		gunLight->setPosition(player.getPosition());
+		flashLight->setRotation(player.getAngle());
+
+		//Player keyboard input
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		{
+			player.MoveDirection(MoveDir::UP, deltaTime);
+			//camera.move(0*deltaTime, -400.f*deltaTime);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			player.MoveDirection(MoveDir::LEFT, deltaTime);
+			//camera.move(-400.0f*deltaTime, 0*deltaTime);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		{
+			player.MoveDirection(MoveDir::DOWN, deltaTime);
+			//camera.move(0*deltaTime, 400.f*deltaTime);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			player.MoveDirection(MoveDir::RIGHT, deltaTime);
+			//camera.move(400.0f*deltaTime, 0*deltaTime);
+		}
+
+		//Update zombie and player
+		player.Update(deltaTime);
+		for (auto &zombie : zombieContainer) {
+			zombie->Update(deltaTime, player.getPosition());
+		}
+
+		//All object collision check here
+		//On Collision with obstacle or wall
+		for (auto &obs : obstacleContainer)
+		{
+			player.CheckCollision(obs);
+			for (size_t i = 0; i < bulletContainer.size(); i++)
 			{
-				zombieContainer[j]->getHit();
-				bulletContainer.erase(bulletContainer.begin() + i);
-				//Check if zombie dead?
-				if (zombieContainer[j]->isDead())
+				//Check if bullet collided with obstacle or out of distance, delete
+				if (bulletContainer[i].onCollision(obs) || sqrt(
+					pow(bulletContainer[i].getPosition().x - bulletContainer[i].startPosition.x, 2) + pow(
+						bulletContainer[i].getPosition().y - bulletContainer[i].startPosition.y, 2)) > 1920)
 				{
-					killCount++;
-					currentActiveZombie--;
-					killText.setString(std::to_string(killCount));
-					scoreTotalText.setString(std::to_string(conf::gameScore));
-
-					int score = 0;
-					
-					switch (zombieContainer[j]->getZombieType())
-					{
-					case ZombieType::NORMAL_ZOMBIE: score = 500; break;
-					case ZombieType::RED_ZOMBIE: score = 1000; break;
-					case ZombieType::BLUE_ZOMBIE: score = 1500; break;
-					case ZombieType::BLACK_ZOMBIE: score = 2000; break;
-					default: break;
-					}
-
-					conf::gameScore += score;
-
-					if (const int randomNum = rand() % 100; randomNum % 5 == 0) { //20% rate
-						pickupHealthContainer.emplace_back(new PickupItem(
-							pickupHealthTex,
-							sf::Vector2f(zombieContainer[j]->getPosition().x, zombieContainer[j]->getPosition().y),
-							sf::Vector2f(100.0f, 100.0f), 15.0f));
-					}
-					
-					delete zombieContainer[j];
-					zombieContainer.erase(zombieContainer.begin() + j);
+					bulletContainer.erase(bulletContainer.begin() + i);
 				}
 			}
 		}
-	}
 
-	for (size_t i = 0; i < pickupHealthContainer.size(); i++)
-	{
-		pickupHealthContainer[i]->Update(deltaTime);
-		if (player.onCollision(*pickupHealthContainer[i]))
-		{
-			player.increaseHealth(15);
-			mAudio.playSFX("health_pickup");
-			pickupHealthContainer.erase(pickupHealthContainer.begin() + i);
-		}
-		else if (pickupHealthContainer[i]->isExpired())
-		{
-			pickupHealthContainer.erase(pickupHealthContainer.begin() + i);
-		}
-	}
-	
-	//Move everything here
-	player.PlayerMove(); // Move Player
-	for (auto &bul:bulletContainer) //move bullet
-	{
-		bul.Move(deltaTime);
-	}
-	for (auto &zombie:zombieContainer)
-	{
-		zombie->Move(deltaTime);
-	}
 
-	//Update Wave
-	if (currentActiveZombie <= 0)
-	{
-		nextWave = true;
-		currentWave++;
-		waveCurrentText.setString(std::to_string(currentWave).append("/~"));
-		calculateTotalZombie();
-		//Play next wave animation
-		if (currentWave > 1) mAnimManager.playAnimation(AnimType::ZOOM, TransitionType::EASE_IN_OUT_CUBIC, {0.0f, 0.0f},
-		                                                {2.8f, 0.0f}, 1.0f, waveCompleteText, true, 2.0f);
-	}
-	if (nextWave)
-	{
-		nextWaveDelay -= deltaTime;
-		if (nextWaveDelay <= 0.0f)
-		{
-			if (const bool spawnedAll = spawnZombie(deltaTime); spawnedAll) {
-				nextWaveDelay = 5.0f;
-				nextWave = false;
+		for (size_t j = 0; j < zombieContainer.size(); j++) {
+			//Check player attack
+			if (player.onCollision(*zombieContainer[j]) && zombieContainer[j]->isAllowAttack())
+			{
+				const float damage = rand() % 10 + 5;
+				zombieContainer[j]->Attack();
+				player.getHit(damage);
+			}
+			//Update path finding?
+			for (size_t i = 0; i < bulletContainer.size(); i++)
+			{
+				//Check if collided with zombie delete
+				if (bulletContainer[i].onCollision(*zombieContainer[j]))
+				{
+					zombieContainer[j]->getHit();
+					bulletContainer.erase(bulletContainer.begin() + i);
+					//Check if zombie dead?
+					if (zombieContainer[j]->isDead())
+					{
+						killCount++;
+						currentActiveZombie--;
+						killText.setString(std::to_string(killCount));
+						scoreTotalText.setString(std::to_string(conf::gameScore));
+
+						int score = 0;
+
+						switch (zombieContainer[j]->getZombieType())
+						{
+						case ZombieType::NORMAL_ZOMBIE: score = 500; break;
+						case ZombieType::RED_ZOMBIE: score = 1000; break;
+						case ZombieType::BLUE_ZOMBIE: score = 1500; break;
+						case ZombieType::BLACK_ZOMBIE: score = 2000; break;
+						default: break;
+						}
+
+						conf::gameScore += score;
+
+						if (const int randomNum = rand() % 100; randomNum % 5 == 0) { //20% rate
+							pickupHealthContainer.emplace_back(new PickupItem(
+								pickupHealthTex,
+								sf::Vector2f(zombieContainer[j]->getPosition().x, zombieContainer[j]->getPosition().y),
+								sf::Vector2f(100.0f, 100.0f), 15.0f));
+						}
+
+						delete zombieContainer[j];
+						zombieContainer.erase(zombieContainer.begin() + j);
+					}
+				}
 			}
 		}
-	}
 
-	//Update Dying Overlay
-	if (player.getHealth() <= 75)
-	{
-		if (!isHeartBeatPlayed) {
-			mAudio.play("HeartBeat");
-			isHeartBeatPlayed = true;
+		for (size_t i = 0; i < pickupHealthContainer.size(); i++)
+		{
+			pickupHealthContainer[i]->Update(deltaTime);
+			if (player.onCollision(*pickupHealthContainer[i]))
+			{
+				player.increaseHealth(15);
+				mAudio.playSFX("health_pickup");
+				pickupHealthContainer.erase(pickupHealthContainer.begin() + i);
+			}
+			else if (pickupHealthContainer[i]->isExpired())
+			{
+				pickupHealthContainer.erase(pickupHealthContainer.begin() + i);
+			}
 		}
-		const float progressOverlay = (75 - player.getHealth()) / 75;
-		const float progressMusic = (75 - player.getHealth()) / 75;
-		const sf::Uint8 a = 40 * progressOverlay;
-		mAudio.setMusicVolume("HeartBeat", 100 * progressMusic);
-		dyingOverlay.setFillColor(sf::Color(255, 0, 0, a));
+
+		//Move everything here
+		player.PlayerMove(); // Move Player
+		for (auto &bul : bulletContainer) //move bullet
+		{
+			bul.Move(deltaTime);
+		}
+		for (auto &zombie : zombieContainer)
+		{
+			zombie->Move(deltaTime);
+		}
+
+		//Update Wave
+		if (currentActiveZombie <= 0)
+		{
+			nextWave = true;
+			currentWave++;
+			waveCurrentText.setString(std::to_string(currentWave).append("/~"));
+			calculateTotalZombie();
+			//Play next wave animation
+			if (currentWave > 1) mAnimManager.playAnimation(AnimType::ZOOM, TransitionType::EASE_IN_OUT_CUBIC, { 0.0f, 0.0f },
+				{ 2.8f, 0.0f }, 1.0f, waveCompleteText, true, 2.0f);
+		}
+		if (nextWave)
+		{
+			nextWaveDelay -= deltaTime;
+			if (nextWaveDelay <= 0.0f)
+			{
+				if (const bool spawnedAll = spawnZombie(deltaTime); spawnedAll) {
+					nextWaveDelay = 5.0f;
+					nextWave = false;
+				}
+			}
+		}
+
+		//Update Dying Overlay
+		if (player.getHealth() <= 75)
+		{
+			if (!isHeartBeatPlayed) {
+				mAudio.play("HeartBeat");
+				isHeartBeatPlayed = true;
+			}
+			const float progressOverlay = (75 - player.getHealth()) / 75;
+			const float progressMusic = (75 - player.getHealth()) / 75;
+			const sf::Uint8 a = 40 * progressOverlay;
+			mAudio.setMusicVolume("HeartBeat", 100 * progressMusic);
+			dyingOverlay.setFillColor(sf::Color(255, 0, 0, a));
+		}
+		else if (isHeartBeatPlayed)
+		{
+			mAudio.stopMusic("HeartBeat");
+		}
+
+		//Update Health bar
+		const float xHealthBar = (player.getHealth() / 200.0f) * 318;
+		healthBar.setSize({ xHealthBar, healthBar.getSize().y });
+
+		//update player position on grid
+		mPathFindingGrid.UpdatePlayerNode(player.getPosition());
+
+		//UPdate Animation
+		mAnimManager.Update(deltaTime);
 	}
-	else if (isHeartBeatPlayed)
+	else
 	{
-		mAudio.stopMusic("HeartBeat");
+		mAudio.stopAll();
+		static float elapsedFadeTime = 0.0f;
+		elapsedFadeTime += deltaTime;
+		const sf::Uint8 progress = elapsedFadeTime / 4.0f * 255;
+		fadeToBlack.setFillColor(sf::Color(0, 0, 0, progress));
+		if (elapsedFadeTime >= 4.0f)
+		{
+			mNext = SceneManager::build<GameoverScene>(mObj, true);
+		}
 	}
-	
-	//Update Health bar
-	const float xHealthBar = (player.getHealth() / 200.0f) * 318;
-	healthBar.setSize({ xHealthBar, healthBar.getSize().y });
-
-	//update player position on grid
-	mPathFindingGrid.UpdatePlayerNode(player.getPosition());
-
-	//UPdate Animation
-	mAnimManager.Update(deltaTime);
 }
 
 void GamePlay::Draw()
@@ -698,6 +716,9 @@ void GamePlay::Draw()
 		mWindow.Draw(waveTitleText);
 		mWindow.Draw(waveCurrentText);
 		mWindow.Draw(waveCompleteText);
+		if (player.isDead()) {
+			mWindow.Draw(fadeToBlack);
+		}
 		//Reset view back
 	}
 	mWindow.GetRenderWindow()->setView(camera);

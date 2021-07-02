@@ -25,7 +25,17 @@ public:
 private:
 	//Define scene component here
 	AnimationManager mAnimManager;
-	bool once = true;
-	sf::RectangleShape rectangle;
+	sf::RectangleShape fadeToBlack;
+	sf::RectangleShape scoreMask;
+
+
+	sf::Font pixelFont;
+	sf::Text gameOverText;
+	sf::Text scoreText;
+	sf::Text newHighScoreText;
+	sf::Text respawnText;
+	sf::Text backToMainText;
+
+	float elapsedTime = 0.0f;
 };
 

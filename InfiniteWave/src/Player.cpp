@@ -189,10 +189,13 @@ void Player::increaseHealth(int amount)
 	}
 }
 
-void Player::getHit()
+void Player::getHit(int damage)
 {
-	const float damage = rand() % 10 + 5;
 	health -= damage;
+	if (health < 0)
+	{
+		health = 0;
+	}
 	std::cout << "UGHHH\n";
 	//TODO play blinking animation
 }
