@@ -1,19 +1,9 @@
 #include "SceneManager.h"
 
-#include <iostream>
-
-SceneManager::SceneManager(): mIsResume(false)
-{
-#ifdef _DEBUG
-	std::cout << "Scene Manager Created" << std::endl;
-#endif
-}
+SceneManager::SceneManager(): mIsResume(false){}
 
 void SceneManager::Run(std::unique_ptr<BaseScene> scene)
 {
-#ifdef _DEBUG
-	std::cout << "Scene Manager Running" << std::endl;
-#endif
 	//move scene to the stack of scene container
 	mScene.push(std::move(scene));
 }

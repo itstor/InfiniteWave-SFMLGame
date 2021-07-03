@@ -1,24 +1,12 @@
 #include "AudioManager.h"
 
-#include <iostream>
-
 #include "Music.h"
 #include "Config.h"
 #include "Sfx.h"
 
-AudioManager::AudioManager()
-{
-#ifdef _DEBUG
-	std::cout << "Audio Manager Created\n";
-#endif
-}
+AudioManager::AudioManager() = default;
 
-AudioManager::~AudioManager()
-{
-#ifdef _DEBUG
-	std::cout << "Audio Manager Destroyed\n";
-#endif
-}
+AudioManager::~AudioManager() = default;
 
 void AudioManager::AddMusic(const std::string& music_name, const std::string& file_path, bool is_loop)
 {
@@ -101,17 +89,11 @@ void AudioManager::UpdateVolume(float new_volume)
 
 void AudioManager::PlayMusic(const std::string & music_name)
 {
-#ifdef _DEBUG
-	std::cout << "Playing " << music_name << std::endl;
-#endif
 	mMusicContainer[music_name]->Play();
 }
 
 void AudioManager::PlaySFX(const std::string& sfx_name)
 {
-#ifdef _DEBUG
-	std::cout << "Playing SFX " << sfx_name << std::endl;
-#endif
 	mSFXContainer[sfx_name]->Play();
 }
 

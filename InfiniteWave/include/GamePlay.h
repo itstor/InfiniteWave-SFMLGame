@@ -33,13 +33,11 @@ public:
 
 private:
 	void InitObstacles();
-	void InitButtons();
 	void InitMap();
 	void InitLight();
 	void InitGUI();
 	void InitTextures();
 	bool SpawnZombie(float delta_time);
-	void Spawn(ZombieType zombie_type, const sf::Vector2f& player_pos);
 	void CalculateTotalZombie();
 	
 	//Define scene component here
@@ -85,11 +83,12 @@ private:
 	std::vector<Obstacle> mObstaclesContainer;
 	std::vector<Bullet> mBulletContainer;
 	std::vector<sf::RectangleShape> mLightObstaclesContainer;
-	std::vector<PickupItem*> mHealthPickupContainer;
-	std::vector<Zombie*> mZombieContainer;
+	std::vector<PickupItem> mHealthPickupContainer;
+	std::vector<std::unique_ptr<Zombie>> mZombieContainer;
 
 	//GUI
 	bool mIsShowGUI = true;
+	bool mIsPause = false;
 	
 	sf::View mMainCamera;
 	sf::View mGUICamera;
@@ -98,6 +97,8 @@ private:
 	sf::Texture mKillIconTex;
 	sf::Texture mAmmoIconTex;
 	sf::Texture mHealthPickupTex;
+	
+	sf::Texture mPauseOverlayTex;
 
 	sf::RectangleShape mHealthIconRect;
 	sf::RectangleShape mKillIconRect;
@@ -115,9 +116,6 @@ private:
 	sf::Text mWaveTitleText;
 	sf::Text mCurrentWaveText;
 	sf::Text mWaveCompleteText;
-
-	Button mResumeButton;
-	Button mBackMainMenuButton;
 };
 
 #endif

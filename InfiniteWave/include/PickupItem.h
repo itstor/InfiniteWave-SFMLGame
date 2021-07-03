@@ -23,7 +23,7 @@ private:
 	float mElapsedTime = 0.0f;
 	bool mIsExpired = false;
 	
-	sf::Texture& mItemTexture;
+	sf::Texture* mItemTexture;
 	SpriteAnimation mAnimTex;
 };
 

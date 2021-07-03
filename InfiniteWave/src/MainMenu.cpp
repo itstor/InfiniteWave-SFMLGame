@@ -2,7 +2,6 @@
 #include "MainMenu.h"
 #include "GamePlay.h"
 
-#include <iostream>
 #include <memory>
 
 #include "Window.h"
@@ -16,9 +15,6 @@
 
 MainMenu::MainMenu(SharedObject& shared_object, bool replace) :BaseScene(shared_object, replace)
 {
-#ifdef _DEBUG
-	std::cout << "MainMenu Created" << std::endl;
-#endif
 	InitBackground();
 	InitButton();
 
@@ -28,10 +24,7 @@ MainMenu::MainMenu(SharedObject& shared_object, bool replace) :BaseScene(shared_
 	}
 }
 
-MainMenu::~MainMenu()
-{
-	std::cout << "MainMenu Deleted" << std::endl;
-}
+MainMenu::~MainMenu() = default;
 
 void MainMenu::InitButton()
 {
@@ -68,15 +61,9 @@ void MainMenu::InitBackground()
 	mMenuBgSpi.setPosition(0, 0);
 }
 
-void MainMenu::Pause()
-{
-	std::cout << "MainMenu Paused" << std::endl;
-}
+void MainMenu::Pause(){}
 
-void MainMenu::Resume()
-{
-	std::cout << "MainMenu Resume" << std::endl;
-}
+void MainMenu::Resume(){}
 
 void MainMenu::Update(float delta_time)
 {

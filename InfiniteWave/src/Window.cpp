@@ -32,20 +32,6 @@ void Window::Destroy()
 	mWindow.close();
 }
 
-void Window::Update()
-{
-	sf::Event evnt{};
-
-	while (mWindow.pollEvent(evnt))
-	{
-		switch (evnt.type)
-		{
-		case sf::Event::Closed: Destroy(); break;
-		default: break;
-		}
-	}
-}
-
 void Window::ToggleFullScreen()
 {
 	conf::gIsFullscreen = !conf::gIsFullscreen;

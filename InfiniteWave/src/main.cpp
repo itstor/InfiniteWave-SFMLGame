@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "Game.h"
 #include "Config.h"
 #include "Window.h"
@@ -8,7 +6,7 @@
 #include "SceneManager.h"
 
 
-int main()
+int WinMain()
 {
 	sf::Image icon;
 	
@@ -17,9 +15,6 @@ int main()
 
 	if (!icon.loadFromFile("data/Texture/Icon/icon.png"))
 	{
-#ifdef _DEBUG
-		std::cout << "icon not found" << std::endl;
-#endif
 		return EXIT_FAILURE;
 	}
 
@@ -32,6 +27,7 @@ int main()
 	Game game(Obj);
 
 	game.Run();
+
 	
 	return EXIT_SUCCESS;
 }

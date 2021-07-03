@@ -23,8 +23,8 @@ void PathRequestManager::StartProcess()
 				mRequestQueue.pop();
 				continue;
 			}
-			std::stack<Node> walkpath = mPathfinding.FindPath(mCurrentRequest->startPosition);
-			mCurrentRequest->zombie->SetWalkPath(walkpath);
+			std::stack<Node> walkPath = mPathfinding.FindPath(mCurrentRequest->startPosition);
+			mCurrentRequest->zombie->SetWalkPath(walkPath);
 			mRequestQueue.pop();
 		}
 	}

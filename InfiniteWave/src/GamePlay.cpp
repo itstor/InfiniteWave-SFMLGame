@@ -4,7 +4,6 @@
 
 //Required Library
 #include <fstream>
-#include <iostream>
 
 #include "Window.h"
 #include "AudioManager.h"
@@ -16,15 +15,13 @@
 #include "RedZombie.h"
 #include "SceneManager.h"
 #include "Config.h"
+#include "MainMenu.h"
 
 
 GamePlay::GamePlay(SharedObject& shared_object, bool replace) : BaseScene(shared_object, replace),
-                                                      mPathFindingGrid(mObstaclesContainer),
-                                                      mPathFinding(mPathFindingGrid), mRequestManager(mPathFinding), mLighSystem(false)
+                                                                mPathFindingGrid(mObstaclesContainer),
+                                                                mPathFinding(mPathFindingGrid), mRequestManager(mPathFinding), mLighSystem(false)
 {
-#ifdef _DEBUG
-	std::cout << "GamePlay Created" << std::endl;
-#endif
 	//stop main menu music
 	mAudio.StopAllMusic();
 
@@ -50,7 +47,6 @@ GamePlay::GamePlay(SharedObject& shared_object, bool replace) : BaseScene(shared
 
 GamePlay::~GamePlay()
 {
-	std::cout << "GamePlay Deleted" << std::endl;
 	mWindow.GetRenderWindow()->setView(mWindow.GetRenderWindow()->getDefaultView());
 }
 
@@ -167,21 +163,16 @@ void GamePlay::InitObstacles()
 
 }
 
-void GamePlay::InitButtons()
-{
-	//Initialize button here
-}
-
 void GamePlay::InitLight()
 {
 	//init light system
 	mLighSystem.create({ 100.0f,100.0f,200.0f,200.0f }, mWindow.GetWindowSize());
 
 	//load light texture
-	mFlashLightTex.loadFromFile("data/Texture/Sprites/Map/flashlight.png");
+	mFlashLightTex.loadFromFile("data/Texture/Light_texture/flashlight.png");
 	mFlashLightTex.setSmooth(true);
 
-	mGunLightTex.loadFromFile("data/Texture/Sprites/Map/mGunLightTex.png");
+	mGunLightTex.loadFromFile("data/Texture/Light_texture/pointLightTexture.png");
 	mGunLightTex.setSmooth(true);
 
 	mFlashLight = mLighSystem.createLightPointEmission();
@@ -201,7 +192,7 @@ void GamePlay::InitLight()
 }
 
 void GamePlay::InitGUI()
-{
+{	
 	mPixelFont.loadFromFile("data/Font/Minecraft.ttf");
 	mAmmoText.setFont(mPixelFont);
 	mKillText.setFont(mPixelFont);
@@ -222,10 +213,12 @@ void GamePlay::InitGUI()
 	mHealthIconTex.loadFromFile("data/Texture/GUI/health.png");
 	mKillIconTex.loadFromFile("data/Texture/GUI/kill.png");
 	mAmmoIconTex.loadFromFile("data/Texture/GUI/ammo.png");
-	
+	mPauseOverlayTex.loadFromFile("data/Texture/GUI/pause_overlay.png");
+
 	mHealthIconRect.setTexture(&mHealthIconTex);
 	mKillIconRect.setTexture(&mKillIconTex);
 	mAmmoIconRect.setTexture(&mAmmoIconTex);
+	mPauseOverlay.setTexture(&mPauseOverlayTex);
 	mHealthBarRect.setFillColor(sf::Color::Red);
 	mAmmoText.setFillColor(sf::Color(204, 153, 37));
 	mKillText.setFillColor(sf::Color::White);
@@ -236,7 +229,7 @@ void GamePlay::InitGUI()
 	mWaveCompleteText.setFillColor(sf::Color::White);
 	mDyingOverlay.setFillColor(sf::Color(255, 0, 0, 0));
 	mFadeToBlackOverlay.setFillColor(sf::Color(0, 0, 0, 0));
-	
+
 	mHealthIconRect.setSize(static_cast<const sf::Vector2f>(mHealthIconTex.getSize()));
 	mKillIconRect.setSize(static_cast<const sf::Vector2f>(mKillIconTex.getSize()));
 	mAmmoIconRect.setSize(static_cast<const sf::Vector2f>(mAmmoIconTex.getSize()));
@@ -250,6 +243,7 @@ void GamePlay::InitGUI()
 	mWaveCompleteText.setScale(0.0f, 0.0f);
 	mDyingOverlay.setSize({ 1920.0f,1080.0f });
 	mFadeToBlackOverlay.setSize({ 1920.0f,1080.0f });
+	mPauseOverlay.setSize({1920.0f, 1080.0f});
 
 	mHealthIconRect.setPosition(9581.59f, 38.3f);
 	mKillIconRect.setPosition(9631.25f, 118.71f);
@@ -266,6 +260,7 @@ void GamePlay::InitGUI()
 	mWaveCompleteText.setPosition(9078.31f, 540.0f);
 	mDyingOverlay.setPosition(8118.0f, 0.0f);
 	mFadeToBlackOverlay.setPosition(8118.0f, 0.0f);
+	mPauseOverlay.setPosition(8118.0f, 0.0f);
 }
 
 void GamePlay::InitTextures()
@@ -290,15 +285,9 @@ void GamePlay::InitTextures()
 	mBloodSplashTex.setSmooth(true);
 }
 
-void GamePlay::Pause()
-{
-	std::cout << "GamePlay Paused" << std::endl;
-}
+void GamePlay::Pause(){}
 
-void GamePlay::Resume()
-{
-	std::cout << "GamePlay Resume" << std::endl;
-}
+void GamePlay::Resume(){}
 
 void GamePlay::CalculateTotalZombie()
 {
@@ -320,28 +309,44 @@ void GamePlay::CalculateTotalZombie()
 
 bool GamePlay::SpawnZombie(float delta_time)
 {
+	float yPos = 1091.0f; //Obstacle
+	float xPos = 291.0f; //Obstacle
+	float distanceFromPlayer = 0.0f;
+	
+	while (mPathFindingGrid.GetNodeType(mPathFindingGrid.GetGridIndexFromPosition({xPos, yPos})) !=
+		NodeType::WALKABLE_NODE || distanceFromPlayer <= 965.0f)
+	{
+		xPos = static_cast<float>(rand() % 8019);
+		yPos = static_cast<float>(rand() % 6547);
+		distanceFromPlayer = sqrt(pow(mPlayer.GetPosition().x - xPos, 2) + pow(mPlayer.GetPosition().y - yPos, 2));
+	}
+
 	mSpawnCooldown -= delta_time;
 	if (mSpawnCooldown <= 0.0f)
 	{
 		if (mTotalNormalZombie > 0)
 		{
 			mTotalNormalZombie--;
-			Spawn(ZombieType::NORMAL_ZOMBIE, mPlayer.GetPosition());
+			mZombieContainer.push_back(Zombie::Spawn<NormalZombie>(
+			{xPos, yPos}, mNormalZombieTex, mBloodSplashTex, mRequestManager, *mAudio.GetSoundBuffer("zombie_1")));
 		}
 		else if (mTotalRedZombie > 0)
 		{
 			mTotalRedZombie--;
-			Spawn(ZombieType::RED_ZOMBIE, mPlayer.GetPosition());
+			mZombieContainer.push_back(Zombie::Spawn<RedZombie>(
+			{xPos, yPos}, mRedZombieTex, mBloodSplashTex, mRequestManager, *mAudio.GetSoundBuffer("zombie_1")));
 		}
 		else if (mTotalBlueZombie > 0)
 		{
 			mTotalBlueZombie--;
-			Spawn(ZombieType::BLUE_ZOMBIE, mPlayer.GetPosition());
+			mZombieContainer.push_back(Zombie::Spawn<BlueZombie>(
+			{xPos, yPos}, mBlueZombieTex, mBloodSplashTex, mRequestManager, *mAudio.GetSoundBuffer("zombie_1")));
 		}
 		else if (mTotalBlackZombie > 0)
 		{
 			mTotalBlackZombie--;
-			Spawn(ZombieType::BLACK_ZOMBIE, mPlayer.GetPosition());
+			mZombieContainer.push_back(Zombie::Spawn<BlackZombie>(
+			{xPos, yPos}, mBlackZombieTex, mBloodSplashTex, mRequestManager, *mAudio.GetSoundBuffer("zombie_1")));
 		}
 		else
 		{
@@ -350,36 +355,6 @@ bool GamePlay::SpawnZombie(float delta_time)
 		mSpawnCooldown = 1.0f;
 	}
 	return false;
-}
-
-void GamePlay::Spawn(ZombieType zombie_type, const sf::Vector2f & player_pos)
-{
-	float yPos = 1091.0f; //Obstacle
-	float xPos = 291.0f; //Obstacle
-	float distanceFromPlayer = 0.0f;
-	while (mPathFindingGrid.GetNodeType(mPathFindingGrid.GetGridIndexFromPosition({xPos, yPos})) !=
-		NodeType::WALKABLE_NODE || distanceFromPlayer <= 965.0f)
-	{
-		xPos = static_cast<float>(rand() % 8019);
-		yPos = static_cast<float>(rand() % 6547);
-		distanceFromPlayer = sqrt(pow(player_pos.x - xPos, 2) + pow(player_pos.y - yPos, 2));
-	}
-	switch (zombie_type)
-	{
-	case ZombieType::NORMAL_ZOMBIE: mZombieContainer.push_back(
-			new NormalZombie({xPos, yPos}, mNormalZombieTex, mBloodSplashTex, mRequestManager, *mAudio.GetSoundBuffer("zombie_1")));
-		break;
-	case ZombieType::RED_ZOMBIE: mZombieContainer.push_back(
-			new RedZombie({xPos, yPos}, mRedZombieTex,mBloodSplashTex, mRequestManager, *mAudio.GetSoundBuffer("zombie_1")));
-		break;
-	case ZombieType::BLUE_ZOMBIE: mZombieContainer.push_back(
-			new BlueZombie({xPos, yPos}, mBlueZombieTex,mBloodSplashTex, mRequestManager, *mAudio.GetSoundBuffer("zombie_1")));
-		break;
-	case ZombieType::BLACK_ZOMBIE: mZombieContainer.push_back(
-			new BlackZombie({xPos, yPos}, mBlackZombieTex,mBloodSplashTex,mRequestManager, *mAudio.GetSoundBuffer("zombie_1")));
-		break;
-	default: break;
-	}
 }
 
 void GamePlay::Update(float delta_time)
@@ -397,13 +372,15 @@ void GamePlay::Update(float delta_time)
 				Use if statement for simultaneous key*/
 			case sf::Keyboard::R: 
 			{
-				mAudio.PlaySFX("pistol_reload");
-				mPlayer.Reload();
-				mAmmoText.setString(std::string(std::to_string(mPlayer.GetAmmo())).append("/18"));
+				if (!mPlayer.IsDead() && !mIsPause) {
+					mAudio.PlaySFX("pistol_reload");
+					mPlayer.Reload();
+					mAmmoText.setString(std::string(std::to_string(mPlayer.GetAmmo())).append("/18"));
+				}
 			} break;
 			case sf::Keyboard::F1: mIsShowGUI = !mIsShowGUI; break;
 			case sf::Keyboard::F11: mWindow.ToggleFullScreen(); break;
-			case sf::Keyboard::Space: mNextScene = SceneManager::Build<GameoverScene>(mSharedObject, true); break;
+			case sf::Keyboard::Escape: mIsPause = !mIsPause; break;
 			default: break;
 			}
 			break;
@@ -414,23 +391,25 @@ void GamePlay::Update(float delta_time)
 				{
 				case sf::Mouse::Left:
 					{
-						if (mPlayer.Shoot())
-						{
-							mAudio.PlaySFX("pistol_shoot");
-							
-							mBullet.SetStartPos(sf::Vector2f(mPlayer.GetPosition().x + 20, mPlayer.GetPosition().y + 20));
-							mBullet.SetDirection(*mPlayer.GetDirVect());
+						if (!mPlayer.IsDead() && !mIsPause) {
+							if (mPlayer.Shoot())
+							{
+								mAudio.PlaySFX("pistol_shoot");
 
-							mGunLight->setTurnedOn(true);
-							mGunLightDelay = 0.0f;
+								mBullet.SetStartPos(sf::Vector2f(mPlayer.GetPosition().x + 20, mPlayer.GetPosition().y + 20));
+								mBullet.SetDirection(*mPlayer.GetDirVect());
 
-							mAmmoText.setString(std::string(std::to_string(mPlayer.GetAmmo())).append("/18"));
+								mGunLight->setTurnedOn(true);
+								mGunLightDelay = 0.0f;
 
-							mBulletContainer.emplace_back(mBullet);
-						}
-						else if (mPlayer.GetAmmo() <= 0)
-						{
-							mAudio.PlaySFX("pistol_click");
+								mAmmoText.setString(std::string(std::to_string(mPlayer.GetAmmo())).append("/18"));
+
+								mBulletContainer.emplace_back(mBullet);
+							}
+							else if (mPlayer.GetAmmo() <= 0)
+							{
+								mAudio.PlaySFX("pistol_click");
+							}
 						}
 				} break;
 				default: break;
@@ -440,7 +419,7 @@ void GamePlay::Update(float delta_time)
 		}
 	}
 
-	if (!mPlayer.IsDead()) {
+	if (!mPlayer.IsDead() && !mIsPause) {
 		if (mGunLight->isTurnedOn()) {
 			mGunLightDelay += delta_time;
 
@@ -568,13 +547,12 @@ void GamePlay::Update(float delta_time)
 						conf::gGameScore += score;
 
 						if (const int randomNum = rand() % 100; randomNum % 5 == 0) { //20% rate
-							mHealthPickupContainer.emplace_back(new PickupItem(
+							mHealthPickupContainer.emplace_back(
 								mHealthPickupTex,
 								sf::Vector2f(mZombieContainer[j]->GetPosition().x, mZombieContainer[j]->GetPosition().y),
-								sf::Vector2f(100.0f, 100.0f), 15.0f));
+								sf::Vector2f(100.0f, 100.0f), 15.0f);
 						}
 
-						delete mZombieContainer[j];
 						mZombieContainer.erase(mZombieContainer.begin() + j);
 					}
 				}
@@ -583,14 +561,14 @@ void GamePlay::Update(float delta_time)
 
 		for (size_t i = 0; i < mHealthPickupContainer.size(); i++)
 		{
-			mHealthPickupContainer[i]->Update(delta_time);
-			if (mPlayer.OnCollision(*mHealthPickupContainer[i]))
+			mHealthPickupContainer[i].Update(delta_time);
+			if (mPlayer.OnCollision(mHealthPickupContainer[i]))
 			{
 				mPlayer.IncreaseHealth(15);
 				mAudio.PlaySFX("health_pickup");
 				mHealthPickupContainer.erase(mHealthPickupContainer.begin() + i);
 			}
-			else if (mHealthPickupContainer[i]->IsExpired())
+			else if (mHealthPickupContainer[i].IsExpired())
 			{
 				mHealthPickupContainer.erase(mHealthPickupContainer.begin() + i);
 			}
@@ -658,7 +636,7 @@ void GamePlay::Update(float delta_time)
 		//UPdate Animation
 		mAnimManager.Update(delta_time);
 	}
-	else
+	else if (mPlayer.IsDead())
 	{
 		mAudio.StopAllMusic();
 		static float elapsedFadeTime = 0.0f;
@@ -685,15 +663,15 @@ void GamePlay::Draw()
 		mWindow.Draw(*bul.getDraw());
 	}*/
 
-	for (auto health:mHealthPickupContainer)
+	for (auto &health:mHealthPickupContainer)
 	{
-		mWindow.Draw(*health);
+		mWindow.Draw(health);
 	}
 	
 	mWindow.Draw(*mPlayer.GetFeetDraw());
 	mWindow.Draw(*mPlayer.GetDraw());
 
-	for (auto zombie : mZombieContainer) {
+	for (auto &zombie : mZombieContainer) {
 		mWindow.Draw(*zombie->GetDraw());
 		mWindow.Draw(*zombie->GetBloodDraw());
 	}
@@ -703,7 +681,9 @@ void GamePlay::Draw()
 
 	//GUI Here
 	mWindow.GetRenderWindow()->setView(mGUICamera);
+	
 	mWindow.Draw(mDyingOverlay);
+	
 	if (mIsShowGUI) {
 		mWindow.Draw(mHealthIconRect);
 		mWindow.Draw(mKillIconRect);
@@ -716,14 +696,17 @@ void GamePlay::Draw()
 		mWindow.Draw(mWaveTitleText);
 		mWindow.Draw(mCurrentWaveText);
 		mWindow.Draw(mWaveCompleteText);
-		if (mPlayer.IsDead()) {
-			mWindow.Draw(mFadeToBlackOverlay);
-		}
-		//Reset view back
 	}
+
+	if (mPlayer.IsDead())
+		mWindow.Draw(mFadeToBlackOverlay);
+
+	if (mIsPause)
+		mWindow.Draw(mPauseOverlay);
+	
+	//Reset view back
 	mWindow.GetRenderWindow()->setView(mMainCamera);
 
-	
 	mWindow.EndDraw();
 }
 

@@ -17,13 +17,13 @@ public:
 	void RestartClock(); //Reset Clock
 
 private:
+	void InitSFX() const;
+	void InitMusic() const;
+	
 	SharedObject& mObj;
 	sf::View mCamera;
 	sf::Clock mClock;
 	float mDeltaTime = 0;
-
-	void InitSFX();
-	void InitMusic();
 };
 
 #endif

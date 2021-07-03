@@ -16,7 +16,6 @@ public:
 	void BeginDraw();
 	void EndDraw();
 
-	void Update();
 	void Destroy();
 
 	bool isDone() const;

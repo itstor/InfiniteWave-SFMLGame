@@ -3,9 +3,6 @@
 //Related Scene
 #include "MainMenu.h"
 
-//Required Library
-#include <iostream>
-
 #include "Window.h"
 #include "SceneManager.h"
 #include "AudioManager.h"
@@ -51,10 +48,7 @@ CreditScene::CreditScene(SharedObject& shared_object, bool replace) :BaseScene(s
 	InitButton();
 }
 
-CreditScene::~CreditScene()
-{
-	std::cout << "CreditScene Deleted" << std::endl;
-}
+CreditScene::~CreditScene() = default;
 
 void CreditScene::InitButton()
 {
@@ -75,15 +69,9 @@ void CreditScene::InitBackground()
 	mMenuBgSpi.setPosition(0, 0);
 }
 
-void CreditScene::Pause()
-{
-	std::cout << "CreditScene Paused" << std::endl;
-}
+void CreditScene::Pause(){}
 
-void CreditScene::Resume()
-{
-	std::cout << "CreditScene Resume" << std::endl;
-}
+void CreditScene::Resume(){}
 
 void CreditScene::Update(float delta_time)
 {
@@ -105,11 +93,8 @@ void CreditScene::Update(float delta_time)
 			{
 				if (mButtonBack.IsHover())
 				{
-					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-					{
-						mAudio.PlaySFX("button");
-						mNextScene = SceneManager::Build<MainMenu>(mSharedObject, true);
-					}
+					mAudio.PlaySFX("button");
+					mNextScene = SceneManager::Build<MainMenu>(mSharedObject, true);
 				}
 			} break;
 			default: break;

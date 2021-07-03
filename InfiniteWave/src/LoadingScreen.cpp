@@ -4,20 +4,14 @@
 #include "SplashScreen.h"
 
 //Required Library
-#include <iostream>
 #include <memory>
 
 #include "Window.h"
 #include "SceneManager.h"
-#include "AudioManager.h"
 #include "GamePlay.h"
 
 LoadingScreen::LoadingScreen(SharedObject& shared_object, bool replace) :BaseScene(shared_object, replace)
 {
-#ifdef _DEBUG
-	std::cout << "LoadingScreen Created" << std::endl;
-#endif
-
 	//setup loading bar and fram
 	mLoadingBarOutline.setOutlineColor(sf::Color::White);
 	mLoadingBarOutline.setFillColor(sf::Color::Transparent);
@@ -108,10 +102,7 @@ LoadingScreen::LoadingScreen(SharedObject& shared_object, bool replace) :BaseSce
 	mMouseRect.setPosition(1127.0f, 1080.0f - 321.43f);
 }
 
-LoadingScreen::~LoadingScreen()
-{
-	std::cout << "LoadingScreen Deleted" << std::endl;
-}
+LoadingScreen::~LoadingScreen() = default;
 
 void LoadingScreen::InitButton()
 {
@@ -123,15 +114,9 @@ void LoadingScreen::InitBackground()
 	//Initialize background here
 }
 
-void LoadingScreen::Pause()
-{
-	std::cout << "LoadingScreen Paused" << std::endl;
-}
+void LoadingScreen::Pause(){}
 
-void LoadingScreen::Resume()
-{
-	std::cout << "LoadingScreen Resume" << std::endl;
-}
+void LoadingScreen::Resume(){}
 
 void LoadingScreen::Update(float delta_time)
 {
@@ -146,7 +131,9 @@ void LoadingScreen::Update(float delta_time)
 			{
 				/*Only for non-simultaneous key
 				Use if statement for simultaneous key*/
+#ifdef _DEBUG
 			case sf::Keyboard::Space: mNextScene = SceneManager::Build<GamePlay>(mSharedObject, true);
+#endif
 			default: break;
 			}
 			break;

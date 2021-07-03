@@ -1,6 +1,5 @@
 #include "Zombie.h"
 
-#include <iostream>
 #include <utility>
 
 Zombie::Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, sf::Texture& blood_tex, PathRequestManager& request_manager, sf::SoundBuffer& sound_buffer): mRequestManager(request_manager), mZombieSoundBuffer(sound_buffer), mZombieTex(zombie_tex), mBloodSplashTex(blood_tex)
@@ -28,15 +27,14 @@ Zombie::Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, sf::Texture& bl
 	mZombieSound.setLoop(false);
 	mZombieSound.setPosition(mEntityRect.getPosition().x, 0, mEntityRect.getPosition().y);
 	mZombieSound.setMinDistance(200.0f);
+	mZombieSound.setVolume(75.0f);
 	mZombieSoundDelay = static_cast<float>(rand() % 8) + 7.0f;
 
 	SetPosition(pos);
 	
 }
 
-Zombie::~Zombie(){
-	std::cout << "DEADDDDD\n";
-};
+Zombie::~Zombie() = default;
 
 void Zombie::Update(float delta_time, const sf::Vector2f& distance)
 {
@@ -123,7 +121,6 @@ void Zombie::Move(float deltaTime)
 void Zombie::Attack()
 {
 	mAllowAttack = false;
-	std::cout << "HRGHHH\n";
 	mAnimState = AnimState::ATTACK_ANIM;
 	//play attack anim
 }
@@ -132,10 +129,8 @@ void Zombie::GetHit()
 {
 	mHealth -= 20;
 	mShowBlood = true;
-	std::cout << "ARGHH\n";
 	if (mHealth <= 0)
 	{
-		std::cout << "DEAD AGAIN\n";
 		mIsDead = true;
 	}
 }

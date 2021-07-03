@@ -39,7 +39,7 @@ void Game::Run()
 	}
 }
 
-void Game::InitSFX()
+void Game::InitSFX() const
 {
 	mObj.AudioManager->AddSFX("button", "data/Audio/SFX/Button_9.wav");
 	mObj.AudioManager->AddSFX("pistol_shoot", "data/Audio/SFX/pistol-shoot.wav");
@@ -49,7 +49,7 @@ void Game::InitSFX()
 	mObj.AudioManager->AddSFX("health_pickup", "data/Audio/SFX/health-pickup.wav");
 }
 
-void Game::InitMusic()
+void Game::InitMusic() const
 {
 	mObj.AudioManager->AddMusic("Loading", "data/Audio/Backsound/backsound.wav", true);
 	mObj.AudioManager->AddMusic("HeartBeat", "data/Audio/SFX/heartbeat.wav", true);

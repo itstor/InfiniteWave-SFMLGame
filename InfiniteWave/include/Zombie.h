@@ -33,6 +33,9 @@ public:
 	ZombieType GetZombieType() const;
 	sf::RectangleShape* GetBloodDraw();
 
+	template <typename T>
+	static std::unique_ptr<T> Spawn(const sf::Vector2f& pos, sf::Texture& zombie_tex, sf::Texture& blood_tex, PathRequestManager& request_manager, sf::SoundBuffer& sound_buffer);
+
 protected:
 	ZombieType mZombieType;
 
@@ -62,5 +65,11 @@ private:
 	sf::Vector2f mNextPosition;
 	std::stack<Node> mWalkPath;
 };
+
+template<typename T>
+std::unique_ptr<T> Zombie::Spawn(const sf::Vector2f & pos, sf::Texture & zombie_tex, sf::Texture & blood_tex, PathRequestManager & request_manager, sf::SoundBuffer & sound_buffer)
+{
+	return std::make_unique<T>(pos, zombie_tex, blood_tex, request_manager, sound_buffer);
+}
 
 #endif

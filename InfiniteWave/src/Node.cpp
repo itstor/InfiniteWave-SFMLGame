@@ -1,7 +1,5 @@
 #include "Node.h"
 
-#include <iostream>
-
 Node::Node(NodeType node_type, const sf::Vector2f& node_position, const sf::Vector2f& node_size, const sf::Vector2i& grid_index, int id):mParentNode(nullptr)
 {
 	mNodeType = node_type;

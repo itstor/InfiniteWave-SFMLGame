@@ -2,12 +2,13 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
-PickupItem::PickupItem(sf::Texture& item_tex, sf::Vector2f position, sf::Vector2f size, float expired_time) : mItemTexture(item_tex)
+PickupItem::PickupItem(sf::Texture& item_tex, sf::Vector2f position, sf::Vector2f size, float expired_time) : mItemTexture(nullptr)
 {
+	mItemTexture = &item_tex;
 	mColliderBody.setSize(size);
 	mColliderBody.setOrigin(size.x * 0.5f, size.y * 0.5f);
 	mColliderBody.setPosition(position);
-	mColliderBody.setTexture(&mItemTexture);
+	mColliderBody.setTexture(&*mItemTexture);
 	mAnimTex.Setup(&item_tex, 1, 4);
 	mColliderBody.setTextureRect(*mAnimTex.GetTextureRect());
 
@@ -33,6 +34,6 @@ bool PickupItem::IsExpired() const
 
 void PickupItem::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
-	states.texture = &mItemTexture;
+	states.texture = &*mItemTexture;
 	target.draw(mColliderBody, states);
 }

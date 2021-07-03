@@ -1,7 +1,5 @@
 #include "SpriteAnimation.h"
 
-#include <iostream>
-
 
 SpriteAnimation::SpriteAnimation() = default;
 

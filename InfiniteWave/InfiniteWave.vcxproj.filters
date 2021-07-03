@@ -106,9 +106,6 @@
     <ClCompile Include="src\AudioManager.cpp">
       <Filter>Source\GameSystem\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="src\TemplateScene.cpp">
-      <Filter>Source\Scene\Template</Filter>
-    </ClCompile>
     <ClCompile Include="src\Bullet.cpp">
       <Filter>Source\GameObject</Filter>
     </ClCompile>
@@ -193,7 +190,6 @@
     <ClCompile Include="src\Animation.cpp">
       <Filter>Source\GameSystem\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mist.cpp" />
     <ClCompile Include="src\GameoverScene.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
@@ -240,9 +236,6 @@
     </ClInclude>
     <ClInclude Include="include\Image.h">
       <Filter>Include\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="include\TemplateScene.h">
-      <Filter>Include\Scene\Template</Filter>
     </ClInclude>
     <ClInclude Include="include\Bullet.h">
       <Filter>Include\GameObject</Filter>
@@ -322,7 +315,6 @@
     <ClInclude Include="include\Animation.h">
       <Filter>Include\GameSystem\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mist.h" />
     <ClInclude Include="include\GameoverScene.h">
       <Filter>Include\Scene</Filter>
     </ClInclude>

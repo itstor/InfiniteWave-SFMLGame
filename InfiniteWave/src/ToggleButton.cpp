@@ -1,6 +1,5 @@
 #include "ToggleButton.h"
 
-#include <iostream>
 
 void ToggleButton::Setup(const std::string & first_state_path, const std::string & second_state_path, float scale_factor, sf::Vector2f position, ButtonState current_state)
 {

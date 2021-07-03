@@ -1,24 +1,19 @@
+#include <memory>
+
 #include "SettingScene.h"
 
 //Related Scene
 #include "MainMenu.h"
-
-//Required Library
-#include <iostream>
-#include <memory>
 
 #include "Window.h"
 #include "SceneManager.h"
 #include "AudioManager.h"
 #include "Config.h"
 
+
 SettingScene::SettingScene(SharedObject& shared_object, bool replace) :BaseScene(shared_object, replace)
 {
-#ifdef _DEBUG
-	std::cout << "SettingScene Created" << std::endl;
-#endif
 	mHeadlineFont.loadFromFile("data/Font/HeadlinerNo.45.ttf");
-
 
 	mSettingText.setFont(mHeadlineFont);
 	mFullScreenText.setFont(mHeadlineFont);
@@ -36,15 +31,15 @@ SettingScene::SettingScene(SharedObject& shared_object, bool replace) :BaseScene
 	mFullScreenText.setPosition(100.12f, 548.89f);
 	mMuteText.setPosition(100.12f, 612.86f);
 	
-	
 	InitBackground();
 	InitButton();
 }
 
-SettingScene::~SettingScene()
-{
-	std::cout << "SettingScene Deleted" << std::endl;
-}
+SettingScene::~SettingScene() = default;
+
+void SettingScene::Pause(){}
+
+void SettingScene::Resume(){}
 
 void SettingScene::InitButton()
 {
@@ -73,16 +68,6 @@ void SettingScene::InitBackground()
 	mMenuBgSpi.setPosition(0, 0);
 }
 
-void SettingScene::Pause()
-{
-	std::cout << "SettingScene Paused" << std::endl;
-}
-
-void SettingScene::Resume()
-{
-	std::cout << "SettingScene Resume" << std::endl;
-}
-
 void SettingScene::Update(float delta_time)
 {
 	const sf::Vector2i mousePos = sf::Mouse::getPosition(*mWindow.GetRenderWindow());
@@ -105,27 +90,18 @@ void SettingScene::Update(float delta_time)
 			{
 				if (mButtonBack.IsHover())
 				{
-					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-					{
-						mAudio.PlaySFX("button");
-						mNextScene = SceneManager::Build<MainMenu>(mSharedObject, true);
-					}
+					mAudio.PlaySFX("button");
+					mNextScene = SceneManager::Build<MainMenu>(mSharedObject, true);
 				}
 				else if (mButtonMute.IsHover())
 				{
-					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-					{
-						mButtonMute.ToggleState();
-						mAudio.ToggleMute();
-					}
+					mButtonMute.ToggleState();
+					mAudio.ToggleMute();
 				}
 				else if (mButtonFullScreen.IsHover())
 				{
-					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-					{
-						mButtonFullScreen.ToggleState();
-						mWindow.ToggleFullScreen();
-					}
+					mButtonFullScreen.ToggleState();
+					mWindow.ToggleFullScreen();
 				}
 			} break;
 			default: break;

@@ -1,8 +1,8 @@
+#include <memory>
+
+//Related Scene
 #include "SplashScreen.h"
 #include "MainMenu.h"
-
-#include <iostream>
-#include <memory>
 
 #include "Window.h"
 #include "Config.h"
@@ -11,16 +11,14 @@
 
 
 SplashScreen::SplashScreen(SharedObject& shared_object, bool replace) :BaseScene(shared_object, replace), mAlphaMask(0, 0, 0, 255)
-{
-#ifdef _DEBUG
-	std::cout << "SplashScreen Created" << std::endl;
-#endif
+{	
 	//Background
-	mBackgroundRect.setSize(sf::Vector2f(mWindow.GetWindowSize().x, mWindow.GetWindowSize().y));
+	mBackgroundRect.setSize(sf::Vector2f(static_cast<float>(mWindow.GetWindowSize().x), static_cast<float>(mWindow.GetWindowSize().y)));
 	mBackgroundRect.setFillColor(sf::Color::Black);
+	
 	//Mask fader
 	mMaskRect.setFillColor(mAlphaMask);
-	mMaskRect.setSize(sf::Vector2f(mWindow.GetWindowSize().x, mWindow.GetWindowSize().y));
+	mMaskRect.setSize(sf::Vector2f(static_cast<float>(mWindow.GetWindowSize().x), static_cast<float>(mWindow.GetWindowSize().y)));
 
 	mITSLogo.Setup("data/Texture/GUI/splash_whiteits.png",
 		sf::Vector2f(static_cast<float>(conf::gWindowWidth) / 2, static_cast<float>(conf::gWindowHeight) / 2),
@@ -33,21 +31,12 @@ SplashScreen::SplashScreen(SharedObject& shared_object, bool replace) :BaseScene
 	mAudio.PlayMusic("Loading");
 }
 
-SplashScreen::~SplashScreen()
-{
-	std::cout << "SplashScreen Deleted" << std::endl;
-}
+SplashScreen::~SplashScreen() = default;
 
 
-void SplashScreen::Pause()
-{
-	std::cout << "SplashScreen Paused" << std::endl;
-}
+void SplashScreen::Pause(){}
 
-void SplashScreen::Resume()
-{
-	std::cout << "SplashScreen Resume" << std::endl;
-}
+void SplashScreen::Resume(){}
 
 void SplashScreen::Update(float delta_time)
 {
@@ -56,21 +45,22 @@ void SplashScreen::Update(float delta_time)
 		switch (event.type)
 		{
 		case sf::Event::Closed: mWindow.Destroy(); break;
-#ifdef _DEBUG
+
 		case sf::Event::KeyPressed:
 		{
 			switch (event.key.code)
 			{
 			case sf::Keyboard::Space:
-				mNextScene = SceneManager::Build<MainMenu>(mSharedObject, false);
+				mNextScene = SceneManager::Build<MainMenu>(mSharedObject, true);
 				break;
+#ifdef _DEBUG
 			case sf::Keyboard::Escape: mWindow.Destroy(); break;
 			case sf::Keyboard::M: mAudio.ToggleMute(); break;
+#endif
 			default: break;
 			}
 			break;
 		}
-#endif
 		default: break;
 		}
 	}
@@ -88,9 +78,7 @@ void SplashScreen::Update(float delta_time)
 		mLogoFlag++;
 
 
-
 	mMaskRect.setFillColor(mAlphaMask);
-
 }
 
 void SplashScreen::Draw()

@@ -22,7 +22,6 @@
     <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\AnimationManager.cpp" />
     <ClCompile Include="src\GameoverScene.cpp" />
-    <ClCompile Include="src\Mist.cpp" />
     <ClCompile Include="src\SpriteAnimation.cpp" />
     <ClCompile Include="src\AudioManager.cpp" />
     <ClCompile Include="src\BaseScene.cpp" />
@@ -59,7 +58,6 @@
     <ClCompile Include="src\Sfx.cpp" />
     <ClCompile Include="src\SplashScreen.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
-    <ClCompile Include="src\TemplateScene.cpp" />
     <ClCompile Include="src\ToggleButton.cpp" />
     <ClCompile Include="src\Window.cpp" />
     <ClCompile Include="src\Zombie.cpp" />
@@ -68,7 +66,6 @@
     <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\AnimationManager.h" />
     <ClInclude Include="include\GameoverScene.h" />
-    <ClInclude Include="include\Mist.h" />
     <ClInclude Include="include\SpriteAnimation.h" />
     <ClInclude Include="include\AudioManager.h" />
     <ClInclude Include="include\BaseScene.h" />
@@ -101,7 +98,6 @@
     <ClInclude Include="include\Sfx.h" />
     <ClInclude Include="include\SharedObject.h" />
     <ClInclude Include="include\SplashScreen.h" />
-    <ClInclude Include="include\TemplateScene.h" />
     <ClInclude Include="include\ToggleButton.h" />
     <ClInclude Include="include\Window.h" />
     <ClInclude Include="include\Zombie.h" />
@@ -225,7 +221,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>D:\Programming\Project\TA-FruitShooterGame\InfiniteWave\third-party\SFML\lib</AdditionalLibraryDirectories>

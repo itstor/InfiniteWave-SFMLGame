@@ -22,9 +22,6 @@ public:
 	void Update(float delta_time) override;
 
 private:
-	void InitBackground();
-	void InitButton();
-
 	float mElapsedTime = 0.0f;
 	
 	//Define scene component here

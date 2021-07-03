@@ -3,7 +3,6 @@
 #include "Player.h"
 
 #include <cmath>
-#include <iostream>
 #include <SFML/Audio/Listener.hpp>
 #include <SFML/Window/Mouse.hpp>
 
@@ -196,7 +195,6 @@ void Player::GetHit(int damage)
 	{
 		mHealth = 0;
 	}
-	std::cout << "UGHHH\n";
 	//TODO play blinking animation
 }
 

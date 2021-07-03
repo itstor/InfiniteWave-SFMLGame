@@ -15,6 +15,7 @@ void Button::Setup(const std::string& idle_path, const std::string& hover_path, 
 	mButtonRect.setScale(scale_factor, scale_factor);
 	mButtonRect.setOrigin(mButtonRect.getSize().x/2, mButtonRect.getSize().y/2);
 	mButtonRect.setPosition(position);
+	mButtonRect.setTexture(&mButtonIdleTex);
 
 	mButtonState = ButtonState::IDLE_BTN;
 }

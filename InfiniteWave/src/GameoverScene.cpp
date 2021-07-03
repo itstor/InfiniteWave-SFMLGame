@@ -3,9 +3,6 @@
 //Related Scene
 #include "SplashScreen.h"
 
-//Required Library
-#include <iostream>
-
 #include "Config.h"
 #include "GamePlay.h"
 #include "MainMenu.h"
@@ -50,30 +47,11 @@ GameoverScene::GameoverScene(SharedObject& shared_object, bool replace) :BaseSce
 	mFadeToBlackOverlay.setPosition(0.0f, 0.0f);
 }
 
-GameoverScene::~GameoverScene()
-{
-	std::cout << "GameoverScene Deleted" << std::endl;
-}
+GameoverScene::~GameoverScene() = default;
 
-void GameoverScene::InitButton()
-{
-	//Initialize button here
-}
+void GameoverScene::Pause(){}
 
-void GameoverScene::InitBackground()
-{
-	//Initialize background here
-}
-
-void GameoverScene::Pause()
-{
-	std::cout << "GameoverScene Paused" << std::endl;
-}
-
-void GameoverScene::Resume()
-{
-	std::cout << "GameoverScene Resume" << std::endl;
-}
+void GameoverScene::Resume(){}
 
 void GameoverScene::Update(float delta_time)
 {
@@ -126,7 +104,7 @@ void GameoverScene::Update(float delta_time)
 		if (conf::gGameScore > conf::gHighScore)
 		{
 			conf::gHighScore = conf::gGameScore;
-			mNewHighScoreText.setPosition(960 - textBoxHigh.width, 303.88f);
+			mNewHighScoreText.setPosition(960 - textBoxHigh.width * 0.5f, 303.88f);
 		}
 		mRespawnText.setPosition(960 - textBoxRespawn.width, 851.84f);
 		mBackToMainText.setOrigin(textBoxBack.width * 0.5f, textBoxBack.height * 0.5f);

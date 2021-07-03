@@ -1,7 +1,5 @@
 #include "Entity.h"
 
-#include <iostream>
-
 #include "Obstacle.h"
 
 void Entity::CheckCollision(Obstacle& obs)

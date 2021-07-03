@@ -1,6 +1,5 @@
 #include "Grid.h"
 
-#include <iostream>
 #include <SFML/Graphics/RenderWindow.hpp>
 
 Grid::Grid(std::vector<Obstacle>& obstacle_container) :mObstacleContainer(obstacle_container){}

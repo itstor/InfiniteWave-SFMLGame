@@ -6,5 +6,4 @@ NormalZombie::NormalZombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, sf:
 	mHealth = 100;
 	mMovementSpeed = 350.0f;
 	mZombieType = ZombieType::NORMAL_ZOMBIE;
-
 }
