@@ -23,6 +23,7 @@ public:
 
 private:
 	float mElapsedTime = 0.0f;
+	int mCountDownRespawn = 5;
 	
 	//Define scene component here
 	AnimationManager mAnimManager;

@@ -112,12 +112,11 @@ void GameoverScene::Update(float delta_time)
 
 		static float respawnElaps = 0.0f;
 		respawnElaps += delta_time;
-		static int countdown = 5;
 		if (respawnElaps >= 1.0f)
 		{
-			countdown--;
-			mRespawnText.setString(std::string("respawn in ").append(std::to_string(countdown)));
-			if (countdown == 0)
+			mCountDownRespawn--;
+			mRespawnText.setString(std::string("respawn in ").append(std::to_string(mCountDownRespawn)));
+			if (mCountDownRespawn == 0)
 			{
 				mNextScene = SceneManager::Build<GamePlay>(mSharedObject, true);
 			}
