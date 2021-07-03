@@ -18,33 +18,33 @@
 #include "Config.h"
 
 
-GamePlay::GamePlay(SharedObject& obj, bool replace) : BaseScene(obj, replace),
-                                                      mPathFindingGrid(obstacleContainer),
-                                                      mPathFinding(mPathFindingGrid), mRequestManager(mPathFinding), ls(false)
+GamePlay::GamePlay(SharedObject& shared_object, bool replace) : BaseScene(shared_object, replace),
+                                                      mPathFindingGrid(mObstaclesContainer),
+                                                      mPathFinding(mPathFindingGrid), mRequestManager(mPathFinding), mLighSystem(false)
 {
 #ifdef _DEBUG
 	std::cout << "GamePlay Created" << std::endl;
 #endif
 	//stop main menu music
-	mAudio.stopAll();
+	mAudio.StopAllMusic();
 
 	//reset game score
-	conf::gameScore = 0;
+	conf::gGameScore = 0;
 	
 	//init view
-	camera.reset(sf::FloatRect(0, 0, 3840, 2160));
-	GUICamera.reset(sf::FloatRect(8118, 0, 1920, 1080));
+	mMainCamera.reset(sf::FloatRect(0, 0, 3840, 2160));
+	mGUICamera.reset(sf::FloatRect(8118, 0, 1920, 1080));
 
 	//init path finding grid
 	mPathFindingGrid.Setup(sf::Vector2f(8019, 6547), sf::Vector2f(136, 136));
 	
-	player.setPosition(sf::Vector2f(3602.19f, 4756.3f));
+	mPlayer.SetPosition(sf::Vector2f(3602.19f, 4756.3f));
 
-	initTexture();
-	initLight();
-	initMap();
-	initObstacles();
-	initGUI();
+	InitTextures();
+	InitLight();
+	InitMap();
+	InitObstacles();
+	InitGUI();
 	mPathFindingGrid.CreateGrid();
 }
 
@@ -54,7 +54,7 @@ GamePlay::~GamePlay()
 	mWindow.GetRenderWindow()->setView(mWindow.GetRenderWindow()->getDefaultView());
 }
 
-void GamePlay::initMap()
+void GamePlay::InitMap()
 {
 	int map[2832];
 	int i = 0;
@@ -71,223 +71,223 @@ void GamePlay::initMap()
 
 	file.close();
 
-	gameMap.load("data/Texture/Sprites/Map/jawbreaker.png", sf::Vector2u(8, 8), map, 59, 48);
-	gameMap.setScale(17, 17);
+	mGameMap.Load("data/Texture/Sprites/Map/jawbreaker.png", sf::Vector2u(8, 8), map, 59, 48);
+	mGameMap.setScale(17, 17);
 }
 
-void GamePlay::initObstacles()
+void GamePlay::InitObstacles()
 {
 	//ROCKS
-	obstacleContainer.emplace_back(sf::Vector2f(5331, 4921), sf::Vector2f(94, 100));
-	obstacleContainer.emplace_back(sf::Vector2f(3154, 4236), sf::Vector2f(94, 100));
-	obstacleContainer.emplace_back(sf::Vector2f(2470.75f, 3011.46f), sf::Vector2f(94, 100));
-	obstacleContainer.emplace_back(sf::Vector2f(836.35f, 2876.25f), sf::Vector2f(94, 100));
-	obstacleContainer.emplace_back(sf::Vector2f(7645.07f, 4238.22f), sf::Vector2f(94, 100));
-	obstacleContainer.emplace_back(sf::Vector2f(7236.48f, 699.15f), sf::Vector2f(94, 100));
-	obstacleContainer.emplace_back(sf::Vector2f(2603.79f, 423.11f), sf::Vector2f(94, 100));
+	mObstaclesContainer.emplace_back(sf::Vector2f(5331, 4921), sf::Vector2f(94, 100));
+	mObstaclesContainer.emplace_back(sf::Vector2f(3154, 4236), sf::Vector2f(94, 100));
+	mObstaclesContainer.emplace_back(sf::Vector2f(2470.75f, 3011.46f), sf::Vector2f(94, 100));
+	mObstaclesContainer.emplace_back(sf::Vector2f(836.35f, 2876.25f), sf::Vector2f(94, 100));
+	mObstaclesContainer.emplace_back(sf::Vector2f(7645.07f, 4238.22f), sf::Vector2f(94, 100));
+	mObstaclesContainer.emplace_back(sf::Vector2f(7236.48f, 699.15f), sf::Vector2f(94, 100));
+	mObstaclesContainer.emplace_back(sf::Vector2f(2603.79f, 423.11f), sf::Vector2f(94, 100));
 	
 	//WALLS
 	/*left top room*/
-	obstacleContainer.emplace_back(sf::Vector2f(291, 1091), sf::Vector2f(126, 126)); //left
-	obstacleContainer.emplace_back(sf::Vector2f(1501, 1091), sf::Vector2f(126, 126)); //right
-	obstacleContainer.emplace_back(sf::Vector2f( 2045, 2588 ), sf::Vector2f( 126, 126)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(291, 1091), sf::Vector2f(126, 126)); //left
+	mObstaclesContainer.emplace_back(sf::Vector2f(1501, 1091), sf::Vector2f(126, 126)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f( 2045, 2588 ), sf::Vector2f( 126, 126)); //right
 
 
-	obstacleContainer.emplace_back(sf::Vector2f(0, 684), sf::Vector2f(2175, 126)); //right
-	obstacleContainer.emplace_back(sf::Vector2f(0, 1501), sf::Vector2f(1764, 126)); //right
-	obstacleContainer.emplace_back(sf::Vector2f(2042, 812), sf::Vector2f(126, 968)); //right
-	obstacleContainer.emplace_back(sf::Vector2f(0, 1630), sf::Vector2f(675.68f, 960.7f)); //right
-	obstacleContainer.emplace_back(sf::Vector2f(0, 2591), sf::Vector2f(1764, 126)); //right
-	obstacleContainer.emplace_back(sf::Vector2f( 1498, 1623 ), sf::Vector2f( 126, 273 )); //right
-	obstacleContainer.emplace_back(sf::Vector2f( 1498, 2187 ), sf::Vector2f( 126, 404.5f )); //right
-	obstacleContainer.emplace_back(sf::Vector2f( 2044, 2042 ), sf::Vector2f( 126, 270 )); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(0, 684), sf::Vector2f(2175, 126)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(0, 1501), sf::Vector2f(1764, 126)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(2042, 812), sf::Vector2f(126, 968)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(0, 1630), sf::Vector2f(675.68f, 960.7f)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(0, 2591), sf::Vector2f(1764, 126)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f( 1498, 1623 ), sf::Vector2f( 126, 273 )); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f( 1498, 2187 ), sf::Vector2f( 126, 404.5f )); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f( 2044, 2042 ), sf::Vector2f( 126, 270 )); //right
 
 
 	/*center room*/
-	obstacleContainer.emplace_back(sf::Vector2f(3134, 2588), sf::Vector2f(126, 544));
-	obstacleContainer.emplace_back(sf::Vector2f(3815, 2721), sf::Vector2f(126, 411.5f)); //right
-	obstacleContainer.emplace_back(sf::Vector2f(3815, 2034), sf::Vector2f(126, 411.5f)); //right
-	obstacleContainer.emplace_back(sf::Vector2f(3135, 2034), sf::Vector2f(126, 281)); //right
-	obstacleContainer.emplace_back(sf::Vector2f(3135, 1908), sf::Vector2f(811.5f, 126)); //right
-	obstacleContainer.emplace_back(sf::Vector2f(3265.61f, 3006.43f), sf::Vector2f(126, 126)); //right
-	obstacleContainer.emplace_back(sf::Vector2f( 3689.61f, 3006.43f ), sf::Vector2f( 126, 126 )); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(3134, 2588), sf::Vector2f(126, 544));
+	mObstaclesContainer.emplace_back(sf::Vector2f(3815, 2721), sf::Vector2f(126, 411.5f)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(3815, 2034), sf::Vector2f(126, 411.5f)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(3135, 2034), sf::Vector2f(126, 281)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(3135, 1908), sf::Vector2f(811.5f, 126)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(3265.61f, 3006.43f), sf::Vector2f(126, 126)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f( 3689.61f, 3006.43f ), sf::Vector2f( 126, 126 )); //right
 	
 	
 	/*right room*/
-	obstacleContainer.emplace_back(sf::Vector2f( 6133, 2725 ), sf::Vector2f( 126, 126 )); //right
-	obstacleContainer.emplace_back(sf::Vector2f( 6133, 3408 ), sf::Vector2f( 126, 126 )); //right
-	obstacleContainer.emplace_back(sf::Vector2f( 6133, 4089 ), sf::Vector2f( 126, 126 )); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f( 6133, 2725 ), sf::Vector2f( 126, 126 )); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f( 6133, 3408 ), sf::Vector2f( 126, 126 )); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f( 6133, 4089 ), sf::Vector2f( 126, 126 )); //right
 
 	
-	obstacleContainer.emplace_back(sf::Vector2f(4220, 4500), sf::Vector2f(2721, 126)); //right
-	obstacleContainer.emplace_back(sf::Vector2f(4900, 2183), sf::Vector2f(407, 126)); //right
-	obstacleContainer.emplace_back(sf::Vector2f( 5580.16f, 2183 ), sf::Vector2f( 1361, 126 )); //right
-	obstacleContainer.emplace_back(sf::Vector2f(4220, 4088), sf::Vector2f(126, 411.5f)); //right
-	obstacleContainer.emplace_back(sf::Vector2f(4220, 3397), sf::Vector2f(126, 411.5f)); //right
-	obstacleContainer.emplace_back(sf::Vector2f(6808, 3132), sf::Vector2f(126, 537)); //right
-	obstacleContainer.emplace_back(sf::Vector2f(6808, 2309), sf::Vector2f(126, 537)); //right
-	obstacleContainer.emplace_back(sf::Vector2f(6808, 3962), sf::Vector2f(126, 537)); //right
-	obstacleContainer.emplace_back(sf::Vector2f(4901, 2730), sf::Vector2f(126, 537)); //right
-	obstacleContainer.emplace_back(sf::Vector2f( 4899.45f, 2309.25f ), sf::Vector2f( 126, 126 )); //right
-	obstacleContainer.emplace_back(sf::Vector2f( 5032, 2863 ), sf::Vector2f( 408, 126 )); //right
-	obstacleContainer.emplace_back(sf::Vector2f( 5032, 3267.5f ), sf::Vector2f( 408, 126 )); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(4220, 4500), sf::Vector2f(2721, 126)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(4900, 2183), sf::Vector2f(407, 126)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f( 5580.16f, 2183 ), sf::Vector2f( 1361, 126 )); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(4220, 4088), sf::Vector2f(126, 411.5f)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(4220, 3397), sf::Vector2f(126, 411.5f)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(6808, 3132), sf::Vector2f(126, 537)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(6808, 2309), sf::Vector2f(126, 537)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(6808, 3962), sf::Vector2f(126, 537)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f(4901, 2730), sf::Vector2f(126, 537)); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f( 4899.45f, 2309.25f ), sf::Vector2f( 126, 126 )); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f( 5032, 2863 ), sf::Vector2f( 408, 126 )); //right
+	mObstaclesContainer.emplace_back(sf::Vector2f( 5032, 3267.5f ), sf::Vector2f( 408, 126 )); //right
 
 
 
 
 	/*left bottom room*/
-	obstacleContainer.emplace_back(sf::Vector2f(1653.48f, 4236), sf::Vector2f(94, 100));
-	obstacleContainer.emplace_back(sf::Vector2f(1653.48f, 3829.75f), sf::Vector2f(94, 100));
+	mObstaclesContainer.emplace_back(sf::Vector2f(1653.48f, 4236), sf::Vector2f(94, 100));
+	mObstaclesContainer.emplace_back(sf::Vector2f(1653.48f, 3829.75f), sf::Vector2f(94, 100));
 	
-	obstacleContainer.emplace_back(sf::Vector2f(0.0f, 4638.04f), sf::Vector2f(2175, 126.25f)); //bottom wall
-	obstacleContainer.emplace_back(sf::Vector2f(0.0f, 3408), sf::Vector2f(2175, 126.25f)); //top wall
-	obstacleContainer.emplace_back(sf::Vector2f(2043.0f, 4226.48f), sf::Vector2f(131, 411.56f)); //left bottom wall
-	obstacleContainer.emplace_back(sf::Vector2f( 2043.0f, 3534.0 ), sf::Vector2f( 131, 411.56f )); //left top wall
+	mObstaclesContainer.emplace_back(sf::Vector2f(0.0f, 4638.04f), sf::Vector2f(2175, 126.25f)); //bottom wall
+	mObstaclesContainer.emplace_back(sf::Vector2f(0.0f, 3408), sf::Vector2f(2175, 126.25f)); //top wall
+	mObstaclesContainer.emplace_back(sf::Vector2f(2043.0f, 4226.48f), sf::Vector2f(131, 411.56f)); //left bottom wall
+	mObstaclesContainer.emplace_back(sf::Vector2f( 2043.0f, 3534.0 ), sf::Vector2f( 131, 411.56f )); //left top wall
 
 	//Add light obstacle
-	for (auto &obs:obstacleContainer)
+	for (auto &obs:mObstaclesContainer)
 	{
-		ls.createLightShape(*obs.getCollider())->setRenderLightOver(false);
+		mLighSystem.createLightShape(*obs.GetCollider())->setRenderLightOver(false);
 	}
 	
 	//MAP BOUNDARIES
-	obstacleContainer.emplace_back(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(-1.0f, 6536.0f));
-	obstacleContainer.emplace_back(sf::Vector2f(8018.0f, 0.0f), sf::Vector2f(1.0f, 6536.0f));
-	obstacleContainer.emplace_back(sf::Vector2f(0.0f, 6536.0f), sf::Vector2f(8018.0f, 1.0f));
-	obstacleContainer.emplace_back(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(8018.0f, -1.0f));
+	mObstaclesContainer.emplace_back(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(-1.0f, 6536.0f));
+	mObstaclesContainer.emplace_back(sf::Vector2f(8018.0f, 0.0f), sf::Vector2f(1.0f, 6536.0f));
+	mObstaclesContainer.emplace_back(sf::Vector2f(0.0f, 6536.0f), sf::Vector2f(8018.0f, 1.0f));
+	mObstaclesContainer.emplace_back(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(8018.0f, -1.0f));
 	
 	//STAIRS
-	obstacleContainer.emplace_back(sf::Vector2f(269, 3538), sf::Vector2f(822.28f, 272)); //left bottom room
-	obstacleContainer.emplace_back(sf::Vector2f(4494, 3394), sf::Vector2f(948, 272)); //right room, top
-	obstacleContainer.emplace_back(sf::Vector2f(4494, 4227), sf::Vector2f(948, 272)); //right room, bottom
+	mObstaclesContainer.emplace_back(sf::Vector2f(269, 3538), sf::Vector2f(822.28f, 272)); //left bottom room
+	mObstaclesContainer.emplace_back(sf::Vector2f(4494, 3394), sf::Vector2f(948, 272)); //right room, top
+	mObstaclesContainer.emplace_back(sf::Vector2f(4494, 4227), sf::Vector2f(948, 272)); //right room, bottom
 
 	//OUTDOOR LADDER
-	obstacleContainer.emplace_back(sf::Vector2f(2700, 4479), sf::Vector2f(182.81f, 176.56f)); //right room, bottom
+	mObstaclesContainer.emplace_back(sf::Vector2f(2700, 4479), sf::Vector2f(182.81f, 176.56f)); //right room, bottom
 
 
 }
 
-void GamePlay::initButton()
+void GamePlay::InitButtons()
 {
 	//Initialize button here
 }
 
-void GamePlay::initLight()
+void GamePlay::InitLight()
 {
 	//init light system
-	ls.create({ 100.0f,100.0f,200.0f,200.0f }, mWindow.GetWindowSize());
+	mLighSystem.create({ 100.0f,100.0f,200.0f,200.0f }, mWindow.GetWindowSize());
 
 	//load light texture
-	flashLightTexture.loadFromFile("data/Texture/Sprites/Map/flashlight.png");
-	flashLightTexture.setSmooth(true);
+	mFlashLightTex.loadFromFile("data/Texture/Sprites/Map/flashlight.png");
+	mFlashLightTex.setSmooth(true);
 
-	pointLightTexture.loadFromFile("data/Texture/Sprites/Map/pointLightTexture.png");
-	pointLightTexture.setSmooth(true);
+	mGunLightTex.loadFromFile("data/Texture/Sprites/Map/mGunLightTex.png");
+	mGunLightTex.setSmooth(true);
 
-	flashLight = ls.createLightPointEmission();
-	flashLight->setOrigin(sf::Vector2f(static_cast<float>(flashLightTexture.getSize().x), static_cast<float>(flashLightTexture.getSize().y) * 0.5f));
-	flashLight->setTexture(flashLightTexture);
-	flashLight->setScale(-5.f, 5.f);
-	flashLight->setColor(sf::Color::White);
+	mFlashLight = mLighSystem.createLightPointEmission();
+	mFlashLight->setOrigin(sf::Vector2f(static_cast<float>(mFlashLightTex.getSize().x), static_cast<float>(mFlashLightTex.getSize().y) * 0.5f));
+	mFlashLight->setTexture(mFlashLightTex);
+	mFlashLight->setScale(-5.f, 5.f);
+	mFlashLight->setColor(sf::Color::White);
 
-	gunLight = ls.createLightPointEmission();
-	gunLight->setOrigin(sf::Vector2f(pointLightTexture.getSize().x * 0.5f, pointLightTexture.getSize().y * 0.5f));
-	gunLight->setTexture(pointLightTexture);
-	gunLight->setScale(15.f, 15.f);
-	gunLight->setColor(sf::Color::Yellow);
-	gunLight->setTurnedOn(false);
+	mGunLight = mLighSystem.createLightPointEmission();
+	mGunLight->setOrigin(sf::Vector2f(mGunLightTex.getSize().x * 0.5f, mGunLightTex.getSize().y * 0.5f));
+	mGunLight->setTexture(mGunLightTex);
+	mGunLight->setScale(15.f, 15.f);
+	mGunLight->setColor(sf::Color::Yellow);
+	mGunLight->setTurnedOn(false);
 
-	ls.setAmbientColor({ 30,30,30 });
+	mLighSystem.setAmbientColor({ 30,30,30 });
 }
 
-void GamePlay::initGUI()
+void GamePlay::InitGUI()
 {
-	pixelFont.loadFromFile("data/Font/Minecraft.ttf");
-	ammoText.setFont(pixelFont);
-	killText.setFont(pixelFont);
-	scoreTitleText.setFont(pixelFont);
-	scoreTotalText.setFont(pixelFont);
-	waveTitleText.setFont(pixelFont);
-	waveCurrentText.setFont(pixelFont);
-	waveCompleteText.setFont(pixelFont);
+	mPixelFont.loadFromFile("data/Font/Minecraft.ttf");
+	mAmmoText.setFont(mPixelFont);
+	mKillText.setFont(mPixelFont);
+	mScoreTitleText.setFont(mPixelFont);
+	mTotalScoreText.setFont(mPixelFont);
+	mWaveTitleText.setFont(mPixelFont);
+	mCurrentWaveText.setFont(mPixelFont);
+	mWaveCompleteText.setFont(mPixelFont);
 
-	ammoText.setString("18/18");
-	killText.setString("0");
-	scoreTitleText.setString("Score:");
-	scoreTotalText.setString("0");
-	waveTitleText.setString("Wave:");
-	waveCurrentText.setString("1/~");
-	waveCompleteText.setString("Wave Complete");
+	mAmmoText.setString("18/18");
+	mKillText.setString("0");
+	mScoreTitleText.setString("Score:");
+	mTotalScoreText.setString("0");
+	mWaveTitleText.setString("Wave:");
+	mCurrentWaveText.setString("1/~");
+	mWaveCompleteText.setString("Wave Complete");
 
-	healthIconTex.loadFromFile("data/Texture/GUI/health.png");
-	killIconTex.loadFromFile("data/Texture/GUI/kill.png");
-	ammoIconTex.loadFromFile("data/Texture/GUI/ammo.png");
+	mHealthIconTex.loadFromFile("data/Texture/GUI/health.png");
+	mKillIconTex.loadFromFile("data/Texture/GUI/kill.png");
+	mAmmoIconTex.loadFromFile("data/Texture/GUI/ammo.png");
 	
-	healthIconRect.setTexture(&healthIconTex);
-	killIconRect.setTexture(&killIconTex);
-	ammoIconRect.setTexture(&ammoIconTex);
-	healthBar.setFillColor(sf::Color::Red);
-	ammoText.setFillColor(sf::Color(204, 153, 37));
-	killText.setFillColor(sf::Color::White);
-	scoreTitleText.setFillColor(sf::Color::White);
-	scoreTotalText.setFillColor(sf::Color::White);
-	waveTitleText.setFillColor(sf::Color::White);
-	waveCurrentText.setFillColor(sf::Color::White);
-	waveCompleteText.setFillColor(sf::Color::White);
-	dyingOverlay.setFillColor(sf::Color(255, 0, 0, 0));
-	fadeToBlack.setFillColor(sf::Color(0, 0, 0, 0));
+	mHealthIconRect.setTexture(&mHealthIconTex);
+	mKillIconRect.setTexture(&mKillIconTex);
+	mAmmoIconRect.setTexture(&mAmmoIconTex);
+	mHealthBarRect.setFillColor(sf::Color::Red);
+	mAmmoText.setFillColor(sf::Color(204, 153, 37));
+	mKillText.setFillColor(sf::Color::White);
+	mScoreTitleText.setFillColor(sf::Color::White);
+	mTotalScoreText.setFillColor(sf::Color::White);
+	mWaveTitleText.setFillColor(sf::Color::White);
+	mCurrentWaveText.setFillColor(sf::Color::White);
+	mWaveCompleteText.setFillColor(sf::Color::White);
+	mDyingOverlay.setFillColor(sf::Color(255, 0, 0, 0));
+	mFadeToBlackOverlay.setFillColor(sf::Color(0, 0, 0, 0));
 	
-	healthIconRect.setSize(static_cast<const sf::Vector2f>(healthIconTex.getSize()));
-	killIconRect.setSize(static_cast<const sf::Vector2f>(killIconTex.getSize()));
-	ammoIconRect.setSize(static_cast<const sf::Vector2f>(ammoIconTex.getSize()));
-	healthBar.setSize({ 318, 28.65f });
-	ammoText.setScale(1.2f, 1.2f);
-	killText.setScale(1.2f, 1.2f);
-	scoreTitleText.setScale(0.8f, 0.8f);
-	scoreTotalText.setScale(1.5f, 1.5f);
-	waveTitleText.setScale(1, 1);
-	waveCurrentText.setScale(1.8f, 1.8f);
-	waveCompleteText.setScale(0.0f, 0.0f);
-	dyingOverlay.setSize({ 1920.0f,1080.0f });
-	fadeToBlack.setSize({ 1920.0f,1080.0f });
+	mHealthIconRect.setSize(static_cast<const sf::Vector2f>(mHealthIconTex.getSize()));
+	mKillIconRect.setSize(static_cast<const sf::Vector2f>(mKillIconTex.getSize()));
+	mAmmoIconRect.setSize(static_cast<const sf::Vector2f>(mAmmoIconTex.getSize()));
+	mHealthBarRect.setSize({ 318, 28.65f });
+	mAmmoText.setScale(1.2f, 1.2f);
+	mKillText.setScale(1.2f, 1.2f);
+	mScoreTitleText.setScale(0.8f, 0.8f);
+	mTotalScoreText.setScale(1.5f, 1.5f);
+	mWaveTitleText.setScale(1, 1);
+	mCurrentWaveText.setScale(1.8f, 1.8f);
+	mWaveCompleteText.setScale(0.0f, 0.0f);
+	mDyingOverlay.setSize({ 1920.0f,1080.0f });
+	mFadeToBlackOverlay.setSize({ 1920.0f,1080.0f });
 
-	healthIconRect.setPosition(9581.59f, 38.3f);
-	killIconRect.setPosition(9631.25f, 118.71f);
-	ammoIconRect.setPosition(9786.53f, 118.71f);
-	healthBar.setPosition(9642.53f, 51.45f);
-	ammoText.setPosition(9850.2f, 127.2f);
-	killText.setPosition(9693.63f, 127.7f);
-	scoreTitleText.setPosition(8155.36f, 956.08f);
-	scoreTotalText.setPosition(8155.36f, 978.27f);
-	waveTitleText.setPosition(9889.69f, 926.52f);
-	waveCurrentText.setPosition(9889.69f, 970.61f);
-	waveCompleteText.setOrigin(waveCompleteText.getLocalBounds().left + waveCompleteText.getLocalBounds().width * 0.5f,
-	                           waveCompleteText.getLocalBounds().top + waveCompleteText.getLocalBounds().height * 0.5f);
-	waveCompleteText.setPosition(9078.31f, 540.0f);
-	dyingOverlay.setPosition(8118.0f, 0.0f);
-	fadeToBlack.setPosition(8118.0f, 0.0f);
+	mHealthIconRect.setPosition(9581.59f, 38.3f);
+	mKillIconRect.setPosition(9631.25f, 118.71f);
+	mAmmoIconRect.setPosition(9786.53f, 118.71f);
+	mHealthBarRect.setPosition(9642.53f, 51.45f);
+	mAmmoText.setPosition(9850.2f, 127.2f);
+	mKillText.setPosition(9693.63f, 127.7f);
+	mScoreTitleText.setPosition(8155.36f, 956.08f);
+	mTotalScoreText.setPosition(8155.36f, 978.27f);
+	mWaveTitleText.setPosition(9889.69f, 926.52f);
+	mCurrentWaveText.setPosition(9889.69f, 970.61f);
+	mWaveCompleteText.setOrigin(mWaveCompleteText.getLocalBounds().left + mWaveCompleteText.getLocalBounds().width * 0.5f,
+	                           mWaveCompleteText.getLocalBounds().top + mWaveCompleteText.getLocalBounds().height * 0.5f);
+	mWaveCompleteText.setPosition(9078.31f, 540.0f);
+	mDyingOverlay.setPosition(8118.0f, 0.0f);
+	mFadeToBlackOverlay.setPosition(8118.0f, 0.0f);
 }
 
-void GamePlay::initTexture()
+void GamePlay::InitTextures()
 {
 	//Load zombie Texture
-	normalZombieTex.loadFromFile("data/Texture/Sprites/Zombie/normal-zombie-sprites.png");
-	normalZombieTex.setSmooth(true);
+	mNormalZombieTex.loadFromFile("data/Texture/Sprites/Zombie/normal-zombie-sprites.png");
+	mNormalZombieTex.setSmooth(true);
 
-	redZombieTex.loadFromFile("data/Texture/Sprites/Zombie/red-zombie-sprites.png");
-	redZombieTex.setSmooth(true);
+	mRedZombieTex.loadFromFile("data/Texture/Sprites/Zombie/red-zombie-sprites.png");
+	mRedZombieTex.setSmooth(true);
 
-	blueZombieTex.loadFromFile("data/Texture/Sprites/Zombie/blue-zombie-sprites.png");
-	blueZombieTex.setSmooth(true);
+	mBlueZombieTex.loadFromFile("data/Texture/Sprites/Zombie/blue-zombie-sprites.png");
+	mBlueZombieTex.setSmooth(true);
 
-	blackZombieTex.loadFromFile("data/Texture/Sprites/Zombie/black-zombie-sprites.png");
-	blackZombieTex.setSmooth(true);
+	mBlackZombieTex.loadFromFile("data/Texture/Sprites/Zombie/black-zombie-sprites.png");
+	mBlackZombieTex.setSmooth(true);
 
-	pickupHealthTex.loadFromFile("data/Texture/Sprites/Pickup/health.png");
-	pickupHealthTex.setSmooth(true);
+	mHealthPickupTex.loadFromFile("data/Texture/Sprites/Pickup/health.png");
+	mHealthPickupTex.setSmooth(true);
 
-	bloodSplash.loadFromFile("data/Texture/Sprites/Zombie/blood-splash.png");
-	bloodSplash.setSmooth(true);
+	mBloodSplashTex.loadFromFile("data/Texture/Sprites/Zombie/blood-splash.png");
+	mBloodSplashTex.setSmooth(true);
 }
 
 void GamePlay::Pause()
@@ -300,59 +300,59 @@ void GamePlay::Resume()
 	std::cout << "GamePlay Resume" << std::endl;
 }
 
-void GamePlay::calculateTotalZombie()
+void GamePlay::CalculateTotalZombie()
 {
-	const auto n = static_cast<float>(currentWave);
+	const auto n = static_cast<float>(mCurrentWave);
 	
-	totalNormalZombie = static_cast<int>(floor((powf(n, 2) + 15) / 4.0f));
-	totalRedZombie = static_cast<int>(floor((powf(n, 2) - 3) / 4.0f));
-	totalBlueZombie = static_cast<int>(floor((powf(n, 2) - 7) / 6.0f));
-	totalBlackZombie = static_cast<int>(floor((powf(n, 2) - 10) / 10.0f));
+	mTotalNormalZombie = static_cast<int>(floor((powf(n, 2) + 15) / 4.0f));
+	mTotalRedZombie = static_cast<int>(floor((powf(n, 2) - 3) / 4.0f));
+	mTotalBlueZombie = static_cast<int>(floor((powf(n, 2) - 7) / 6.0f));
+	mTotalBlackZombie = static_cast<int>(floor((powf(n, 2) - 10) / 10.0f));
 
-	totalNormalZombie = totalNormalZombie > 0 ? totalNormalZombie : 0;
-	totalRedZombie = totalRedZombie > 0 ? totalRedZombie : 0;
-	totalBlueZombie = totalBlueZombie > 0 ? totalBlueZombie : 0;
-	totalBlackZombie = totalBlackZombie > 0 ? totalBlackZombie : 0;
+	mTotalNormalZombie = mTotalNormalZombie > 0 ? mTotalNormalZombie : 0;
+	mTotalRedZombie = mTotalRedZombie > 0 ? mTotalRedZombie : 0;
+	mTotalBlueZombie = mTotalBlueZombie > 0 ? mTotalBlueZombie : 0;
+	mTotalBlackZombie = mTotalBlackZombie > 0 ? mTotalBlackZombie : 0;
 
-	//std::cout << totalNormalZombie << totalRedZombie << totalBrownZombie << totalBlackZombie;
-	currentActiveZombie = totalNormalZombie + totalRedZombie + totalBlueZombie + totalBlackZombie;
+	//std::cout << mTotalNormalZombie << mTotalRedZombie << totalBrownZombie << mTotalBlackZombie;
+	mCurrentActiveZombie = mTotalNormalZombie + mTotalRedZombie + mTotalBlueZombie + mTotalBlackZombie;
 }
 
-bool GamePlay::spawnZombie(float deltaTime)
+bool GamePlay::SpawnZombie(float delta_time)
 {
-	spawnCooldown -= deltaTime;
-	if (spawnCooldown <= 0.0f)
+	mSpawnCooldown -= delta_time;
+	if (mSpawnCooldown <= 0.0f)
 	{
-		if (totalNormalZombie > 0)
+		if (mTotalNormalZombie > 0)
 		{
-			totalNormalZombie--;
-			spawn(ZombieType::NORMAL_ZOMBIE, player.getPosition());
+			mTotalNormalZombie--;
+			Spawn(ZombieType::NORMAL_ZOMBIE, mPlayer.GetPosition());
 		}
-		else if (totalRedZombie > 0)
+		else if (mTotalRedZombie > 0)
 		{
-			totalRedZombie--;
-			spawn(ZombieType::RED_ZOMBIE, player.getPosition());
+			mTotalRedZombie--;
+			Spawn(ZombieType::RED_ZOMBIE, mPlayer.GetPosition());
 		}
-		else if (totalBlueZombie > 0)
+		else if (mTotalBlueZombie > 0)
 		{
-			totalBlueZombie--;
-			spawn(ZombieType::BLUE_ZOMBIE, player.getPosition());
+			mTotalBlueZombie--;
+			Spawn(ZombieType::BLUE_ZOMBIE, mPlayer.GetPosition());
 		}
-		else if (totalBlackZombie > 0)
+		else if (mTotalBlackZombie > 0)
 		{
-			totalBlackZombie--;
-			spawn(ZombieType::BLACK_ZOMBIE, player.getPosition());
+			mTotalBlackZombie--;
+			Spawn(ZombieType::BLACK_ZOMBIE, mPlayer.GetPosition());
 		}
 		else
 		{
 			return true; //return true if all have been spawned
 		}
-		spawnCooldown = 1.0f;
+		mSpawnCooldown = 1.0f;
 	}
 	return false;
 }
 
-void GamePlay::spawn(ZombieType zombieType, const sf::Vector2f & playerPos)
+void GamePlay::Spawn(ZombieType zombie_type, const sf::Vector2f & player_pos)
 {
 	float yPos = 1091.0f; //Obstacle
 	float xPos = 291.0f; //Obstacle
@@ -362,27 +362,27 @@ void GamePlay::spawn(ZombieType zombieType, const sf::Vector2f & playerPos)
 	{
 		xPos = static_cast<float>(rand() % 8019);
 		yPos = static_cast<float>(rand() % 6547);
-		distanceFromPlayer = sqrt(pow(playerPos.x - xPos, 2) + pow(playerPos.y - yPos, 2));
+		distanceFromPlayer = sqrt(pow(player_pos.x - xPos, 2) + pow(player_pos.y - yPos, 2));
 	}
-	switch (zombieType)
+	switch (zombie_type)
 	{
-	case ZombieType::NORMAL_ZOMBIE: zombieContainer.push_back(
-			new NormalZombie({xPos, yPos}, normalZombieTex, bloodSplash, mRequestManager, *mAudio.getSoundBuffer("zombie_1")));
+	case ZombieType::NORMAL_ZOMBIE: mZombieContainer.push_back(
+			new NormalZombie({xPos, yPos}, mNormalZombieTex, mBloodSplashTex, mRequestManager, *mAudio.GetSoundBuffer("zombie_1")));
 		break;
-	case ZombieType::RED_ZOMBIE: zombieContainer.push_back(
-			new RedZombie({xPos, yPos}, redZombieTex,bloodSplash, mRequestManager, *mAudio.getSoundBuffer("zombie_1")));
+	case ZombieType::RED_ZOMBIE: mZombieContainer.push_back(
+			new RedZombie({xPos, yPos}, mRedZombieTex,mBloodSplashTex, mRequestManager, *mAudio.GetSoundBuffer("zombie_1")));
 		break;
-	case ZombieType::BLUE_ZOMBIE: zombieContainer.push_back(
-			new BlueZombie({xPos, yPos}, blueZombieTex,bloodSplash, mRequestManager, *mAudio.getSoundBuffer("zombie_1")));
+	case ZombieType::BLUE_ZOMBIE: mZombieContainer.push_back(
+			new BlueZombie({xPos, yPos}, mBlueZombieTex,mBloodSplashTex, mRequestManager, *mAudio.GetSoundBuffer("zombie_1")));
 		break;
-	case ZombieType::BLACK_ZOMBIE: zombieContainer.push_back(
-			new BlackZombie({xPos, yPos}, blackZombieTex,bloodSplash,mRequestManager, *mAudio.getSoundBuffer("zombie_1")));
+	case ZombieType::BLACK_ZOMBIE: mZombieContainer.push_back(
+			new BlackZombie({xPos, yPos}, mBlackZombieTex,mBloodSplashTex,mRequestManager, *mAudio.GetSoundBuffer("zombie_1")));
 		break;
 	default: break;
 	}
 }
 
-void GamePlay::Update(float deltaTime)
+void GamePlay::Update(float delta_time)
 {
 	for (auto event = sf::Event{}; mWindow.GetRenderWindow()->pollEvent(event);)
 	{
@@ -397,13 +397,13 @@ void GamePlay::Update(float deltaTime)
 				Use if statement for simultaneous key*/
 			case sf::Keyboard::R: 
 			{
-				mAudio.playSFX("pistol_reload");
-				player.Reload();
-				ammoText.setString(std::string(std::to_string(player.getAmmo())).append("/18"));
+				mAudio.PlaySFX("pistol_reload");
+				mPlayer.Reload();
+				mAmmoText.setString(std::string(std::to_string(mPlayer.GetAmmo())).append("/18"));
 			} break;
-			case sf::Keyboard::F1: showGUI = !showGUI; break;
+			case sf::Keyboard::F1: mIsShowGUI = !mIsShowGUI; break;
 			case sf::Keyboard::F11: mWindow.ToggleFullScreen(); break;
-			case sf::Keyboard::Space: mNext = SceneManager::build<GameoverScene>(mObj, true); break;
+			case sf::Keyboard::Space: mNextScene = SceneManager::Build<GameoverScene>(mSharedObject, true); break;
 			default: break;
 			}
 			break;
@@ -414,23 +414,23 @@ void GamePlay::Update(float deltaTime)
 				{
 				case sf::Mouse::Left:
 					{
-						if (player.Shoot())
+						if (mPlayer.Shoot())
 						{
-							mAudio.playSFX("pistol_shoot");
+							mAudio.PlaySFX("pistol_shoot");
 							
-							bullet.setStartPos(sf::Vector2f(player.getPosition().x + 20, player.getPosition().y + 20));
-							bullet.setDir(*player.getDirVect());
+							mBullet.SetStartPos(sf::Vector2f(mPlayer.GetPosition().x + 20, mPlayer.GetPosition().y + 20));
+							mBullet.SetDirection(*mPlayer.GetDirVect());
 
-							gunLight->setTurnedOn(true);
-							gunLightDelay = 0.0f;
+							mGunLight->setTurnedOn(true);
+							mGunLightDelay = 0.0f;
 
-							ammoText.setString(std::string(std::to_string(player.getAmmo())).append("/18"));
+							mAmmoText.setString(std::string(std::to_string(mPlayer.GetAmmo())).append("/18"));
 
-							bulletContainer.emplace_back(bullet);
+							mBulletContainer.emplace_back(mBullet);
 						}
-						else if (player.getAmmo() <= 0)
+						else if (mPlayer.GetAmmo() <= 0)
 						{
-							mAudio.playSFX("pistol_click");
+							mAudio.PlaySFX("pistol_click");
 						}
 				} break;
 				default: break;
@@ -440,123 +440,123 @@ void GamePlay::Update(float deltaTime)
 		}
 	}
 
-	if (!player.isDead()) {
-		if (gunLight->isTurnedOn()) {
-			gunLightDelay += deltaTime;
+	if (!mPlayer.IsDead()) {
+		if (mGunLight->isTurnedOn()) {
+			mGunLightDelay += delta_time;
 
-			if (gunLightDelay >= 0.1f)
-				gunLight->setTurnedOn(false);
+			if (mGunLightDelay >= 0.1f)
+				mGunLight->setTurnedOn(false);
 		}
 
 		/*UPDATE CAMERA CENTER*/
-		if ((player.getPosition().x - camera.getSize().x / 2 < 0 ||
-			player.getPosition().x + camera.getSize().x / 2 > 8018) &&
-			(player.getPosition().y - camera.getSize().y / 2 < 0 ||
-				player.getPosition().y + camera.getSize().y / 2 > 6536))
+		if ((mPlayer.GetPosition().x - mMainCamera.getSize().x / 2 < 0 ||
+			mPlayer.GetPosition().x + mMainCamera.getSize().x / 2 > 8018) &&
+			(mPlayer.GetPosition().y - mMainCamera.getSize().y / 2 < 0 ||
+				mPlayer.GetPosition().y + mMainCamera.getSize().y / 2 > 6536))
 		{
-			camera.setCenter(camera.getCenter().x, camera.getCenter().y);
+			mMainCamera.setCenter(mMainCamera.getCenter().x, mMainCamera.getCenter().y);
 		}
-		else if (player.getPosition().x - camera.getSize().x / 2 < 0 ||
-			player.getPosition().x + camera.getSize().x / 2 > 8018)
+		else if (mPlayer.GetPosition().x - mMainCamera.getSize().x / 2 < 0 ||
+			mPlayer.GetPosition().x + mMainCamera.getSize().x / 2 > 8018)
 		{
-			camera.setCenter(camera.getCenter().x, player.getPosition().y);
+			mMainCamera.setCenter(mMainCamera.getCenter().x, mPlayer.GetPosition().y);
 		}
-		else if (player.getPosition().y - camera.getSize().y / 2 < 0 ||
-			player.getPosition().y + camera.getSize().y / 2 > 6536)
+		else if (mPlayer.GetPosition().y - mMainCamera.getSize().y / 2 < 0 ||
+			mPlayer.GetPosition().y + mMainCamera.getSize().y / 2 > 6536)
 		{
-			camera.setCenter(player.getPosition().x, camera.getCenter().y);
+			mMainCamera.setCenter(mPlayer.GetPosition().x, mMainCamera.getCenter().y);
 		}
 		else
 		{
-			camera.setCenter(player.getPosition());
+			mMainCamera.setCenter(mPlayer.GetPosition());
 		}
 
-		//Update player face dir and light dir
+		//Update mPlayer face dir and light dir
 		const sf::Vector2i mousePos = sf::Mouse::getPosition(*mWindow.GetRenderWindow());
 		const sf::Vector2f worldMousePos = mWindow.GetRenderWindow()->mapPixelToCoords(mousePos);
-		player.lookAt(worldMousePos);
+		mPlayer.LookAt(worldMousePos);
 
-		flashLight->setPosition(player.getPosition());
-		gunLight->setPosition(player.getPosition());
-		flashLight->setRotation(player.getAngle());
+		mFlashLight->setPosition(mPlayer.GetPosition());
+		mGunLight->setPosition(mPlayer.GetPosition());
+		mFlashLight->setRotation(mPlayer.GetAngle());
 
 		//Player keyboard input
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
 			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			player.MoveDirection(MoveDir::UP, deltaTime);
-			//camera.move(0*deltaTime, -400.f*deltaTime);
+			mPlayer.MoveDirection(MoveDir::UP, delta_time);
+			//mMainCamera.move(0*deltaTime, -400.f*deltaTime);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)
 			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			player.MoveDirection(MoveDir::LEFT, deltaTime);
-			//camera.move(-400.0f*deltaTime, 0*deltaTime);
+			mPlayer.MoveDirection(MoveDir::LEFT, delta_time);
+			//mMainCamera.move(-400.0f*deltaTime, 0*deltaTime);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)
 			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
-			player.MoveDirection(MoveDir::DOWN, deltaTime);
-			//camera.move(0*deltaTime, 400.f*deltaTime);
+			mPlayer.MoveDirection(MoveDir::DOWN, delta_time);
+			//mMainCamera.move(0*deltaTime, 400.f*deltaTime);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)
 			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			player.MoveDirection(MoveDir::RIGHT, deltaTime);
-			//camera.move(400.0f*deltaTime, 0*deltaTime);
+			mPlayer.MoveDirection(MoveDir::RIGHT, delta_time);
+			//mMainCamera.move(400.0f*deltaTime, 0*deltaTime);
 		}
 
-		//Update zombie and player
-		player.Update(deltaTime);
-		for (auto &zombie : zombieContainer) {
-			zombie->Update(deltaTime, player.getPosition());
+		//Update zombie and mPlayer
+		mPlayer.Update(delta_time);
+		for (auto &zombie : mZombieContainer) {
+			zombie->Update(delta_time, mPlayer.GetPosition());
 		}
 
 		//All object collision check here
 		//On Collision with obstacle or wall
-		for (auto &obs : obstacleContainer)
+		for (auto &obs : mObstaclesContainer)
 		{
-			player.CheckCollision(obs);
-			for (size_t i = 0; i < bulletContainer.size(); i++)
+			mPlayer.CheckCollision(obs);
+			for (size_t i = 0; i < mBulletContainer.size(); i++)
 			{
-				//Check if bullet collided with obstacle or out of distance, delete
-				if (bulletContainer[i].onCollision(obs) || sqrt(
-					pow(bulletContainer[i].getPosition().x - bulletContainer[i].startPosition.x, 2) + pow(
-						bulletContainer[i].getPosition().y - bulletContainer[i].startPosition.y, 2)) > 1920)
+				//Check if mBullet collided with obstacle or out of distance, delete
+				if (mBulletContainer[i].OnCollision(obs) || sqrt(
+					pow(mBulletContainer[i].GetPosition().x - mBulletContainer[i].mStartPosition.x, 2) + pow(
+						mBulletContainer[i].GetPosition().y - mBulletContainer[i].mStartPosition.y, 2)) > 1920)
 				{
-					bulletContainer.erase(bulletContainer.begin() + i);
+					mBulletContainer.erase(mBulletContainer.begin() + i);
 				}
 			}
 		}
 
 
-		for (size_t j = 0; j < zombieContainer.size(); j++) {
-			//Check player attack
-			if (player.onCollision(*zombieContainer[j]) && zombieContainer[j]->isAllowAttack())
+		for (size_t j = 0; j < mZombieContainer.size(); j++) {
+			//Check mPlayer attack
+			if (mPlayer.OnCollision(*mZombieContainer[j]) && mZombieContainer[j]->IsAllowAttack())
 			{
 				const float damage = rand() % 10 + 5;
-				zombieContainer[j]->Attack();
-				player.getHit(damage);
+				mZombieContainer[j]->Attack();
+				mPlayer.GetHit(damage);
 			}
 			//Update path finding?
-			for (size_t i = 0; i < bulletContainer.size(); i++)
+			for (size_t i = 0; i < mBulletContainer.size(); i++)
 			{
 				//Check if collided with zombie delete
-				if (bulletContainer[i].onCollision(*zombieContainer[j]))
+				if (mBulletContainer[i].OnCollision(*mZombieContainer[j]))
 				{
-					zombieContainer[j]->getHit();
-					bulletContainer.erase(bulletContainer.begin() + i);
+					mZombieContainer[j]->GetHit();
+					mBulletContainer.erase(mBulletContainer.begin() + i);
 					//Check if zombie dead?
-					if (zombieContainer[j]->isDead())
+					if (mZombieContainer[j]->IsDead())
 					{
-						killCount++;
-						currentActiveZombie--;
-						killText.setString(std::to_string(killCount));
-						scoreTotalText.setString(std::to_string(conf::gameScore));
+						mKillCount++;
+						mCurrentActiveZombie--;
+						mKillText.setString(std::to_string(mKillCount));
+						mTotalScoreText.setString(std::to_string(conf::gGameScore));
 
 						int score = 0;
 
-						switch (zombieContainer[j]->getZombieType())
+						switch (mZombieContainer[j]->GetZombieType())
 						{
 						case ZombieType::NORMAL_ZOMBIE: score = 500; break;
 						case ZombieType::RED_ZOMBIE: score = 1000; break;
@@ -565,109 +565,109 @@ void GamePlay::Update(float deltaTime)
 						default: break;
 						}
 
-						conf::gameScore += score;
+						conf::gGameScore += score;
 
 						if (const int randomNum = rand() % 100; randomNum % 5 == 0) { //20% rate
-							pickupHealthContainer.emplace_back(new PickupItem(
-								pickupHealthTex,
-								sf::Vector2f(zombieContainer[j]->getPosition().x, zombieContainer[j]->getPosition().y),
+							mHealthPickupContainer.emplace_back(new PickupItem(
+								mHealthPickupTex,
+								sf::Vector2f(mZombieContainer[j]->GetPosition().x, mZombieContainer[j]->GetPosition().y),
 								sf::Vector2f(100.0f, 100.0f), 15.0f));
 						}
 
-						delete zombieContainer[j];
-						zombieContainer.erase(zombieContainer.begin() + j);
+						delete mZombieContainer[j];
+						mZombieContainer.erase(mZombieContainer.begin() + j);
 					}
 				}
 			}
 		}
 
-		for (size_t i = 0; i < pickupHealthContainer.size(); i++)
+		for (size_t i = 0; i < mHealthPickupContainer.size(); i++)
 		{
-			pickupHealthContainer[i]->Update(deltaTime);
-			if (player.onCollision(*pickupHealthContainer[i]))
+			mHealthPickupContainer[i]->Update(delta_time);
+			if (mPlayer.OnCollision(*mHealthPickupContainer[i]))
 			{
-				player.increaseHealth(15);
-				mAudio.playSFX("health_pickup");
-				pickupHealthContainer.erase(pickupHealthContainer.begin() + i);
+				mPlayer.IncreaseHealth(15);
+				mAudio.PlaySFX("health_pickup");
+				mHealthPickupContainer.erase(mHealthPickupContainer.begin() + i);
 			}
-			else if (pickupHealthContainer[i]->isExpired())
+			else if (mHealthPickupContainer[i]->IsExpired())
 			{
-				pickupHealthContainer.erase(pickupHealthContainer.begin() + i);
+				mHealthPickupContainer.erase(mHealthPickupContainer.begin() + i);
 			}
 		}
 
 		//Move everything here
-		player.PlayerMove(); // Move Player
-		for (auto &bul : bulletContainer) //move bullet
+		mPlayer.PlayerMove(); // Move Player
+		for (auto &bul : mBulletContainer) //move mBullet
 		{
-			bul.Move(deltaTime);
+			bul.Move(delta_time);
 		}
-		for (auto &zombie : zombieContainer)
+		for (auto &zombie : mZombieContainer)
 		{
-			zombie->Move(deltaTime);
+			zombie->Move(delta_time);
 		}
 
 		//Update Wave
-		if (currentActiveZombie <= 0)
+		if (mCurrentActiveZombie <= 0)
 		{
-			nextWave = true;
-			currentWave++;
-			waveCurrentText.setString(std::to_string(currentWave).append("/~"));
-			calculateTotalZombie();
+			mIsNextWave = true;
+			mCurrentWave++;
+			mCurrentWaveText.setString(std::to_string(mCurrentWave).append("/~"));
+			CalculateTotalZombie();
 			//Play next wave animation
-			if (currentWave > 1) mAnimManager.playAnimation(AnimType::ZOOM, TransitionType::EASE_IN_OUT_CUBIC, { 0.0f, 0.0f },
-				{ 2.8f, 0.0f }, 1.0f, waveCompleteText, true, 2.0f);
+			if (mCurrentWave > 1) mAnimManager.PlayAnimation(AnimType::ZOOM, TransitionType::EASE_IN_OUT_CUBIC, { 0.0f, 0.0f },
+				{ 2.8f, 0.0f }, 1.0f, mWaveCompleteText, true, 2.0f);
 		}
-		if (nextWave)
+		if (mIsNextWave)
 		{
-			nextWaveDelay -= deltaTime;
-			if (nextWaveDelay <= 0.0f)
+			mNextWaveDelay -= delta_time;
+			if (mNextWaveDelay <= 0.0f)
 			{
-				if (const bool spawnedAll = spawnZombie(deltaTime); spawnedAll) {
-					nextWaveDelay = 5.0f;
-					nextWave = false;
+				if (const bool spawnedAll = SpawnZombie(delta_time); spawnedAll) {
+					mNextWaveDelay = 5.0f;
+					mIsNextWave = false;
 				}
 			}
 		}
 
 		//Update Dying Overlay
-		if (player.getHealth() <= 75)
+		if (mPlayer.GetHealth() <= 75)
 		{
-			if (!isHeartBeatPlayed) {
-				mAudio.play("HeartBeat");
-				isHeartBeatPlayed = true;
+			if (!mIsHeartBeatPlayed) {
+				mAudio.PlayMusic("HeartBeat");
+				mIsHeartBeatPlayed = true;
 			}
-			const float progressOverlay = (75 - player.getHealth()) / 75;
-			const float progressMusic = (75 - player.getHealth()) / 75;
+			const float progressOverlay = (75 - mPlayer.GetHealth()) / 75;
+			const float progressMusic = (75 - mPlayer.GetHealth()) / 75;
 			const sf::Uint8 a = 40 * progressOverlay;
-			mAudio.setMusicVolume("HeartBeat", 100 * progressMusic);
-			dyingOverlay.setFillColor(sf::Color(255, 0, 0, a));
+			mAudio.SetMusicVolume("HeartBeat", 100 * progressMusic);
+			mDyingOverlay.setFillColor(sf::Color(255, 0, 0, a));
 		}
-		else if (isHeartBeatPlayed)
+		else if (mIsHeartBeatPlayed)
 		{
-			mAudio.stopMusic("HeartBeat");
+			mAudio.StopMusic("HeartBeat");
 		}
 
 		//Update Health bar
-		const float xHealthBar = (player.getHealth() / 200.0f) * 318;
-		healthBar.setSize({ xHealthBar, healthBar.getSize().y });
+		const float xHealthBar = (mPlayer.GetHealth() / 200.0f) * 318;
+		mHealthBarRect.setSize({ xHealthBar, mHealthBarRect.getSize().y });
 
-		//update player position on grid
-		mPathFindingGrid.UpdatePlayerNode(player.getPosition());
+		//update mPlayer position on grid
+		mPathFindingGrid.UpdatePlayerNode(mPlayer.GetPosition());
 
 		//UPdate Animation
-		mAnimManager.Update(deltaTime);
+		mAnimManager.Update(delta_time);
 	}
 	else
 	{
-		mAudio.stopAll();
+		mAudio.StopAllMusic();
 		static float elapsedFadeTime = 0.0f;
-		elapsedFadeTime += deltaTime;
+		elapsedFadeTime += delta_time;
 		const sf::Uint8 progress = elapsedFadeTime / 4.0f * 255;
-		fadeToBlack.setFillColor(sf::Color(0, 0, 0, progress));
+		mFadeToBlackOverlay.setFillColor(sf::Color(0, 0, 0, progress));
 		if (elapsedFadeTime >= 4.0f)
 		{
-			mNext = SceneManager::build<GameoverScene>(mObj, true);
+			mNextScene = SceneManager::Build<GameoverScene>(mSharedObject, true);
 		}
 	}
 }
@@ -677,51 +677,51 @@ void GamePlay::Draw()
 	mWindow.BeginDraw();
 
 	/*Draw everything here*/
-	mWindow.GetRenderWindow()->setView(camera);
+	mWindow.GetRenderWindow()->setView(mMainCamera);
 	
-	mWindow.Draw(gameMap);
-	/*for (auto &bul:bulletContainer)
+	mWindow.Draw(mGameMap);
+	/*for (auto &bul:mBulletContainer)
 	{
 		mWindow.Draw(*bul.getDraw());
 	}*/
 
-	for (auto health:pickupHealthContainer)
+	for (auto health:mHealthPickupContainer)
 	{
 		mWindow.Draw(*health);
 	}
 	
-	mWindow.Draw(*player.getFeetDraw());
-	mWindow.Draw(*player.getDraw());
+	mWindow.Draw(*mPlayer.GetFeetDraw());
+	mWindow.Draw(*mPlayer.GetDraw());
 
-	for (auto zombie : zombieContainer) {
-		mWindow.Draw(*zombie->getDraw());
-		mWindow.Draw(*zombie->getBloodDraw());
+	for (auto zombie : mZombieContainer) {
+		mWindow.Draw(*zombie->GetDraw());
+		mWindow.Draw(*zombie->GetBloodDraw());
 	}
 
-	ls.render(*mWindow.GetRenderWindow());
+	mLighSystem.render(*mWindow.GetRenderWindow());
 	//mPathFindingGrid.Draw(mWindow.GetRenderWindow());
 
 	//GUI Here
-	mWindow.GetRenderWindow()->setView(GUICamera);
-	mWindow.Draw(dyingOverlay);
-	if (showGUI) {
-		mWindow.Draw(healthIconRect);
-		mWindow.Draw(killIconRect);
-		mWindow.Draw(ammoIconRect);
-		mWindow.Draw(healthBar);
-		mWindow.Draw(ammoText);
-		mWindow.Draw(killText);
-		mWindow.Draw(scoreTitleText);
-		mWindow.Draw(scoreTotalText);
-		mWindow.Draw(waveTitleText);
-		mWindow.Draw(waveCurrentText);
-		mWindow.Draw(waveCompleteText);
-		if (player.isDead()) {
-			mWindow.Draw(fadeToBlack);
+	mWindow.GetRenderWindow()->setView(mGUICamera);
+	mWindow.Draw(mDyingOverlay);
+	if (mIsShowGUI) {
+		mWindow.Draw(mHealthIconRect);
+		mWindow.Draw(mKillIconRect);
+		mWindow.Draw(mAmmoIconRect);
+		mWindow.Draw(mHealthBarRect);
+		mWindow.Draw(mAmmoText);
+		mWindow.Draw(mKillText);
+		mWindow.Draw(mScoreTitleText);
+		mWindow.Draw(mTotalScoreText);
+		mWindow.Draw(mWaveTitleText);
+		mWindow.Draw(mCurrentWaveText);
+		mWindow.Draw(mWaveCompleteText);
+		if (mPlayer.IsDead()) {
+			mWindow.Draw(mFadeToBlackOverlay);
 		}
 		//Reset view back
 	}
-	mWindow.GetRenderWindow()->setView(camera);
+	mWindow.GetRenderWindow()->setView(mMainCamera);
 
 	
 	mWindow.EndDraw();

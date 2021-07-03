@@ -1,4 +1,7 @@
 #pragma once
+#ifndef BULLET_H_
+#define BULLET_H_
+
 #include <SFML/Graphics/CircleShape.hpp>
 
 #include "GameObject.h"
@@ -8,17 +11,20 @@ class Bullet: public GameObject
 public:
 	Bullet();
 	
-	void Move(float deltaTime);
-	void setDir(sf::Vector2f dirVect);
-	void setStartPos(sf::Vector2f pos);
-	sf::Vector2f getPosition() const;
-	bool onCollision(GameObject& other) const override;
+	void Move(float delta_time);
+	void SetDirection(sf::Vector2f dir_vector);
+	bool OnCollision(GameObject& other) const override;
+	void SetStartPos(sf::Vector2f position);
 	
-	sf::CircleShape* getDraw();
-	sf::Vector2f startPosition;
+	sf::Vector2f GetPosition() const;
+	sf::CircleShape* GetDraw();
+
+	sf::Vector2f mStartPosition;
 private:
-	sf::CircleShape bullet;
-	sf::Vector2f currentVelo;
-	float max_speed_;
+	float mMaxSpeed;
+
+	sf::CircleShape mBulletShape;
+	sf::Vector2f mCurrentVelocity;
 };
 
+#endif

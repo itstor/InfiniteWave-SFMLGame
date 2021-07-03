@@ -1,4 +1,7 @@
 #pragma once
+#ifndef ENTITY_H_
+#define ENTITY_H_
+
 #include "GameObject.h"
 
 class Obstacle;
@@ -6,22 +9,26 @@ class Obstacle;
 enum class MoveDir { UP, DOWN, RIGHT, LEFT};
 enum class AnimState { IDLE_ANIM, WALK_ANIM, SHOOT_ANIM, RELOAD_ANIM, ATTACK_ANIM};
 
+
 class Entity : public GameObject
 {
 public:
 	void CheckCollision(Obstacle& obs);
-	float getHealth() const;
-	bool isDead() const;
 	
-	sf::RectangleShape* getDraw();
+	float GetHealth() const;
+	bool IsDead() const;
+	
+	sf::RectangleShape* GetDraw();
 
 protected:
-	sf::RectangleShape entityRect;
-	sf::Vector2f movePos;
-	float movementSpeed = 0;
+	float mMovementSpeed = 0;
+	int mHealth = 0;
+	float mAngle = 0;
+	bool mIsDead = false;
 	
-	int health = 0;
-	float angle = 0;
-	bool misDead = false;
+	sf::RectangleShape mEntityRect;
+	sf::Vector2f mMovePos;
 };
+
+#endif
 

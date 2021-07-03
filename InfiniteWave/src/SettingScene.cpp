@@ -12,33 +12,33 @@
 #include "AudioManager.h"
 #include "Config.h"
 
-SettingScene::SettingScene(SharedObject& obj, bool replace) :BaseScene(obj, replace)
+SettingScene::SettingScene(SharedObject& shared_object, bool replace) :BaseScene(shared_object, replace)
 {
 #ifdef _DEBUG
 	std::cout << "SettingScene Created" << std::endl;
 #endif
-	headlineFont.loadFromFile("data/Font/HeadlinerNo.45.ttf");
+	mHeadlineFont.loadFromFile("data/Font/HeadlinerNo.45.ttf");
 
 
-	settingText.setFont(headlineFont);
-	fullscreenText.setFont(headlineFont);
-	muteText.setFont(headlineFont);
+	mSettingText.setFont(mHeadlineFont);
+	mFullScreenText.setFont(mHeadlineFont);
+	mMuteText.setFont(mHeadlineFont);
 
-	settingText.setString("SETTING");
-	fullscreenText.setString("FULLSCREEN");
-	muteText.setString("MUSIC SFX");
+	mSettingText.setString("SETTING");
+	mFullScreenText.setString("FULLSCREEN");
+	mMuteText.setString("MUSIC SFX");
 
-	settingText.setScale(1.56f, 1.56f);
-	fullscreenText.setScale(1.1f, 1.1f);
-	muteText.setScale(1.1f, 1.1f);
+	mSettingText.setScale(1.56f, 1.56f);
+	mFullScreenText.setScale(1.1f, 1.1f);
+	mMuteText.setScale(1.1f, 1.1f);
 
-	settingText.setPosition(160.63f, 433.52f);
-	fullscreenText.setPosition(100.12f, 548.89f);
-	muteText.setPosition(100.12f, 612.86f);
+	mSettingText.setPosition(160.63f, 433.52f);
+	mFullScreenText.setPosition(100.12f, 548.89f);
+	mMuteText.setPosition(100.12f, 612.86f);
 	
 	
-	initBg();
-	initButton();
+	InitBackground();
+	InitButton();
 }
 
 SettingScene::~SettingScene()
@@ -46,31 +46,31 @@ SettingScene::~SettingScene()
 	std::cout << "SettingScene Deleted" << std::endl;
 }
 
-void SettingScene::initButton()
+void SettingScene::InitButton()
 {
 	//Initialize button here
-	btnBack.Setup("data/Texture/GUI/Buttons/Back_BTN.png",
+	mButtonBack.Setup("data/Texture/GUI/Buttons/Back_BTN.png",
 				"data/Texture/GUI/Buttons/Back_BTN.png",
 				"data/Texture/GUI/Buttons/Back_BTN.png",
 				1.0f, sf::Vector2f(123.27f, 463.19f));
 
-	btnFullscreen.Setup("data/Texture/GUI/Buttons/BTN_ONOFF_FIRST.png",
+	mButtonFullScreen.Setup("data/Texture/GUI/Buttons/BTN_ONOFF_FIRST.png",
 		"data/Texture/GUI/Buttons/BTN_ONOFF_SECOND.png",
-		1.0f, sf::Vector2f(330.48f, 569.0f), conf::isFullscreen ? FIRST_STATE : SECOND_STATE);
+		1.0f, sf::Vector2f(330.48f, 569.0f), conf::gIsFullscreen ? ButtonState::FIRST_STATE : ButtonState::SECOND_STATE);
 
-	btnMute.Setup("data/Texture/GUI/Buttons/BTN_ONOFF_FIRST.png",
+	mButtonMute.Setup("data/Texture/GUI/Buttons/BTN_ONOFF_FIRST.png",
 		"data/Texture/GUI/Buttons/BTN_ONOFF_SECOND.png",
-		1.0f, sf::Vector2f(330.48f, 632.75f), conf::isMuted ? SECOND_STATE: FIRST_STATE);
+		1.0f, sf::Vector2f(330.48f, 632.75f), conf::gIsMuted ? ButtonState::SECOND_STATE: ButtonState::FIRST_STATE);
 
 }
 
-void SettingScene::initBg()
+void SettingScene::InitBackground()
 {
 	//Initialize background here
-	menuBgTex.loadFromFile("data/Texture/GUI/main-menu_background2.png");
-	menuBgSpi.setTexture(menuBgTex);
-	menuBgSpi.setScale(1.f, 1.f);
-	menuBgSpi.setPosition(0, 0);
+	mMenuBgTex.loadFromFile("data/Texture/GUI/main-menu_background2.png");
+	mMenuBgSpi.setTexture(mMenuBgTex);
+	mMenuBgSpi.setScale(1.f, 1.f);
+	mMenuBgSpi.setPosition(0, 0);
 }
 
 void SettingScene::Pause()
@@ -83,14 +83,14 @@ void SettingScene::Resume()
 	std::cout << "SettingScene Resume" << std::endl;
 }
 
-void SettingScene::Update(float deltaTime)
+void SettingScene::Update(float delta_time)
 {
 	const sf::Vector2i mousePos = sf::Mouse::getPosition(*mWindow.GetRenderWindow());
 	const sf::Vector2f worldMousePos = mWindow.GetRenderWindow()->mapPixelToCoords(mousePos);
 
-	btnBack.Update(worldMousePos);
-	btnFullscreen.Update(worldMousePos);
-	btnMute.Update(worldMousePos);
+	mButtonBack.Update(worldMousePos);
+	mButtonFullScreen.Update(worldMousePos);
+	mButtonMute.Update(worldMousePos);
 	
 	for (auto event = sf::Event{}; mWindow.GetRenderWindow()->pollEvent(event);)
 	{
@@ -103,27 +103,27 @@ void SettingScene::Update(float deltaTime)
 			{
 			case sf::Mouse::Left:
 			{
-				if (btnBack.isHover())
+				if (mButtonBack.IsHover())
 				{
 					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 					{
-						mAudio.playSFX("button");
-						mNext = SceneManager::build<MainMenu>(mObj, true);
+						mAudio.PlaySFX("button");
+						mNextScene = SceneManager::Build<MainMenu>(mSharedObject, true);
 					}
 				}
-				else if (btnMute.isHover())
+				else if (mButtonMute.IsHover())
 				{
 					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 					{
-						btnMute.toggleState();
-						mAudio.toggleMute();
+						mButtonMute.ToggleState();
+						mAudio.ToggleMute();
 					}
 				}
-				else if (btnFullscreen.isHover())
+				else if (mButtonFullScreen.IsHover())
 				{
 					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 					{
-						btnFullscreen.toggleState();
+						mButtonFullScreen.ToggleState();
 						mWindow.ToggleFullScreen();
 					}
 				}
@@ -151,13 +151,13 @@ void SettingScene::Draw()
 	mWindow.BeginDraw();
 
 	/*Draw everything here*/
-	mWindow.Draw(menuBgSpi);
-	mWindow.Draw(settingText);
-	mWindow.Draw(fullscreenText);
-	mWindow.Draw(muteText);
-	mWindow.Draw(*btnBack.getDraw());
-	mWindow.Draw(*btnMute.getDraw());
-	mWindow.Draw(*btnFullscreen.getDraw());
+	mWindow.Draw(mMenuBgSpi);
+	mWindow.Draw(mSettingText);
+	mWindow.Draw(mFullScreenText);
+	mWindow.Draw(mMuteText);
+	mWindow.Draw(*mButtonBack.GetDraw());
+	mWindow.Draw(*mButtonMute.GetDraw());
+	mWindow.Draw(*mButtonFullScreen.GetDraw());
 
 
 	mWindow.EndDraw();

@@ -11,7 +11,7 @@
 #include "SceneManager.h"
 #include "AudioManager.h"
 
-TemplateScene::TemplateScene(SharedObject& obj, bool replace) :BaseScene(obj, replace)
+TemplateScene::TemplateScene(SharedObject& shared_object, bool replace) :BaseScene(shared_object, replace)
 {
 #ifdef _DEBUG
 	std::cout << "TemplateScene Created" << std::endl;
@@ -23,12 +23,12 @@ TemplateScene::~TemplateScene()
 	std::cout << "TemplateScene Deleted" << std::endl;
 }
 
-void TemplateScene::initButton()
+void TemplateScene::InitButton()
 {
 	//Initialize button here
 }
 
-void TemplateScene::initBg()
+void TemplateScene::InitBackground()
 {
 	//Initialize background here
 }
@@ -43,7 +43,7 @@ void TemplateScene::Resume()
 	std::cout << "TemplateScene Resume" << std::endl;
 }
 
-void TemplateScene::Update(float deltaTime)
+void TemplateScene::Update(float delta_time)
 {
 	for (auto event = sf::Event{}; mWindow.GetRenderWindow()->pollEvent(event);)
 	{

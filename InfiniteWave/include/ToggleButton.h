@@ -1,25 +1,31 @@
 #pragma once
+#ifndef TOGGLE_BUTTON_H_
+#define TOGGLE_BUTTON_H_
+
 #include <string>
-#include <SFML/Graphics/RectangleShape.hpp>
 
 #include "Button.h"
+
 
 class ToggleButton: public Button
 {
 public:
 	ToggleButton() = default;
 
-	void Setup(const std::string& firstStatePath, const std::string& secondStatePath, float sizeFact, sf::Vector2f pos, unsigned short
-	           currentState = FIRST_STATE);
+	void Setup(const std::string& first_state_path, const std::string& second_state_path, float scale_factor, sf::Vector2f position, ButtonState current_state = ButtonState::FIRST_STATE);
 
-	void Update(sf::Vector2f mousePos);
-	bool isHover() const;
-	int toggleState();
+	void Update(sf::Vector2f mouse_pos);
+	ButtonState ToggleState();
+
+	
+	bool IsHover() const;
 
 private:
-	bool misHover;
+	bool mIsHover;
 	
-	sf::Texture firstStateTex;
-	sf::Texture secondStateTex;
+	sf::Texture mFirstStateTex;
+	sf::Texture mSecondStateTex;
 };
 
+
+#endif

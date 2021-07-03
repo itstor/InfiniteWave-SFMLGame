@@ -20,107 +20,107 @@ AudioManager::~AudioManager()
 #endif
 }
 
-void AudioManager::addMusic(const std::string& musicName, const std::string& file_path, bool isLoop)
+void AudioManager::AddMusic(const std::string& music_name, const std::string& file_path, bool is_loop)
 {
-	musicContainer[musicName] = new Music(file_path, isLoop);
+	mMusicContainer[music_name] = new Music(file_path, is_loop);
 }
 
-void AudioManager::addSFX(const std::string& sfxName, const std::string& file_path)
+void AudioManager::AddSFX(const std::string& sfx_name, const std::string& file_path)
 {
-	SFXContainer[sfxName] = new SFX(file_path);
+	mSFXContainer[sfx_name] = new SFX(file_path);
 }
 
 
-void AudioManager::toggleMute()
+void AudioManager::ToggleMute()
 {
-	conf::isMuted = !conf::isMuted;
+	conf::gIsMuted = !conf::gIsMuted;
 
 	//MUSIC VOLUME
-	conf::temp_musicVolume = conf::isMuted ? conf::musicVolume : conf::temp_musicVolume;
-	conf::musicVolume = conf::isMuted ? 0.0f : conf::temp_musicVolume;
+	conf::gTempMusicVolume = conf::gIsMuted ? conf::gMusicVolume : conf::gTempMusicVolume;
+	conf::gMusicVolume = conf::gIsMuted ? 0.0f : conf::gTempMusicVolume;
 
 	//SFX VOLUME
-	conf::temp_sfxVolume = conf::isMuted ? conf::sfxVolume : conf::temp_sfxVolume;
-	conf::sfxVolume = conf::isMuted ? 0.0f : conf::temp_sfxVolume;
+	conf::gTempSFXVolume = conf::gIsMuted ? conf::gSFXVolume : conf::gTempSFXVolume;
+	conf::gSFXVolume = conf::gIsMuted ? 0.0f : conf::gTempSFXVolume;
 
 	//std::cout << conf::musicVolume << " " << conf::temp_musicVolume << std::endl;
 
-	return updateVolume(conf::musicVolume);
+	return UpdateVolume(conf::gMusicVolume);
 }
 
-void AudioManager::stopAll()
+void AudioManager::StopAllMusic()
 {
-	for (auto&[name, music]:musicContainer)
+	for (auto&[name, music]:mMusicContainer)
 	{
-		music->stop();
+		music->Stop();
 	}
 }
 
-void AudioManager::stopMusic(const std::string & music_name)
+void AudioManager::StopMusic(const std::string & music_name)
 {
-	musicContainer[music_name]->stop();
+	mMusicContainer[music_name]->Stop();
 }
 
-void AudioManager::setMusicVolume(const std::string& music_name, float volume)
+void AudioManager::SetMusicVolume(const std::string& music_name, float volume)
 {
-	musicContainer[music_name]->setVolume(volume);
+	mMusicContainer[music_name]->SetVolume(volume);
 }
 
-sf::Sound::Status AudioManager::getStatus(const std::string & music_name)
+sf::Sound::Status AudioManager::GetMuicStatus(const std::string & music_name)
 {
-	return musicContainer[music_name]->getStatus();
-}
-
-
-void AudioManager::increase_volume()
-{
-	conf::musicVolume++;
-	return updateVolume();
-}
-
-void AudioManager::decrease_volume()
-{
-	conf::musicVolume--;
-	return updateVolume();
+	return mMusicContainer[music_name]->GetStatus();
 }
 
 
-void AudioManager::updateVolume()
+void AudioManager::IncreaseVolume()
 {
-	return updateVolume(conf::musicVolume);
+	conf::gMusicVolume++;
+	return UpdateVolume();
+}
+
+void AudioManager::DecreaseVolume()
+{
+	conf::gMusicVolume--;
+	return UpdateVolume();
 }
 
 
-void AudioManager::updateVolume(float newVolume)
+void AudioManager::UpdateVolume()
 {
-	for (auto&[name, music] : musicContainer)
+	return UpdateVolume(conf::gMusicVolume);
+}
+
+
+void AudioManager::UpdateVolume(float new_volume)
+{
+	for (auto&[name, music] : mMusicContainer)
 	{
-		music->setVolume(newVolume);
+		music->SetVolume(new_volume);
 	}
 }
 
-void AudioManager::play(const std::string & music_name)
+void AudioManager::PlayMusic(const std::string & music_name)
 {
 #ifdef _DEBUG
 	std::cout << "Playing " << music_name << std::endl;
 #endif
-	musicContainer[music_name]->play();
+	mMusicContainer[music_name]->Play();
 }
 
-void AudioManager::playSFX(const std::string& sfx_name)
+void AudioManager::PlaySFX(const std::string& sfx_name)
 {
 #ifdef _DEBUG
 	std::cout << "Playing SFX " << sfx_name << std::endl;
 #endif
-	SFXContainer[sfx_name]->play();
+	mSFXContainer[sfx_name]->Play();
 }
 
-void AudioManager::changeSFXPitch(const std::string& sfx_name, float pitch)
+void AudioManager::SetSFXPitch(const std::string& sfx_name, float pitch)
 {
-	SFXContainer[sfx_name]->setPitch(pitch);
+	mSFXContainer[sfx_name]->SetPitch(pitch);
 }
 
-sf::SoundBuffer* AudioManager::getSoundBuffer(const std::string& sfx_name)
+sf::SoundBuffer* AudioManager::GetSoundBuffer(const std::string& sfx_name)
 {
-	return &*SFXContainer[sfx_name]->getSoundBuffer();
+	return &*mSFXContainer[sfx_name]->GetSoundBuffer();
 }

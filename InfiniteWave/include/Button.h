@@ -1,32 +1,35 @@
 #pragma once
+#ifndef BUTTON_H_
+#define BUTTON_H_
+
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
-enum btn_state { IDLE_BTN = 0, HOVER_BTN = 1, ACTIVE_BTN = 2, FIRST_STATE = 3, SECOND_STATE = 4};
+enum class ButtonState { IDLE_BTN, HOVER_BTN, ACTIVE_BTN, FIRST_STATE, SECOND_STATE};
+
 
 class Button
 {
 public:
 	Button() = default;
 	
-	void Setup(const std::string& idlePath, const std::string& hoverPath, const std::string& activePath, float sizeFact, sf::Vector2f
-	           pos);
-
-	sf::RectangleShape* getDraw();
-	void Update(sf::Vector2f mousePos);
+	void Setup(const std::string& idle_path, const std::string& hover_path, const std::string& active_path, float scale_factor, sf::Vector2f position);
+	void Update(sf::Vector2f mouse_pos);
 	void Click();
 
-	bool isPressed() const;
-	bool isHover() const;
-	
-private:
-	sf::Texture btnIdleTex;
-	sf::Texture btnHoverTex;
-	sf::Texture btnActiveTex;
+	bool IsPressed() const;
+	bool IsHover() const;
+	sf::RectangleShape* GetDraw();
 
 protected:
-	sf::RectangleShape btn;
-	unsigned short int btnState;
-	
+	sf::RectangleShape mButtonRect;
+	ButtonState mButtonState;
+
+private:
+	sf::Texture mButtonIdleTex;
+	sf::Texture mButtonHoverTex;
+	sf::Texture mButtonActiveTex;
 };
+
+#endif
 

@@ -11,19 +11,19 @@ class Game
 {
 public:
 	Game(SharedObject& obj);
-	~Game();
+	~Game() = default;
 
+	void Run(); //Run Game loop
 	void RestartClock(); //Reset Clock
-	void run(); //Run Game loop
 
 private:
-	SharedObject& obj;
-	sf::View camera;
+	SharedObject& mObj;
+	sf::View mCamera;
 	sf::Clock mClock;
 	float mDeltaTime = 0;
 
-	void initSFX();
-	void initMusic();
+	void InitSFX();
+	void InitMusic();
 };
 
 #endif

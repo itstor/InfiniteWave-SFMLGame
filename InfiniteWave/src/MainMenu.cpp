@@ -14,17 +14,17 @@
 #include "SettingScene.h"
 
 
-MainMenu::MainMenu(SharedObject& obj, bool replace) :BaseScene(obj, replace)
+MainMenu::MainMenu(SharedObject& shared_object, bool replace) :BaseScene(shared_object, replace)
 {
 #ifdef _DEBUG
 	std::cout << "MainMenu Created" << std::endl;
 #endif
-	initBg();
-	initButton();
+	InitBackground();
+	InitButton();
 
-	if(!mAudio.getStatus("Loading"))
+	if(!mAudio.GetMuicStatus("Loading"))
 	{
-		mAudio.play("Loading");
+		mAudio.PlayMusic("Loading");
 	}
 }
 
@@ -33,39 +33,39 @@ MainMenu::~MainMenu()
 	std::cout << "MainMenu Deleted" << std::endl;
 }
 
-void MainMenu::initButton()
+void MainMenu::InitButton()
 {
-	btnPlay.Setup("data/Texture/GUI/Buttons/Start_BTN.png",
+	mButtonPlay.Setup("data/Texture/GUI/Buttons/Start_BTN.png",
 	              "data/Texture/GUI/Buttons/Start_BTN_HOV.png",
 	              "data/Texture/GUI/Buttons/Start_BTN_ACT.png",
 	              1.0f, sf::Vector2f(204.47f,499.09f));
-	btnContainer.push_back(&btnPlay);
+	btnContainer.push_back(&mButtonPlay);
 
-	btnSetting.Setup("data/Texture/GUI/Buttons/Settings_BTN.png",
+	mButtonSetting.Setup("data/Texture/GUI/Buttons/Settings_BTN.png",
 	                 "data/Texture/GUI/Buttons/Settings_BTN_HOV.png",
 	                 "data/Texture/GUI/Buttons/Settings_BTN_ACT.png",
 	                 1.0f, sf::Vector2f(204.47f, 579.9f));
-	btnContainer.push_back(&btnSetting);
+	btnContainer.push_back(&mButtonSetting);
 
-	btnCredit.Setup("data/Texture/GUI/Buttons/Credit_BTN.png",
+	mButtonCredit.Setup("data/Texture/GUI/Buttons/Credit_BTN.png",
 	                 "data/Texture/GUI/Buttons/Credit_BTN_HOV.png",
 	                 "data/Texture/GUI/Buttons/Credit_BTN_ACT.png",
 	                 1.0f, sf::Vector2f(204.47f, 660.73f));
-	btnContainer.push_back(&btnCredit);
+	btnContainer.push_back(&mButtonCredit);
 
-	btnExit.Setup("data/Texture/GUI/Buttons/Close_BTN.png",
+	mButtonExit.Setup("data/Texture/GUI/Buttons/Close_BTN.png",
 	              "data/Texture/GUI/Buttons/Close_BTN_HOV.png",
 	              "data/Texture/GUI/Buttons/Close_BTN_ACT.png",
 	              1.0f, sf::Vector2f(204.47f,746.77f));
-	btnContainer.push_back(&btnExit);
+	btnContainer.push_back(&mButtonExit);
 }
 
-void MainMenu::initBg()
+void MainMenu::InitBackground()
 {
-	menuBgTex.loadFromFile("data/Texture/GUI/main-menu_background2.png");
-	menuBgSpi.setTexture(menuBgTex);
-	menuBgSpi.setScale(1.f, 1.f);
-	menuBgSpi.setPosition(0, 0);
+	mMenuBgTex.loadFromFile("data/Texture/GUI/main-menu_background2.png");
+	mMenuBgSpi.setTexture(mMenuBgTex);
+	mMenuBgSpi.setScale(1.f, 1.f);
+	mMenuBgSpi.setPosition(0, 0);
 }
 
 void MainMenu::Pause()
@@ -78,7 +78,7 @@ void MainMenu::Resume()
 	std::cout << "MainMenu Resume" << std::endl;
 }
 
-void MainMenu::Update(float deltaTime)
+void MainMenu::Update(float delta_time)
 {
 	for (auto event = sf::Event{}; mWindow.GetRenderWindow()->pollEvent(event);)
 	{
@@ -91,15 +91,15 @@ void MainMenu::Update(float deltaTime)
 			switch (event.key.code)
 			{
 			case sf::Keyboard::Space:
-				mNext = SceneManager::build<LoadingScreen>(mObj, true);
+				mNextScene = SceneManager::Build<LoadingScreen>(mSharedObject, true);
 				break;
 			case sf::Keyboard::Escape: mWindow.Destroy(); break;
-			case sf::Keyboard::BackSpace: mManager.prevScene(); break;
-			case sf::Keyboard::M: mAudio.toggleMute(); break;
-			case sf::Keyboard::Add: mAudio.increase_volume(); break;
-			case sf::Keyboard::Hyphen: mAudio.decrease_volume(); break;
+			case sf::Keyboard::BackSpace: mScene.PrevScene(); break;
+			case sf::Keyboard::M: mAudio.ToggleMute(); break;
+			case sf::Keyboard::Add: mAudio.IncreaseVolume(); break;
+			case sf::Keyboard::Hyphen: mAudio.DecreaseVolume(); break;
 			case sf::Keyboard::F11: mWindow.ToggleFullScreen(); break;
-			case sf::Keyboard::G: mNext = SceneManager::build<GameoverScene>(mObj, true);
+			case sf::Keyboard::G: mNextScene = SceneManager::Build<GameoverScene>(mSharedObject, true);
 				break; 
 			default: break;
 			}
@@ -116,32 +116,32 @@ void MainMenu::Update(float deltaTime)
 	for (auto btn : btnContainer)
 	{
 		btn->Update(worldMousePos);
-		if (btn->isHover())
+		if (btn->IsHover())
 		{
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				btn->Click();
-				mAudio.playSFX("button");
+				mAudio.PlaySFX("button");
 			}
 		}
 	}
 
 	//-=-=-=-=-=-=-=-=-=-CLICKED BUTTON HERE-=-=-=-=-=-=-=-=-=-=-=-
-	if (btnExit.isPressed())
+	if (mButtonExit.IsPressed())
 	{
 		mWindow.Destroy();
 	}
-	else if (btnPlay.isPressed())
+	else if (mButtonPlay.IsPressed())
 	{
-		mNext = SceneManager::build<LoadingScreen>(mObj, true);
+		mNextScene = SceneManager::Build<LoadingScreen>(mSharedObject, true);
 	}
-	else if (btnSetting.isPressed())
+	else if (mButtonSetting.IsPressed())
 	{
-		mNext = SceneManager::build<SettingScene>(mObj, false);
+		mNextScene = SceneManager::Build<SettingScene>(mSharedObject, false);
 	}
-	else if (btnCredit.isPressed())
+	else if (mButtonCredit.IsPressed())
 	{
-		mNext = SceneManager::build<CreditScene>(mObj, false);
+		mNextScene = SceneManager::Build<CreditScene>(mSharedObject, false);
 	}
 }
 
@@ -149,12 +149,12 @@ void MainMenu::Draw()
 {
 	mWindow.BeginDraw();
 
-	mWindow.Draw(menuBgSpi);
+	mWindow.Draw(mMenuBgSpi);
 
 	//mWindow.Draw(rect);
 
 	for (auto btn : btnContainer)
-		mWindow.Draw(*btn->getDraw());
+		mWindow.Draw(*btn->GetDraw());
 
 	mWindow.EndDraw();
 }

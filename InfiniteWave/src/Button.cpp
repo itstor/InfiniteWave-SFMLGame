@@ -5,62 +5,62 @@
 #include "Config.h"
 
 
-void Button::Setup(const std::string& idlePath, const std::string& hoverPath, const std::string& activePath, float sizeFact, sf::Vector2f pos)
+void Button::Setup(const std::string& idle_path, const std::string& hover_path, const std::string& active_path, float scale_factor, sf::Vector2f position)
 {
-	btnIdleTex.loadFromFile(idlePath);
-	btnHoverTex.loadFromFile(hoverPath);
-	btnActiveTex.loadFromFile(activePath);
+	mButtonIdleTex.loadFromFile(idle_path);
+	mButtonHoverTex.loadFromFile(hover_path);
+	mButtonActiveTex.loadFromFile(active_path);
 
-	btn.setSize(sf::Vector2f(static_cast<float>(btnIdleTex.getSize().x), static_cast<float>(btnIdleTex.getSize().y)));
-	btn.setScale(sizeFact, sizeFact);
-	btn.setOrigin(btn.getSize().x/2, btn.getSize().y/2);
-	btn.setPosition(pos);
+	mButtonRect.setSize(sf::Vector2f(static_cast<float>(mButtonIdleTex.getSize().x), static_cast<float>(mButtonIdleTex.getSize().y)));
+	mButtonRect.setScale(scale_factor, scale_factor);
+	mButtonRect.setOrigin(mButtonRect.getSize().x/2, mButtonRect.getSize().y/2);
+	mButtonRect.setPosition(position);
 
-	btnState = IDLE_BTN;
+	mButtonState = ButtonState::IDLE_BTN;
 }
 
-sf::RectangleShape* Button::getDraw()
+sf::RectangleShape* Button::GetDraw()
 {
-	return &btn;
+	return &mButtonRect;
 }
 
-void Button::Update(sf::Vector2f mousePos)
+void Button::Update(sf::Vector2f mouse_pos)
 {
-	btnState = IDLE_BTN;
-	if(btn.getGlobalBounds().contains(mousePos))
+	mButtonState = ButtonState::IDLE_BTN;
+	if(mButtonRect.getGlobalBounds().contains(mouse_pos))
 	{
-		btnState = HOVER_BTN;
+		mButtonState = ButtonState::HOVER_BTN;
 	}
 
-	switch (btnState)
+	switch (mButtonState)
 	{
-	case IDLE_BTN:
+	case ButtonState::IDLE_BTN:
 		{
-		btn.setTexture(&btnIdleTex);
+		mButtonRect.setTexture(&mButtonIdleTex);
 	} break;
-	case HOVER_BTN:
+	case ButtonState::HOVER_BTN:
 		{
-		btn.setTexture(&btnHoverTex);
+		mButtonRect.setTexture(&mButtonHoverTex);
 	} break;
-	case ACTIVE_BTN:
+	case ButtonState::ACTIVE_BTN:
 		{
-		btn.setTexture(&btnActiveTex);
+		mButtonRect.setTexture(&mButtonActiveTex);
 	} break;
 	default: break;
 	}
 }
 
-bool Button::isPressed() const
+bool Button::IsPressed() const
 {
-	return btnState == ACTIVE_BTN ? true : false;
+	return mButtonState == ButtonState::ACTIVE_BTN ? true : false;
 }
 
-bool Button::isHover() const
+bool Button::IsHover() const
 {
-	return btnState == HOVER_BTN ? true : false;
+	return mButtonState == ButtonState::HOVER_BTN ? true : false;
 }
 
 void Button::Click()
 {
-	btnState = ACTIVE_BTN;
+	mButtonState = ButtonState::ACTIVE_BTN;
 }

@@ -4,42 +4,42 @@
 
 SFX::SFX(const std::string& file_path)
 {
-	this->file_path = file_path;
+	this->mFilePath = file_path;
 
-	if (!buffer.loadFromFile(this->file_path))
+	if (!mSoundBuffer.loadFromFile(this->mFilePath))
 #ifdef _DEBUG 
 		std::cout << "File not found" << file_path << std::endl;
 #endif
 
-	sound.setBuffer(buffer);
+	mSound.setBuffer(mSoundBuffer);
 }
 
 
-void SFX::play()
+void SFX::Play()
 {
-	sound.setVolume(conf::sfxVolume);
-	sound.play();
+	mSound.setVolume(conf::gSFXVolume);
+	mSound.play();
 #ifdef _DEBUG 
-	std::cout << "Playing SFX" << file_path << std::endl;
+	std::cout << "Playing SFX" << mFilePath << std::endl;
 #endif
 }
 
-void SFX::setPitch(float pitch)
+void SFX::SetPitch(float new_pitch)
 {
-	sound.setPitch(pitch);
+	mSound.setPitch(new_pitch);
 }
 
-void SFX::pause()
+void SFX::Pause()
 {
-	sound.pause();
+	mSound.pause();
 }
 
-void SFX::stop()
+void SFX::Stop()
 {
-	sound.stop();
+	mSound.stop();
 }
 
-sf::SoundBuffer* SFX::getSoundBuffer()
+sf::SoundBuffer* SFX::GetSoundBuffer()
 {
-	return &buffer;
+	return &mSoundBuffer;
 }

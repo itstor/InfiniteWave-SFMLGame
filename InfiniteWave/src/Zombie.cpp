@@ -3,34 +3,34 @@
 #include <iostream>
 #include <utility>
 
-Zombie::Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, sf::Texture& blood_tex, PathRequestManager& request_manager, sf::SoundBuffer& sound_buffer): mRequestManager(request_manager), mZombieSoundBuffer(sound_buffer), zombieTex(zombie_tex), bloodSplashTex(blood_tex)
+Zombie::Zombie(const sf::Vector2f& pos, sf::Texture& zombie_tex, sf::Texture& blood_tex, PathRequestManager& request_manager, sf::SoundBuffer& sound_buffer): mRequestManager(request_manager), mZombieSoundBuffer(sound_buffer), mZombieTex(zombie_tex), mBloodSplashTex(blood_tex)
 {
-	ColliderBody.setSize({288,311});
-	ColliderBody.setOrigin(ColliderBody.getSize() * 0.5f);
-	entityRect.setSize({ 288,311 });
-	entityRect.setOrigin(entityRect.getSize() * 0.5f);
+	mColliderBody.setSize({288,311});
+	mColliderBody.setOrigin(mColliderBody.getSize() * 0.5f);
+	mEntityRect.setSize({ 288,311 });
+	mEntityRect.setOrigin(mEntityRect.getSize() * 0.5f);
 
 	//setup anim
 	//TODO change texture to load from memory
-	entityRect.setTexture(&zombieTex);
-	zombieAnim.Setup(&zombieTex, 2, 17);
+	mEntityRect.setTexture(&mZombieTex);
+	mZombieAnim.Setup(&mZombieTex, 2, 17);
 
 	//setup blood
-	bloodRect.setTexture(&bloodSplashTex);
-	bloodRect.setSize({200.0f,200.0f});
-	bloodRect.setOrigin(100.0f, 100.0f);
-	bloodAnim.Setup(&bloodSplashTex, 1, 14);
-	bloodAnim.Hide();
-	bloodRect.setTextureRect(*bloodAnim.getTexture());
+	mBloodRect.setTexture(&mBloodSplashTex);
+	mBloodRect.setSize({200.0f,200.0f});
+	mBloodRect.setOrigin(100.0f, 100.0f);
+	mBloodAnim.Setup(&mBloodSplashTex, 1, 14);
+	mBloodAnim.Hide();
+	mBloodRect.setTextureRect(*mBloodAnim.GetTextureRect());
 
 	//setup zombie sfx
 	mZombieSound.setBuffer(mZombieSoundBuffer);
 	mZombieSound.setLoop(false);
-	mZombieSound.setPosition(entityRect.getPosition().x, 0, entityRect.getPosition().y);
+	mZombieSound.setPosition(mEntityRect.getPosition().x, 0, mEntityRect.getPosition().y);
 	mZombieSound.setMinDistance(200.0f);
-	zombieSoundDelay = static_cast<float>(rand() % 8) + 7.0f;
+	mZombieSoundDelay = static_cast<float>(rand() % 8) + 7.0f;
 
-	setPosition(pos);
+	SetPosition(pos);
 	
 }
 
@@ -38,138 +38,138 @@ Zombie::~Zombie(){
 	std::cout << "DEADDDDD\n";
 };
 
-void Zombie::Update(float deltaTime, const sf::Vector2f& distance)
+void Zombie::Update(float delta_time, const sf::Vector2f& distance)
 {
-	if (!(animState == AnimState::ATTACK_ANIM) || zombieAnim.isFinish())
-		animState = AnimState::WALK_ANIM;
+	if (!(mAnimState == AnimState::ATTACK_ANIM) || mZombieAnim.IsFinish())
+		mAnimState = AnimState::WALK_ANIM;
 	
-	if (animState == AnimState::WALK_ANIM)
+	if (mAnimState == AnimState::WALK_ANIM)
 	{
-		zombieAnim.Update(deltaTime, 0, 0.05f, 0, 17);
-		entityRect.setTextureRect(*zombieAnim.getTexture());
+		mZombieAnim.Update(delta_time, 0, 0.05f, 0, 17);
+		mEntityRect.setTextureRect(*mZombieAnim.GetTextureRect());
 	}
-	else if(animState == AnimState::ATTACK_ANIM)
+	else if(mAnimState == AnimState::ATTACK_ANIM)
 	{
-		zombieAnim.Update(deltaTime, 1, 0.1f,0, 9);
-		entityRect.setTextureRect(*zombieAnim.getTexture());
+		mZombieAnim.Update(delta_time, 1, 0.1f,0, 9);
+		mEntityRect.setTextureRect(*mZombieAnim.GetTextureRect());
 	}
 
-	if (showBlood)
+	if (mShowBlood)
 	{
-		bloodAnim.Update(deltaTime, 0, 0.03f, 0,13);
-		bloodRect.setTextureRect(*bloodAnim.getTexture());
-		if (bloodAnim.isFinish())
+		mBloodAnim.Update(delta_time, 0, 0.03f, 0,13);
+		mBloodRect.setTextureRect(*mBloodAnim.GetTextureRect());
+		if (mBloodAnim.IsFinish())
 		{
-			showBlood = false;
+			mShowBlood = false;
 		}
 	}
 
-	attackCooldown -= deltaTime;
-	if (attackCooldown <= 0.0f)
+	mAttackCooldown -= delta_time;
+	if (mAttackCooldown <= 0.0f)
 	{
-		allowAttack = true;
-		attackCooldown = 5.0f;
+		mAllowAttack = true;
+		mAttackCooldown = 5.0f;
 	}
 
 	//Update walk path every 2 second
-	pathUpdateDelay -= deltaTime;
-	if (pathUpdateDelay <= 0.0f)
+	mPathUpdateDelay -= delta_time;
+	if (mPathUpdateDelay <= 0.0f)
 	{
-		mRequestManager.AddRequest(*this, this->getPosition());
-		pathUpdateDelay = 2.0f;
+		mRequestManager.AddRequest(*this, this->GetPosition());
+		mPathUpdateDelay = 2.0f;
 	}
 
 	if (!mWalkPath.empty()) {
-		nextPosition = mWalkPath.top().GetNodePosition();
-		lookAt(nextPosition);
+		mNextPosition = mWalkPath.top().GetNodePosition();
+		LookAt(mNextPosition);
 		//Check if zombie arrived to next point
-		if (mRequestManager.getGrid()->GetGridIndexFromPosition(entityRect.getPosition()) 
-			== mRequestManager.getGrid()->GetGridIndexFromPosition(nextPosition))
+		if (mRequestManager.GetGrid()->GetGridIndexFromPosition(mEntityRect.getPosition()) 
+			== mRequestManager.GetGrid()->GetGridIndexFromPosition(mNextPosition))
 		{
 			mWalkPath.pop();
 		}
 	}
 
-	zombieSoundDelay -= deltaTime;
-	if (zombieSoundDelay <= 0.0f)
+	mZombieSoundDelay -= delta_time;
+	if (mZombieSoundDelay <= 0.0f)
 	{
 		mZombieSound.play();
-		zombieSoundDelay = static_cast<float>(rand() % 8) + 7.0f;
+		mZombieSoundDelay = static_cast<float>(rand() % 8) + 7.0f;
 	}
 	
 }
 
-void Zombie::setPosition(const sf::Vector2f& pos)
+void Zombie::SetPosition(const sf::Vector2f& position)
 {
-	entityRect.setPosition(pos);
-	ColliderBody.setPosition(pos);
+	mEntityRect.setPosition(position);
+	mColliderBody.setPosition(position);
 }
 
-void Zombie::setWalkPath(std::stack<Node> walk_path)
+void Zombie::SetWalkPath(std::stack<Node> walk_path)
 {
 	mWalkPath = std::move(walk_path);
 }
 
 void Zombie::Move(float deltaTime)
 {
-		movePos = mDirVect * movementSpeed * deltaTime;
-		entityRect.move(movePos);
-		ColliderBody.move(movePos);
-		mZombieSound.setPosition(entityRect.getPosition().x, 0, entityRect.getPosition().y); //Move sound source position
-		bloodRect.setPosition(entityRect.getPosition());
-		mDirVect.x = 0.0f; mDirVect.y = 0.0f;
+		mMovePos = mDirVector * mMovementSpeed * deltaTime;
+		mEntityRect.move(mMovePos);
+		mColliderBody.move(mMovePos);
+		mZombieSound.setPosition(mEntityRect.getPosition().x, 0, mEntityRect.getPosition().y); //Move sound source position
+		mBloodRect.setPosition(mEntityRect.getPosition());
+		mDirVector.x = 0.0f; mDirVector.y = 0.0f;
 }
 
 void Zombie::Attack()
 {
-	allowAttack = false;
+	mAllowAttack = false;
 	std::cout << "HRGHHH\n";
-	animState = AnimState::ATTACK_ANIM;
+	mAnimState = AnimState::ATTACK_ANIM;
 	//play attack anim
 }
 
-void Zombie::getHit()
+void Zombie::GetHit()
 {
-	health -= 20;
-	showBlood = true;
+	mHealth -= 20;
+	mShowBlood = true;
 	std::cout << "ARGHH\n";
-	if (health <= 0)
+	if (mHealth <= 0)
 	{
 		std::cout << "DEAD AGAIN\n";
-		misDead = true;
+		mIsDead = true;
 	}
 }
 
-bool Zombie::isAllowAttack() const
+bool Zombie::IsAllowAttack() const
 {
-	return allowAttack;
+	return mAllowAttack;
 }
 
-sf::Vector2f Zombie::getPosition() const
+sf::Vector2f Zombie::GetPosition() const
 {
-	return entityRect.getPosition();
+	return mEntityRect.getPosition();
 }
 
-ZombieType Zombie::getZombieType() const
+ZombieType Zombie::GetZombieType() const
 {
 	return mZombieType;
 }
 
-sf::RectangleShape* Zombie::getBloodDraw()
+sf::RectangleShape* Zombie::GetBloodDraw()
 {
-	return &bloodRect;
+	return &mBloodRect;
 }
 
-void Zombie::lookAt(const sf::Vector2f & target_position)
+void Zombie::LookAt(const sf::Vector2f & target_position)
 {
 	const float PI = 3.14159265f;
 
-	const sf::Vector2f dir(target_position.x - entityRect.getPosition().x,
-		target_position.y - entityRect.getPosition().y);
+	const sf::Vector2f dir(target_position.x - mEntityRect.getPosition().x,
+		target_position.y - mEntityRect.getPosition().y);
 	
-	angle = (atan2(dir.y, dir.x)) * 180 / PI;
+	mAngle = (atan2(dir.y, dir.x)) * 180 / PI;
 
-	mDirVect = dir / sqrt(pow(dir.x, 2) + pow(dir.y, 2));
+	mDirVector = dir / sqrt(pow(dir.x, 2) + pow(dir.y, 2));
 
-	entityRect.setRotation(angle);
+	mEntityRect.setRotation(mAngle);
 }

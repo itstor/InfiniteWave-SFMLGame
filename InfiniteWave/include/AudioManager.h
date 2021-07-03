@@ -1,6 +1,6 @@
 #pragma once
-#ifndef AUDIOMANAGER_H
-#define AUDIOMANAGER_H
+#ifndef AUDIO_MANAGER_H_
+#define AUDIO_MANAGER_H_
 
 #include <unordered_map>
 #include <SFML/Audio/Sound.hpp>
@@ -8,30 +8,34 @@
 class SFX;
 class Music;
 
+
 class AudioManager
 {
-private:
-	std::unordered_map<std::string, Music*> musicContainer;
-	std::unordered_map<std::string, SFX*> SFXContainer;
 public:
 	AudioManager();
 	~AudioManager();
 
-	void addMusic(const std::string& musicName, const std::string& file_path, bool isLoop);
-	void addSFX(const std::string& sfxName, const std::string& file_path);
-	void updateVolume();
-	void updateVolume(float newVolume);
-	void decrease_volume();
-	void increase_volume();
-	void play(const std::string& music_name);
-	void playSFX(const std::string& sfx_name);
-	void changeSFXPitch(const std::string& sfx_name, float pitch);
-	sf::SoundBuffer* getSoundBuffer(const std::string& sfx_name);
-	void toggleMute();
-	void stopAll();
-	void stopMusic(const std::string& music_name);
-	void setMusicVolume(const std::string& music_name, float volume);
-	sf::Sound::Status getStatus(const std::string& music_name);
+	void AddMusic(const std::string& music_name, const std::string& file_path, bool is_loop);
+	void AddSFX(const std::string& sfx_name, const std::string& file_path);
+	void PlayMusic(const std::string& music_name);
+	void PlaySFX(const std::string& sfx_name);
+	void UpdateVolume();
+	void UpdateVolume(float new_volume);
+	void DecreaseVolume();
+	void IncreaseVolume();
+	void ToggleMute();
+	void StopAllMusic();
+	void StopMusic(const std::string& music_name);
+	
+	void SetSFXPitch(const std::string& sfx_name, float pitch);
+	void SetMusicVolume(const std::string& music_name, float volume);
+
+	sf::SoundBuffer* GetSoundBuffer(const std::string& sfx_name);
+	sf::Sound::Status GetMuicStatus(const std::string& music_name);
+
+private:
+	std::unordered_map<std::string, Music*> mMusicContainer;
+	std::unordered_map<std::string, SFX*> mSFXContainer;
 };
 
 #endif

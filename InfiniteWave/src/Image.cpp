@@ -5,34 +5,34 @@ Image::Image() = default;
 
 void Image::Setup(const std::string& file_path, sf::Vector2f pos, float size_fact)
 {
-	imgTexture.loadFromFile(file_path);
-	imgTexture.setSmooth(true);
-	const sf::Vector2f size(imgTexture.getSize().x, imgTexture.getSize().y);
+	mImageTex.loadFromFile(file_path);
+	mImageTex.setSmooth(true);
+	const sf::Vector2f size(mImageTex.getSize().x, mImageTex.getSize().y);
 	
-	img.setTexture(&imgTexture);
+	mImageRect.setTexture(&mImageTex);
 
-	img.setSize(size);
-	img.setScale(size_fact, size_fact);
+	mImageRect.setSize(size);
+	mImageRect.setScale(size_fact, size_fact);
 
-	img.setOrigin(size.x/2, size.y/2);
-	img.setPosition(pos);
+	mImageRect.setOrigin(size.x/2, size.y/2);
+	mImageRect.setPosition(pos);
 }
 
 
 void Image::Setup(const std::string& file_path, sf::Vector2f pos, sf::Vector2f size)
 {
-	imgTexture.loadFromFile(file_path);
-	imgTexture.setSmooth(true);
+	mImageTex.loadFromFile(file_path);
+	mImageTex.setSmooth(true);
 	
-	img.setTexture(&imgTexture);
+	mImageRect.setTexture(&mImageTex);
 
-	img.setSize(size);
+	mImageRect.setSize(size);
 
-	img.setOrigin(size.x / 2, size.y / 2);
-	img.setPosition(pos);
+	mImageRect.setOrigin(size.x / 2, size.y / 2);
+	mImageRect.setPosition(pos);
 }
 
-sf::RectangleShape* Image::getDraw()
+sf::RectangleShape* Image::GetDraw()
 {
-	return &img;
+	return &mImageRect;
 }

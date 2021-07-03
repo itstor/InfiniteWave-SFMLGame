@@ -9,70 +9,70 @@
 
 
 
-Player::Player(): playerRect(entityRect)
+Player::Player(): mPlayerRect(mEntityRect)
 {
 	//setup player
-	movementSpeed = 400.0f;
-	health = 200;
+	mMovementSpeed = 400.0f;
+	mHealth = 200;
 	
 	//setup animation texture
-	bodyTex.loadFromFile("data/Texture/Sprites/Player/playerspites.png");
-	bodyTex.setSmooth(true);
-	playerRect.setTexture(&bodyTex);
+	mBodyTex.loadFromFile("data/Texture/Sprites/Player/playerspites.png");
+	mBodyTex.setSmooth(true);
+	mPlayerRect.setTexture(&mBodyTex);
 
-	feetTex.loadFromFile("data/Texture/Sprites/Player/feetplayer.png");
-	feetTex.setSmooth(true);
-	playerFeetRect.setTexture(&feetTex);
+	mFeetTex.loadFromFile("data/Texture/Sprites/Player/feetplayer.png");
+	mFeetTex.setSmooth(true);
+	mPlayerFeetRect.setTexture(&mFeetTex);
 
-	ColliderBody.setSize(sf::Vector2f(100, 100));
-	ColliderBody.setOrigin(50, 50);
-	playerRect.setSize(sf::Vector2f(253, 216));
-	playerRect.setOrigin(98, 119);
-	playerFeetRect.setSize(sf::Vector2f(172, 124));
-	playerFeetRect.setOrigin(86, 62);
-	sf::Listener::setPosition(playerRect.getPosition().x, 0, playerRect.getPosition().y);
+	mColliderBody.setSize(sf::Vector2f(100, 100));
+	mColliderBody.setOrigin(50, 50);
+	mPlayerRect.setSize(sf::Vector2f(253, 216));
+	mPlayerRect.setOrigin(98, 119);
+	mPlayerFeetRect.setSize(sf::Vector2f(172, 124));
+	mPlayerFeetRect.setOrigin(86, 62);
+	sf::Listener::setPosition(mPlayerRect.getPosition().x, 0, mPlayerRect.getPosition().y);
 	
 
 	//init animation
-	bodyAnim.Setup(&bodyTex, 3, 20);
-	feetAnim.Setup(&feetTex, 1, 21);
+	mBodyAnim.Setup(&mBodyTex, 3, 20);
+	mFeetAnim.Setup(&mFeetTex, 1, 21);
 }
 
-void Player::MoveDirection(MoveDir dir, float deltaTime)
+void Player::MoveDirection(MoveDir dir, float delta_time)
 {
-	feetAnimState = AnimState::WALK_ANIM;
+	mFeetAnimState = AnimState::WALK_ANIM;
 	//Restrict from anim changing
-	if (!(bodyAnimState == AnimState::SHOOT_ANIM || bodyAnimState == AnimState::RELOAD_ANIM) || bodyAnim.isFinish())
-		bodyAnimState = AnimState::WALK_ANIM;
+	if (!(mBodyAnimState == AnimState::SHOOT_ANIM || mBodyAnimState == AnimState::RELOAD_ANIM) || mBodyAnim.IsFinish())
+		mBodyAnimState = AnimState::WALK_ANIM;
 	
 	if (dir == MoveDir::LEFT) //Left
 	{
-		movePos.x = -movementSpeed * deltaTime;
+		mMovePos.x = -mMovementSpeed * delta_time;
 	}
 	if (dir == MoveDir::RIGHT) //Right
 	{
-		movePos.x = movementSpeed * deltaTime;
+		mMovePos.x = mMovementSpeed * delta_time;
 	}
 	if (dir == MoveDir::UP) //Up
 	{
-		movePos.y = -movementSpeed * deltaTime;
+		mMovePos.y = -mMovementSpeed * delta_time;
 	}
 	if (dir == MoveDir::DOWN) //Down
 	{
-		movePos.y = movementSpeed * deltaTime;
+		mMovePos.y = mMovementSpeed * delta_time;
 	}
 }
 
 void Player::PlayerMove()
 {
-	if (movePos.x != 0 && movePos.y != 0) //If player move directional
-		movePos *= 0.7f;
+	if (mMovePos.x != 0 && mMovePos.y != 0) //If player move directional
+		mMovePos *= 0.7f;
 
-	entityRect.move(movePos);
-	ColliderBody.move(movePos);
-	playerFeetRect.setPosition(entityRect.getPosition().x, entityRect.getPosition().y + 20);
-	sf::Listener::setPosition(playerRect.getPosition().x, 0, playerRect.getPosition().y);
-	movePos.x = 0.0f; movePos.y = 0.0f;
+	mEntityRect.move(mMovePos);
+	mColliderBody.move(mMovePos);
+	mPlayerFeetRect.setPosition(mEntityRect.getPosition().x, mEntityRect.getPosition().y + 20);
+	sf::Listener::setPosition(mPlayerRect.getPosition().x, 0, mPlayerRect.getPosition().y);
+	mMovePos.x = 0.0f; mMovePos.y = 0.0f;
 }
 
 bool Player::Shoot()
@@ -81,14 +81,14 @@ bool Player::Shoot()
 	{
 		holdAmmo--;
 		allowShoot = false;
-		bodyAnimState = AnimState::SHOOT_ANIM;
+		mBodyAnimState = AnimState::SHOOT_ANIM;
 		return true;
 	}
 	
 	return false;
 }
 
-int Player::getAmmo() const
+int Player::GetAmmo() const
 {
 	return holdAmmo;
 }
@@ -96,56 +96,56 @@ int Player::getAmmo() const
 void Player::Reload()
 {
 	holdAmmo = 18;
-	bodyAnimState = AnimState::RELOAD_ANIM;
+	mBodyAnimState = AnimState::RELOAD_ANIM;
 }
 
 
-void Player::Update(float deltaTime)
+void Player::Update(float delta_time)
 {
 	//Change animation based on state
 
 	//body
-	if (bodyAnimState == AnimState::IDLE_ANIM)
+	if (mBodyAnimState == AnimState::IDLE_ANIM)
 	{
-		bodyAnim.Update(deltaTime, 0, 0.1f, 0, 20);
-		playerRect.setTextureRect(*bodyAnim.getTexture());
+		mBodyAnim.Update(delta_time, 0, 0.1f, 0, 20);
+		mPlayerRect.setTextureRect(*mBodyAnim.GetTextureRect());
 	}
-	else if(bodyAnimState == AnimState::WALK_ANIM)
+	else if(mBodyAnimState == AnimState::WALK_ANIM)
 	{
-		bodyAnim.Update(deltaTime, 1, 0.05f,0, 20);
-		playerRect.setTextureRect(*bodyAnim.getTexture());
+		mBodyAnim.Update(delta_time, 1, 0.05f,0, 20);
+		mPlayerRect.setTextureRect(*mBodyAnim.GetTextureRect());
 	}
-	else if(bodyAnimState == AnimState::SHOOT_ANIM)
+	else if(mBodyAnimState == AnimState::SHOOT_ANIM)
 	{
-		bodyAnim.Update(deltaTime, 2, 0.05f, 16, 18);
-		playerRect.setTextureRect(*bodyAnim.getTexture());
+		mBodyAnim.Update(delta_time, 2, 0.05f, 16, 18);
+		mPlayerRect.setTextureRect(*mBodyAnim.GetTextureRect());
 	}
-	else if(bodyAnimState == AnimState::RELOAD_ANIM)
+	else if(mBodyAnimState == AnimState::RELOAD_ANIM)
 	{
-		bodyAnim.Update(deltaTime, 2, 0.05f,0, 15);
-		playerRect.setTextureRect(*bodyAnim.getTexture());
+		mBodyAnim.Update(delta_time, 2, 0.05f,0, 15);
+		mPlayerRect.setTextureRect(*mBodyAnim.GetTextureRect());
 	}
 
 	//feet
-	if (feetAnimState == AnimState::IDLE_ANIM)
+	if (mFeetAnimState == AnimState::IDLE_ANIM)
 	{
-		feetAnim.Hide();
-		playerFeetRect.setTextureRect(*feetAnim.getTexture());
+		mFeetAnim.Hide();
+		mPlayerFeetRect.setTextureRect(*mFeetAnim.GetTextureRect());
 	}
-	else if (feetAnimState == AnimState::WALK_ANIM)
+	else if (mFeetAnimState == AnimState::WALK_ANIM)
 	{
-		feetAnim.Update(deltaTime, 0, 0.05f,0, 20);
-		playerFeetRect.setTextureRect(*feetAnim.getTexture());
+		mFeetAnim.Update(delta_time, 0, 0.05f,0, 20);
+		mPlayerFeetRect.setTextureRect(*mFeetAnim.GetTextureRect());
 	}
 
 	//Set back
-	feetAnimState = AnimState::IDLE_ANIM;
+	mFeetAnimState = AnimState::IDLE_ANIM;
 
-	if (!(bodyAnimState == AnimState::SHOOT_ANIM || bodyAnimState == AnimState::RELOAD_ANIM) || bodyAnim.isFinish())
-		bodyAnimState = AnimState::IDLE_ANIM;
+	if (!(mBodyAnimState == AnimState::SHOOT_ANIM || mBodyAnimState == AnimState::RELOAD_ANIM) || mBodyAnim.IsFinish())
+		mBodyAnimState = AnimState::IDLE_ANIM;
 
 	//Update player shoot cooldown
-	elapsedShootTime += deltaTime;
+	elapsedShootTime += delta_time;
 	if (elapsedShootTime >= shootCooldown && holdAmmo > 0)
 	{
 		allowShoot = true;
@@ -153,69 +153,69 @@ void Player::Update(float deltaTime)
 	}
 
 	//death
-	if (health <= 0.0f)
+	if (mHealth <= 0.0f)
 	{
-		misDead = true;
+		mIsDead = true;
 	}
 }
 
-void Player::lookAt(const sf::Vector2f& mousePos)
+void Player::LookAt(const sf::Vector2f& mouse_pos)
 {
-	const sf::Vector2f dir(mousePos.x - playerRect.getPosition().x,
-		mousePos.y - playerRect.getPosition().y);
+	const sf::Vector2f dir(mouse_pos.x - mPlayerRect.getPosition().x,
+		mouse_pos.y - mPlayerRect.getPosition().y);
 	
-	angle = (atan2(dir.y, dir.x)) * 180 / static_cast<float>(M_PI);
+	mAngle = (atan2(dir.y, dir.x)) * 180 / static_cast<float>(M_PI);
 
-	dirVect = dir / sqrt(pow(dir.x, 2) + pow(dir.y, 2));
+	mDirVector = dir / sqrt(pow(dir.x, 2) + pow(dir.y, 2));
 
-	playerRect.setRotation(angle);
-	playerFeetRect.setRotation(angle);
+	mPlayerRect.setRotation(mAngle);
+	mPlayerFeetRect.setRotation(mAngle);
 }
 
-void Player::setPosition(const sf::Vector2f & pos)
+void Player::SetPosition(const sf::Vector2f & pos)
 {
-	playerRect.setPosition(pos);
-	playerFeetRect.setPosition(pos);
-	ColliderBody.setPosition(pos);
-	sf::Listener::setPosition(playerRect.getPosition().x, 0, playerRect.getPosition().y);
+	mPlayerRect.setPosition(pos);
+	mPlayerFeetRect.setPosition(pos);
+	mColliderBody.setPosition(pos);
+	sf::Listener::setPosition(mPlayerRect.getPosition().x, 0, mPlayerRect.getPosition().y);
 }
 
-void Player::increaseHealth(int amount)
+void Player::IncreaseHealth(int amount)
 {
-	health += amount;
-	if (health > 200)
+	mHealth += amount;
+	if (mHealth > 200)
 	{
-		health = 200;
+		mHealth = 200;
 	}
 }
 
-void Player::getHit(int damage)
+void Player::GetHit(int damage)
 {
-	health -= damage;
-	if (health < 0)
+	mHealth -= damage;
+	if (mHealth < 0)
 	{
-		health = 0;
+		mHealth = 0;
 	}
 	std::cout << "UGHHH\n";
 	//TODO play blinking animation
 }
 
-sf::Vector2f Player::getPosition() const
+sf::Vector2f Player::GetPosition() const
 {
-	return playerRect.getPosition();
+	return mPlayerRect.getPosition();
 }
 
-float Player::getAngle() const
+float Player::GetAngle() const
 {
-	return angle;
+	return mAngle;
 }
 
-sf::Vector2f* Player::getDirVect()
+sf::Vector2f* Player::GetDirVect()
 {
-	return &dirVect;
+	return &mDirVector;
 }
 
-sf::RectangleShape* Player::getFeetDraw()
+sf::RectangleShape* Player::GetFeetDraw()
 {
-	return &playerFeetRect;
+	return &mPlayerFeetRect;
 }

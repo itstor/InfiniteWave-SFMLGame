@@ -1,45 +1,45 @@
 #include "Music.h"
 #include <iostream>
 
-Music::Music(const std::string& file_path, const bool& isLoop)
+Music::Music(const std::string& file_path, bool is_loop)
 {
 #ifdef _DEBUG
 	std::cout << "Music Created " << file_path << std::endl;
 #endif
 	
-	this->file_path = file_path;
+	this->mFilePath = file_path;
 
-	if (!music.openFromFile(this->file_path))
+	if (!mMusic.openFromFile(this->mFilePath))
 		std::cout << "File not found" << std::endl;
 
-	music.setLoop(isLoop);
+	mMusic.setLoop(is_loop);
 }
 
-void Music::play()
+void Music::Play()
 {
 	//music.setVolume(conf::musicVolume);
 	std::cout << "Music Played\n";
-	music.play();
+	mMusic.play();
 }
 
-void Music::pause()
+void Music::Pause()
 {
-	music.pause();
+	mMusic.pause();
 }
 
-void Music::stop()
+void Music::Stop()
 {
-	music.stop();
+	mMusic.stop();
 }
 
-void Music::setVolume(float& newVolume)
+void Music::SetVolume(float new_volume)
 {
-	music.setVolume(newVolume);
+	mMusic.setVolume(new_volume);
 }
 
-sf::SoundSource::Status Music::getStatus() const
+sf::SoundSource::Status Music::GetStatus() const
 {
-	return music.getStatus();
+	return mMusic.getStatus();
 }
 
 

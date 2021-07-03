@@ -1,15 +1,15 @@
 #include "GameObject.h"
 
-sf::RectangleShape * GameObject::getCollider()
+sf::RectangleShape * GameObject::GetCollider()
 {
-	return &ColliderBody;
+	return &mColliderBody;
 }
 
-bool GameObject::onCollision(GameObject & other) const
+bool GameObject::OnCollision(GameObject & other) const
 {
-	const sf::FloatRect selfBounds = ColliderBody.getGlobalBounds();
+	const sf::FloatRect selfBounds = mColliderBody.getGlobalBounds();
 
-	if (const sf::FloatRect otherBounds = other.getCollider()->getGlobalBounds(); otherBounds.intersects(selfBounds))
+	if (const sf::FloatRect otherBounds = other.GetCollider()->getGlobalBounds(); otherBounds.intersects(selfBounds))
 	{
 		return true;
 	}
@@ -17,10 +17,10 @@ bool GameObject::onCollision(GameObject & other) const
 	return false;
 }
 
-bool GameObject::onCollision(const sf::RectangleShape & other) const
+bool GameObject::OnCollision(const sf::RectangleShape & other) const
 {
 	const sf::FloatRect otherBounds = other.getGlobalBounds();
-	if (const sf::FloatRect selfBounds = ColliderBody.getGlobalBounds(); selfBounds.intersects(otherBounds))
+	if (const sf::FloatRect selfBounds = mColliderBody.getGlobalBounds(); selfBounds.intersects(otherBounds))
 	{
 		return true;
 	}

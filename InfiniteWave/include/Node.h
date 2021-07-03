@@ -1,4 +1,7 @@
 #pragma once
+#ifndef NODE_H_
+#define NODE_H_
+
 #include <SFML/Graphics/RectangleShape.hpp>
 
 enum class NodeType {WALKABLE_NODE, OBSTACLE_NODE, PLAYER_NODE};
@@ -14,33 +17,32 @@ public:
 	bool operator>(const Node& node) const;
 	
 	void ChangeType(NodeType node_type);
+	
 	//getter setter
-	void SetgCost(int gCost);
-	int GetgCost() const;
-	void SethCost(int hCost);
-	int GethCost() const;
-	int GetfCost() const;
+	void SetNodeParent(Node* node);
+	void SetGCost(int g_cost);
+	void SetHCost(int h_cost);
+	int GetGCost() const;
+	int GetHCost() const;
+	int GetFCost() const;
 	int GetNodeId() const;
-	void setNodeParent(Node* node);
 	Node* GetParent() const;
 	sf::Vector2i GetGridIndex() const;
 	sf::Vector2f GetNodePosition(bool center = true) const;
 	
-	sf::RectangleShape* getDraw();
+	sf::RectangleShape* GetDraw();
 	NodeType GetType() const;
 private:
-	int mNodeId;
-	
-	sf::Vector2i mGridIndex;
-	
-	int m_gCost = 0;
-	int m_hCost = 0;
+	int mNodeId = 0;
+	int mGCost = 0;
+	int mHCost = 0;
 
-	Node* mParentNode;
 	sf::RectangleShape mNodeRect;
-	NodeType mNodeType;
+	sf::Vector2i mGridIndex;
 	sf::Vector2f mNodePostion;
 	sf::Vector2f mNodeSize;
+	Node* mParentNode;
+	NodeType mNodeType;
 };
 
 class NodeHash
@@ -51,3 +53,5 @@ public:
 		return std::hash<int>()(node.GetNodeId());
 	}
 };
+
+#endif

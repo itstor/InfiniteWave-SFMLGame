@@ -1,39 +1,41 @@
 #pragma once
+#ifndef CREDIT_H_
+#define CREDIT_H_
 
 #include <SFML/Graphics.hpp>
 #include "BaseScene.h"
 #include "Button.h" //GUI Optional
-#include "ToggleButton.h"
 
 class SceneManager;
 
 class CreditScene final : public BaseScene
 {
 public:
-	CreditScene(SharedObject& obj, bool replace = true);
+	CreditScene(SharedObject& shared_object, bool replace = true);
 	~CreditScene() override;
 
 	void Pause() override;
 	void Draw() override;
 	void Resume() override;
-	void Update(float deltaTime) override;
+	void Update(float delta_time) override;
 
 private:
 	//Define scene component here
-	void initBg();
-	void initButton();
+	void InitBackground();
+	void InitButton();
 
-	sf::Font headlineFont;
-	sf::Font dccFont;
-	sf::Text creditText;
-	sf::Text createdbyText;
-	sf::Text additionalText;
-	sf::Text add_creditText;
-	sf::Text libraryText;
-	sf::Text library_credText;
+	sf::Font mHeadlineFont;
+	sf::Font mDCCFont;
+	sf::Text mCreditText;
+	sf::Text mCreatedByText;
+	sf::Text mAdditionalText;
+	sf::Text mAddCreditText;
+	sf::Text mLibraryText;
+	sf::Text mLibraryCreditText;
 	
-	sf::Texture menuBgTex;
-	sf::Sprite menuBgSpi;
-	Button btnBack;
+	sf::Texture mMenuBgTex;
+	sf::Sprite mMenuBgSpi;
+	Button mButtonBack;
 };
 
+#endif

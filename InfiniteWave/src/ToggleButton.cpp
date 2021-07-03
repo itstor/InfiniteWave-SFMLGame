@@ -2,50 +2,48 @@
 
 #include <iostream>
 
-void ToggleButton::Setup(const std::string & firstStatePath, const std::string & secondStatePath, float sizeFact, sf::Vector2f pos, unsigned short int setState)
+void ToggleButton::Setup(const std::string & first_state_path, const std::string & second_state_path, float scale_factor, sf::Vector2f position, ButtonState current_state)
 {
-	firstStateTex.loadFromFile(firstStatePath);
-	secondStateTex.loadFromFile(secondStatePath);
+	mFirstStateTex.loadFromFile(first_state_path);
+	mSecondStateTex.loadFromFile(second_state_path);
 
-	btn.setSize(sf::Vector2f(static_cast<float>(firstStateTex.getSize().x), static_cast<float>(firstStateTex.getSize().y)));
-	btn.setScale(sizeFact, sizeFact);
-	btn.setOrigin(btn.getSize().x / 2, btn.getSize().y / 2);
-	btn.setPosition(pos);
+	mButtonRect.setSize(sf::Vector2f(static_cast<float>(mFirstStateTex.getSize().x), static_cast<float>(mFirstStateTex.getSize().y)));
+	mButtonRect.setScale(scale_factor, scale_factor);
+	mButtonRect.setOrigin(mButtonRect.getSize().x / 2, mButtonRect.getSize().y / 2);
+	mButtonRect.setPosition(position);
 
-	btnState = setState;
+	mButtonState = current_state;
 }
 
-void ToggleButton::Update(sf::Vector2f mousePos)
+void ToggleButton::Update(sf::Vector2f mouse_pos)
 {
-	misHover = false;
+	mIsHover = false;
 	
-	if(btn.getGlobalBounds().contains(mousePos))
+	if(mButtonRect.getGlobalBounds().contains(mouse_pos))
 	{
-		misHover = true;
+		mIsHover = true;
 	}
 
 	
-	if (btnState == FIRST_STATE)
+	if (mButtonState == ButtonState::FIRST_STATE)
 	{
-		btn.setTexture(&firstStateTex);
+		mButtonRect.setTexture(&mFirstStateTex);
 	}
-	else if (btnState == SECOND_STATE)
+	else if (mButtonState == ButtonState::SECOND_STATE)
 	{
-		btn.setTexture(&secondStateTex);
+		mButtonRect.setTexture(&mSecondStateTex);
 	}
 }
 
-bool ToggleButton::isHover() const
+bool ToggleButton::IsHover() const
 {
-	return misHover;
+	return mIsHover;
 }
 
-int ToggleButton::toggleState()
+ButtonState ToggleButton::ToggleState()
 {
-	btnState = btnState == FIRST_STATE ? SECOND_STATE : FIRST_STATE;
+	mButtonState = mButtonState == ButtonState::FIRST_STATE ? ButtonState::SECOND_STATE : ButtonState::FIRST_STATE;
 
-	std::cout << btnState << std::endl;
-
-	return btnState;
+	return mButtonState;
 }
 

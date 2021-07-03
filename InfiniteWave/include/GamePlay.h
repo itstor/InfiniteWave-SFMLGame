@@ -1,19 +1,21 @@
 #pragma once
+#ifndef GAME_PLAY_H_
+#define GAME_PLAY_H_
 
 #include <SFML/Graphics.hpp>
 
-#include "AnimationManager.h"
-#include "BaseScene.h"
-#include "Bullet.h"
-#include "Button.h" //GUI Optional
-#include "Grid.h"
 #include "Map.h"
+#include "Grid.h"
+#include "Bullet.h"
+#include "Button.h"
 #include "Player.h"
-#include "Obstacle.h"
-#include "LightSystem.hpp"
-#include "PathFinding.h"
-#include "PickupItem.h"
 #include "Zombie.h"
+#include "Obstacle.h"
+#include "BaseScene.h"
+#include "PickupItem.h"
+#include "PathFinding.h"
+#include "LightSystem.hpp"
+#include "AnimationManager.h"
 
 class SceneManager;
 
@@ -21,25 +23,24 @@ class SceneManager;
 class GamePlay final : public BaseScene
 {
 public:
-	GamePlay(SharedObject& obj, bool replace = true);
+	GamePlay(SharedObject& shared_object, bool replace = true);
 	~GamePlay() override;
 
 	void Pause() override;
 	void Draw() override;
 	void Resume() override;
-	void Update(float deltaTime) override;
-
+	void Update(float delta_time) override;
 
 private:
-	void initObstacles();
-	void initButton();
-	void initMap();
-	void initLight();
-	void initGUI();
-	void initTexture();
-	bool spawnZombie(float deltaTime);
-	void spawn(ZombieType zombieType, const sf::Vector2f& playerPos);
-	void calculateTotalZombie();
+	void InitObstacles();
+	void InitButtons();
+	void InitMap();
+	void InitLight();
+	void InitGUI();
+	void InitTextures();
+	bool SpawnZombie(float delta_time);
+	void Spawn(ZombieType zombie_type, const sf::Vector2f& player_pos);
+	void CalculateTotalZombie();
 	
 	//Define scene component here
 	Grid mPathFindingGrid;
@@ -47,74 +48,76 @@ private:
 	PathRequestManager mRequestManager;
 	AnimationManager mAnimManager;
 	
-	float gunLightDelay = 0.0f;
-	bool isHeartBeatPlayed = false;
+	float mGunLightDelay = 0.0f;
+	bool mIsHeartBeatPlayed = false;
 
 	//Wave system
-	bool nextWave = false;
-	float nextWaveDelay = 5.0f;
-	float spawnCooldown = 1.0f;
-	unsigned int currentWave = 0;
-	int killCount = 0;
-	int currentActiveZombie = 0;
-	int totalNormalZombie = 0;
-	int totalRedZombie = 0;
-	int totalBlueZombie = 0;
-	int totalBlackZombie = 0;
+	bool mIsNextWave = false;
+	float mNextWaveDelay = 5.0f;
+	float mSpawnCooldown = 1.0f;
+	unsigned int mCurrentWave = 0;
+	int mKillCount = 0;
+	int mCurrentActiveZombie = 0;
+	int mTotalNormalZombie = 0;
+	int mTotalRedZombie = 0;
+	int mTotalBlueZombie = 0;
+	int mTotalBlackZombie = 0;
 
-	Player player;
-	Bullet bullet;
-	Map gameMap;
+	Player mPlayer;
+	Bullet mBullet;
+	Map mGameMap;
 
 	//Zombie Texture
-	sf::Texture normalZombieTex;
-	sf::Texture redZombieTex;
-	sf::Texture blueZombieTex;
-	sf::Texture blackZombieTex;
-	sf::Texture bloodSplash;
+	sf::Texture mNormalZombieTex;
+	sf::Texture mRedZombieTex;
+	sf::Texture mBlueZombieTex;
+	sf::Texture mBlackZombieTex;
+	sf::Texture mBloodSplashTex;
 
 	//Light
-	ltbl::LightSystem ls;
-	ltbl::LightPointEmission* flashLight{};
-	ltbl::LightPointEmission* gunLight{};
-	sf::Texture flashLightTexture;
-	sf::Texture pointLightTexture;
+	ltbl::LightSystem mLighSystem;
+	ltbl::LightPointEmission* mFlashLight{};
+	ltbl::LightPointEmission* mGunLight{};
+	sf::Texture mFlashLightTex;
+	sf::Texture mGunLightTex;
 
 	//Container
-	std::vector<Obstacle> obstacleContainer;
-	std::vector<Bullet> bulletContainer;
-	std::vector<sf::RectangleShape> lightObstacles;
-	std::vector<PickupItem*> pickupHealthContainer;
-	std::vector<Zombie*> zombieContainer;
+	std::vector<Obstacle> mObstaclesContainer;
+	std::vector<Bullet> mBulletContainer;
+	std::vector<sf::RectangleShape> mLightObstaclesContainer;
+	std::vector<PickupItem*> mHealthPickupContainer;
+	std::vector<Zombie*> mZombieContainer;
 
 	//GUI
-	bool showGUI = true;
+	bool mIsShowGUI = true;
 	
-	sf::View camera;
-	sf::View GUICamera;
+	sf::View mMainCamera;
+	sf::View mGUICamera;
 
-	sf::Texture healthIconTex;
-	sf::Texture killIconTex;
-	sf::Texture ammoIconTex;
-	sf::Texture pickupHealthTex;
+	sf::Texture mHealthIconTex;
+	sf::Texture mKillIconTex;
+	sf::Texture mAmmoIconTex;
+	sf::Texture mHealthPickupTex;
 
-	sf::RectangleShape healthIconRect;
-	sf::RectangleShape killIconRect;
-	sf::RectangleShape ammoIconRect;
-	sf::RectangleShape healthBar;
-	sf::RectangleShape dyingOverlay;
-	sf::RectangleShape fadeToBlack;
-	sf::RectangleShape pauseOverlay;
+	sf::RectangleShape mHealthIconRect;
+	sf::RectangleShape mKillIconRect;
+	sf::RectangleShape mAmmoIconRect;
+	sf::RectangleShape mHealthBarRect;
+	sf::RectangleShape mDyingOverlay;
+	sf::RectangleShape mFadeToBlackOverlay;
+	sf::RectangleShape mPauseOverlay;
 
-	sf::Font pixelFont;
-	sf::Text killText;
-	sf::Text ammoText;
-	sf::Text scoreTitleText;
-	sf::Text scoreTotalText;
-	sf::Text waveTitleText;
-	sf::Text waveCurrentText;
-	sf::Text waveCompleteText;
+	sf::Font mPixelFont;
+	sf::Text mKillText;
+	sf::Text mAmmoText;
+	sf::Text mScoreTitleText;
+	sf::Text mTotalScoreText;
+	sf::Text mWaveTitleText;
+	sf::Text mCurrentWaveText;
+	sf::Text mWaveCompleteText;
 
-	Button resumeButton;
-	Button backMainMenuButton;
+	Button mResumeButton;
+	Button mBackMainMenuButton;
 };
+
+#endif

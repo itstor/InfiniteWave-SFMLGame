@@ -18,11 +18,11 @@ void Grid::Draw(sf::RenderWindow* target)
 {
 	for (auto &grid:mGrid)
 	{
-		target->draw(*grid.getDraw());
+		target->draw(*grid.GetDraw());
 	}
 }
 
-std::vector<Node>* Grid::getGrid()
+std::vector<Node>* Grid::GetGrid()
 {
 	return &mGrid;
 }
@@ -66,7 +66,7 @@ void Grid::CreateGrid()
 				sf::RectangleShape tempNode(mNodeSize);
 				tempNode.setPosition(x*mNodeSize.x, y*mNodeSize.y);
 				
-				if (obs.onCollision(tempNode))
+				if (obs.OnCollision(tempNode))
 				{
 					//std::cout << "Obstacle\n";
 					mGrid.emplace_back(NodeType::OBSTACLE_NODE, sf::Vector2f(x*mNodeSize.x, y*mNodeSize.y), mNodeSize, sf::Vector2i(x, y), id++);

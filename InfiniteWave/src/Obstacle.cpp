@@ -2,10 +2,10 @@
 
 Obstacle::Obstacle(const sf::Vector2f & position, const sf::Vector2f & size)
 {
-	this->position = position;
-	ColliderBody.setPosition(this->position);
-	ColliderBody.setSize(size);
-	ColliderBody.setOutlineColor(sf::Color::Red);
-	ColliderBody.setOutlineThickness(1);
-	ColliderBody.setFillColor(sf::Color::Transparent);
+	this->mPosition = position;
+	mColliderBody.setPosition(this->mPosition);
+	mColliderBody.setSize(size);
+	mColliderBody.setOutlineColor(sf::Color::Red);
+	mColliderBody.setOutlineThickness(1);
+	mColliderBody.setFillColor(sf::Color::Transparent);
 }

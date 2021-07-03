@@ -1,15 +1,23 @@
 #pragma once
+#ifndef GAME_OBJECT_H_
+#define GAME_OBJECT_H_
+
 #include <SFML/Graphics/RectangleShape.hpp>
+
 
 class GameObject
 {
 public:
 	virtual ~GameObject() = default;
 	
-	virtual bool onCollision(GameObject& other) const;
-	bool onCollision(const sf::RectangleShape& other) const;
-	sf::RectangleShape* getCollider();
+	virtual bool OnCollision(GameObject& other) const;
+	bool OnCollision(const sf::RectangleShape& other) const;
+	
+	sf::RectangleShape* GetCollider();
+
 protected:
-	sf::RectangleShape ColliderBody;
-	sf::Vector2f position;
+	sf::RectangleShape mColliderBody;
+	sf::Vector2f mPosition;
 };
+
+#endif

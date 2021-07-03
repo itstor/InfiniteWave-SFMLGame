@@ -1,33 +1,33 @@
 #pragma once
+#ifndef SPLASH_SCREEN_H_
+#define SPLASH_SCREEN_H_
 
-#include <iostream>
 #include <SFML/Graphics.hpp>
+
 #include "BaseScene.h"
 #include "Image.h"
 
-struct SharedObject;
 
 class SplashScreen final: public BaseScene
 {
 public:
-	SplashScreen(SharedObject& obj, bool replace = true);
-#ifdef _DEBUG
-	~SplashScreen() override { std::cout << "SplashScreen Deleted" << std::endl; }
-#endif
+	SplashScreen(SharedObject& shared_object, bool replace = true);
+	~SplashScreen() override;
 
 	void Pause() override;
 	void Draw() override;
 	void Resume() override;
-	void Update(float deltaTime) override;
+	void Update(float delta_time) override;
 
 private:
-	unsigned char logoFlag = 1;
+	unsigned char mLogoFlag = 1;
 	
-	sf::RectangleShape background; //White background
-	sf::Color alphaMask; //Fader color
-	sf::RectangleShape rectMask; //fader mask
+	sf::RectangleShape mBackgroundRect; //black background
+	sf::Color mAlphaMask; //Fader color
+	sf::RectangleShape mMaskRect; //fader mask
 	
-	Image logoITS;
-	Image logoGame;
+	Image mITSLogo;
+	Image mGameLogo;
 };
 
+#endif

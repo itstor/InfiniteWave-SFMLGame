@@ -1,37 +1,37 @@
 #include "Bullet.h"
 
-Bullet::Bullet(): currentVelo(0.0f, 0.0f), max_speed_(5000.0f)
+Bullet::Bullet(): mCurrentVelocity(0.0f, 0.0f), mMaxSpeed(5000.0f)
 {
-	bullet.setRadius(5.0f);
-	bullet.setFillColor(sf::Color::Red);
+	mBulletShape.setRadius(5.0f);
+	mBulletShape.setFillColor(sf::Color::Red);
 }
 
-void Bullet::Move(float deltaTime)
+void Bullet::Move(float delta_time)
 {
-	bullet.move(currentVelo * deltaTime);
+	mBulletShape.move(mCurrentVelocity * delta_time);
 }
 
-void Bullet::setDir(sf::Vector2f dirVect)
+void Bullet::SetDirection(sf::Vector2f dir_vector)
 {
-	currentVelo = dirVect * max_speed_;
+	mCurrentVelocity = dir_vector * mMaxSpeed;
 }
 
-void Bullet::setStartPos(sf::Vector2f pos)
+void Bullet::SetStartPos(sf::Vector2f position)
 {
-	bullet.setPosition(pos);
-	startPosition = pos;
+	mBulletShape.setPosition(position);
+	mStartPosition = position;
 }
 
-sf::Vector2f Bullet::getPosition() const
+sf::Vector2f Bullet::GetPosition() const
 {
-	return bullet.getPosition();
+	return mBulletShape.getPosition();
 }
 
-bool Bullet::onCollision(GameObject & other) const
+bool Bullet::OnCollision(GameObject & other) const
 {
-	const sf::FloatRect selfBounds = bullet.getGlobalBounds();
+	const sf::FloatRect selfBounds = mBulletShape.getGlobalBounds();
 
-	if (const sf::FloatRect otherBounds = other.getCollider()->getGlobalBounds(); otherBounds.intersects(selfBounds))
+	if (const sf::FloatRect otherBounds = other.GetCollider()->getGlobalBounds(); otherBounds.intersects(selfBounds))
 	{
 		return true;
 	}
@@ -40,7 +40,7 @@ bool Bullet::onCollision(GameObject & other) const
 }
 
 
-sf::CircleShape* Bullet::getDraw()
+sf::CircleShape* Bullet::GetDraw()
 {
-	return &bullet;
+	return &mBulletShape;
 }

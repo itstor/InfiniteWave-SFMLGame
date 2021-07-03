@@ -1,25 +1,30 @@
 #pragma once
+#ifndef SPRITE_ANIMATION_H_
+#define SPRITE_ANIMATION_H_
+
 #include <SFML/Graphics/Texture.hpp>
+
 
 class SpriteAnimation
 {
 public:
 	SpriteAnimation();
 
-	void Setup(sf::Texture* animTex, unsigned row, unsigned maxImageCount);
-	void Update(float deltaTime, int row, float switchTime, unsigned startFrame, unsigned endFrame);
+	void Setup(sf::Texture* anim_tex, unsigned row, unsigned max_image_count);
+	void Update(float delta_time, int row, float switch_time, unsigned start_frame, unsigned end_frame);
 	void Hide();
-	sf::IntRect* getTexture();
-	
-	[[nodiscard]] bool isFinish() const;
-	sf::IntRect uvRect;
+
+	[[nodiscard]] bool IsFinish() const;
+	sf::IntRect* GetTextureRect();
 	
 private:
-	unsigned int currentImage = 0;
-	unsigned int maxImage = 0;
-	int prevRow = -1;
-	bool finish = false;
-	float totalTime = 0.0f;
-	
+	unsigned int mCurrentImage = 0;
+	unsigned int mMaxImage = 0;
+	int mPrevRow = -1;
+	bool mFinish = false;
+	float mTotalTime = 0.0f;
+
+	sf::IntRect mUVRect;
 };
 
+#endif

@@ -18,12 +18,12 @@ Window::~Window()
 
 void Window::Create()
 {
-	const auto style = conf::isFullscreen ? sf::Style::Fullscreen : sf::Style::Titlebar | sf::Style::Close;
+	const auto style = conf::gIsFullscreen ? sf::Style::Fullscreen : sf::Style::Titlebar | sf::Style::Close;
 
 	mWindow.create({ mWinSize.x, mWinSize.y }, mWinTitle, style);
 	mWindow.setIcon(mWinIcon.getSize().x, mWinIcon.getSize().y, mWinIcon.getPixelsPtr());
 	//Set FPS Max to 60fps
-	mWindow.setFramerateLimit(conf::maxFPS);
+	mWindow.setFramerateLimit(conf::gMaxFPS);
 }
 
 void Window::Destroy()
@@ -48,7 +48,7 @@ void Window::Update()
 
 void Window::ToggleFullScreen()
 {
-	conf::isFullscreen = !conf::isFullscreen;
+	conf::gIsFullscreen = !conf::gIsFullscreen;
 	mWindow.close();
 	Create();
 }

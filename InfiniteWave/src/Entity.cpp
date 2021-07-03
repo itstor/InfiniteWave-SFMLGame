@@ -6,12 +6,12 @@
 
 void Entity::CheckCollision(Obstacle& obs)
 {
-	const sf::FloatRect entityBounds = ColliderBody.getGlobalBounds();
-	const sf::FloatRect obstacleBounds = obs.getCollider()->getGlobalBounds();
+	const sf::FloatRect entityBounds = mColliderBody.getGlobalBounds();
+	const sf::FloatRect obstacleBounds = obs.GetCollider()->getGlobalBounds();
 
 	sf::FloatRect nextPosition = entityBounds;
-	nextPosition.left += movePos.x;
-	nextPosition.top += movePos.y;
+	nextPosition.left += mMovePos.x;
+	nextPosition.top += mMovePos.y;
 
 	if (obstacleBounds.intersects(nextPosition))
 	{
@@ -21,7 +21,7 @@ void Entity::CheckCollision(Obstacle& obs)
 			entityBounds.left + entityBounds.width > obstacleBounds.left)
 		{
 			//std::cout << "Collided TOP\n";
-			movePos.y = 0.0f;
+			mMovePos.y = 0.0f;
 		}
 		//BOTTOM
 		else if (entityBounds.top > obstacleBounds.top &&
@@ -29,7 +29,7 @@ void Entity::CheckCollision(Obstacle& obs)
 			entityBounds.left + entityBounds.width > obstacleBounds.left)
 		{
 			//std::cout << "Collided BOTTOM\n";
-			movePos.y = 0.0f;
+			mMovePos.y = 0.0f;
 		}
 		//LEFT
 		if (entityBounds.left < obstacleBounds.left &&
@@ -37,7 +37,7 @@ void Entity::CheckCollision(Obstacle& obs)
 			entityBounds.top + entityBounds.height > obstacleBounds.top)
 		{
 			//std::cout << "Collided LEFT\n";
-			movePos.x = 0.0f;
+			mMovePos.x = 0.0f;
 		}
 		//RIGHT
 		else if (entityBounds.left > obstacleBounds.left &&
@@ -45,22 +45,22 @@ void Entity::CheckCollision(Obstacle& obs)
 			entityBounds.top + entityBounds.height > obstacleBounds.top)
 		{
 			//std::cout << "Collided RIGHT\n";
-			movePos.x = 0.0f;
+			mMovePos.x = 0.0f;
 		}
 	}
 }
 
-float Entity::getHealth() const
+float Entity::GetHealth() const
 {
-	return health;
+	return mHealth;
 }
 
-bool Entity::isDead() const
+bool Entity::IsDead() const
 {
-	return misDead;
+	return mIsDead;
 }
 
-sf::RectangleShape* Entity::getDraw()
+sf::RectangleShape* Entity::GetDraw()
 {
-	return &entityRect;
+	return &mEntityRect;
 }

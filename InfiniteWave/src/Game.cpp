@@ -9,50 +9,49 @@
 
 #include "AudioManager.h"
 
-Game::Game(SharedObject& obj) : obj(obj)
+Game::Game(SharedObject& obj) : mObj(obj)
 {
 	RestartClock();
 	srand(static_cast<unsigned int>(time(nullptr)));
 	
-	initMusic();
-	initSFX();
+	InitMusic();
+	InitSFX();
 }
 
-Game::~Game() = default;
 
 void Game::RestartClock()
 {
 	mDeltaTime = mClock.restart().asSeconds();
 }
 
-void Game::run()
+void Game::Run()
 {
 	//Run game with SplashScreen as the first scene
-	obj.SceneManager->run(SceneManager::build<SplashScreen>(obj, true));
+	mObj.SceneManager->Run(SceneManager::Build<SplashScreen>(mObj, true));
 
-	while (!obj.Window->isDone())
+	while (!mObj.Window->isDone())
 	{
 		//Window loop here
-		obj.SceneManager->nextScene(); //try to change the scene
-		obj.SceneManager->Update(mDeltaTime); //update current scene
-		obj.SceneManager->Draw(); //render current scene
+		mObj.SceneManager->NextScene(); //try to change the scene
+		mObj.SceneManager->Update(mDeltaTime); //update current scene
+		mObj.SceneManager->Draw(); //render current scene
 		RestartClock(); //restart clock to get delta time
 	}
 }
 
-void Game::initSFX()
+void Game::InitSFX()
 {
-	obj.AudioManager->addSFX("button", "data/Audio/SFX/Button_9.wav");
-	obj.AudioManager->addSFX("pistol_shoot", "data/Audio/SFX/pistol-shoot.wav");
-	obj.AudioManager->addSFX("pistol_reload", "data/Audio/SFX/pistol-reload.wav");
-	obj.AudioManager->addSFX("pistol_click", "data/Audio/SFX/pistol-click.wav");
-	obj.AudioManager->addSFX("zombie_1", "data/Audio/SFX/zombie-alive1.wav");
-	obj.AudioManager->addSFX("health_pickup", "data/Audio/SFX/health-pickup.wav");
+	mObj.AudioManager->AddSFX("button", "data/Audio/SFX/Button_9.wav");
+	mObj.AudioManager->AddSFX("pistol_shoot", "data/Audio/SFX/pistol-shoot.wav");
+	mObj.AudioManager->AddSFX("pistol_reload", "data/Audio/SFX/pistol-reload.wav");
+	mObj.AudioManager->AddSFX("pistol_click", "data/Audio/SFX/pistol-click.wav");
+	mObj.AudioManager->AddSFX("zombie_1", "data/Audio/SFX/zombie-alive1.wav");
+	mObj.AudioManager->AddSFX("health_pickup", "data/Audio/SFX/health-pickup.wav");
 }
 
-void Game::initMusic()
+void Game::InitMusic()
 {
-	obj.AudioManager->addMusic("Loading", "data/Audio/Backsound/backsound.wav", true);
-	obj.AudioManager->addMusic("HeartBeat", "data/Audio/SFX/heartbeat.wav", true);
+	mObj.AudioManager->AddMusic("Loading", "data/Audio/Backsound/backsound.wav", true);
+	mObj.AudioManager->AddMusic("HeartBeat", "data/Audio/SFX/heartbeat.wav", true);
 }
 

@@ -1,43 +1,43 @@
 #include "PathRequestManager.h"
 #include "Zombie.h"
 
-PathRequestManager::PathRequestManager(PathFinding& path_finding): mPathfinding(path_finding), currentRequest(nullptr), pfThread(&PathRequestManager::StartProcess, this)
+PathRequestManager::PathRequestManager(PathFinding& path_finding): mPathfinding(path_finding), mCurrentRequest(nullptr), mPFThread(&PathRequestManager::StartProcess, this)
 {
-	pfThread.launch();
+	mPFThread.launch();
 
 }
 
 PathRequestManager::~PathRequestManager()
 {
-	pfThread.terminate();
+	mPFThread.terminate();
 }
 
 void PathRequestManager::StartProcess()
 {
 	while (true) {
-		if (!requestQueue.empty()) {
-			currentRequest = &requestQueue.front();
+		if (!mRequestQueue.empty()) {
+			mCurrentRequest = &mRequestQueue.front();
 			//Skip if zombie deleted
-			if (currentRequest->zombie == nullptr)
+			if (mCurrentRequest->zombie == nullptr)
 			{
-				requestQueue.pop();
+				mRequestQueue.pop();
 				continue;
 			}
-			std::stack<Node> walkpath = mPathfinding.FindPath(currentRequest->start_position);
-			currentRequest->zombie->setWalkPath(walkpath);
-			requestQueue.pop();
+			std::stack<Node> walkpath = mPathfinding.FindPath(mCurrentRequest->startPosition);
+			mCurrentRequest->zombie->SetWalkPath(walkpath);
+			mRequestQueue.pop();
 		}
 	}
 }
 
-Grid* PathRequestManager::getGrid()
+Grid* PathRequestManager::GetGrid()
 {
-	return &*mPathfinding.getGrid();
+	return &*mPathfinding.GetGrid();
 }
 
 void PathRequestManager::AddRequest(Zombie& zombie_obj, const sf::Vector2f& start_position)
 {
-	requestQueue.emplace(zombie_obj, start_position);
+	mRequestQueue.emplace(zombie_obj, start_position);
 }
 
 

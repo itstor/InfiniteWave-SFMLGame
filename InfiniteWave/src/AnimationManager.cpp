@@ -1,24 +1,24 @@
 #include "AnimationManager.h"
 #include <SFML/System/Vector2.hpp>
 
-void AnimationManager::playAnimation(AnimType type, TransitionType transition_type, const sf::Vector2f& start,
+void AnimationManager::PlayAnimation(AnimType type, TransitionType transition_type, const sf::Vector2f& start,
                                      const sf::Vector2f& end, float time, sf::Transformable& object, bool back,
                                      float back_delay)
 {
-	animationContainer.push_back(new Animation(type, transition_type, start, end, time, object, back, back_delay));
+	mAnimationContainer.push_back(new Animation(type, transition_type, start, end, time, object, back, back_delay));
 }
 
-void AnimationManager::Update(float deltaTime)
+void AnimationManager::Update(float delta_time)
 {
-	if (!animationContainer.empty())
+	if (!mAnimationContainer.empty())
 	{
-		for (size_t i = 0; i < animationContainer.size(); i++)
+		for (size_t i = 0; i < mAnimationContainer.size(); i++)
 		{
-			animationContainer[i]->Update(deltaTime);
-			if (animationContainer[i]->isFinished())
+			mAnimationContainer[i]->Update(delta_time);
+			if (mAnimationContainer[i]->IsFinished())
 			{
-				delete animationContainer[i];
-				animationContainer.erase(animationContainer.begin() + i);
+				delete mAnimationContainer[i];
+				mAnimationContainer.erase(mAnimationContainer.begin() + i);
 			}
 		}
 	}

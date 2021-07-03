@@ -6,55 +6,55 @@
 SpriteAnimation::SpriteAnimation() = default;
 
 
-void SpriteAnimation::Setup(sf::Texture* animTex, unsigned int row, unsigned int maxImageCount)
+void SpriteAnimation::Setup(sf::Texture* anim_tex, unsigned int row, unsigned int max_image_count)
 {
-	maxImage = maxImageCount;
-	uvRect.width = animTex->getSize().x / maxImageCount;
-	uvRect.height = animTex->getSize().y / row;
+	mMaxImage = max_image_count;
+	mUVRect.width = anim_tex->getSize().x / max_image_count;
+	mUVRect.height = anim_tex->getSize().y / row;
 }
 
-void SpriteAnimation::Update(float deltaTime, int row, float switchTime, unsigned int startFrame, unsigned int endFrame)
+void SpriteAnimation::Update(float delta_time, int row, float switch_time, unsigned int start_frame, unsigned int end_frame)
 {
 	//Reset current frame to start frame
-	if (row != prevRow)
+	if (row != mPrevRow)
 	{
-		prevRow = row;
-		totalTime = 0;
-		currentImage = 0 + startFrame;
+		mPrevRow = row;
+		mTotalTime = 0;
+		mCurrentImage = 0 + start_frame;
 	}
 	
-	totalTime += deltaTime;
-	if (totalTime >= switchTime)
+	mTotalTime += delta_time;
+	if (mTotalTime >= switch_time)
 	{
-		finish = false;
-		totalTime = 0;
-		currentImage++;
+		mFinish = false;
+		mTotalTime = 0;
+		mCurrentImage++;
 
-		if (currentImage >= endFrame)
+		if (mCurrentImage >= end_frame)
 		{
-			finish = true;
-			currentImage = 0;
+			mFinish = true;
+			mCurrentImage = 0;
 		}
 	}
 
-	uvRect.left = currentImage * uvRect.width;
-	uvRect.top = row * uvRect.height;
+	mUVRect.left = mCurrentImage * mUVRect.width;
+	mUVRect.top = row * mUVRect.height;
 }
 
 void SpriteAnimation::Hide()
 {
-	uvRect.left = (maxImage + 1) * uvRect.width;
+	mUVRect.left = (mMaxImage + 1) * mUVRect.width;
 }
 
-sf::IntRect* SpriteAnimation::getTexture()
+sf::IntRect* SpriteAnimation::GetTextureRect()
 {
-	return &uvRect;
+	return &mUVRect;
 }
 
 
-bool SpriteAnimation::isFinish() const
+bool SpriteAnimation::IsFinish() const
 {
-	return finish;
+	return mFinish;
 }
 
 

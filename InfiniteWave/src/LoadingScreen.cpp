@@ -12,100 +12,100 @@
 #include "AudioManager.h"
 #include "GamePlay.h"
 
-LoadingScreen::LoadingScreen(SharedObject& obj, bool replace) :BaseScene(obj, replace)
+LoadingScreen::LoadingScreen(SharedObject& shared_object, bool replace) :BaseScene(shared_object, replace)
 {
 #ifdef _DEBUG
 	std::cout << "LoadingScreen Created" << std::endl;
 #endif
 
 	//setup loading bar and fram
-	loadingFrame.setOutlineColor(sf::Color::White);
-	loadingFrame.setFillColor(sf::Color::Transparent);
-	loadingFrame.setOutlineThickness(5);
-	loadingFrame.setSize(sf::Vector2f(551, 44));
-	loadingFrame.setPosition(684.5f, 1080.0f - 611.0f);
+	mLoadingBarOutline.setOutlineColor(sf::Color::White);
+	mLoadingBarOutline.setFillColor(sf::Color::Transparent);
+	mLoadingBarOutline.setOutlineThickness(5);
+	mLoadingBarOutline.setSize(sf::Vector2f(551, 44));
+	mLoadingBarOutline.setPosition(684.5f, 1080.0f - 611.0f);
 
-	loadingBar.setFillColor(sf::Color::White);
-	loadingBar.setSize(sf::Vector2f(22, 30));
+	mSingleLoadingBar.setFillColor(sf::Color::White);
+	mSingleLoadingBar.setSize(sf::Vector2f(22, 30));
 	
 	//load font
-	pixelFont.loadFromFile("data/Font/Minecraft.ttf");
+	mPixelFont.loadFromFile("data/Font/Minecraft.ttf");
 
 	//setup text
-	moveText.setFont(pixelFont);
-	moveText.setString("move");
-	moveText.setCharacterSize(38);
-	moveText.setFillColor(sf::Color::White);
+	mMoveText.setFont(mPixelFont);
+	mMoveText.setString("move");
+	mMoveText.setCharacterSize(38);
+	mMoveText.setFillColor(sf::Color::White);
 
-	reloadText.setFont(pixelFont);
-	reloadText.setString("reload");
-	reloadText.setCharacterSize(38);
-	reloadText.setFillColor(sf::Color::White);
+	mReloadText.setFont(mPixelFont);
+	mReloadText.setString("reload");
+	mReloadText.setCharacterSize(38);
+	mReloadText.setFillColor(sf::Color::White);
 
-	aimText.setFont(pixelFont);
-	aimText.setString("aim");
-	aimText.setCharacterSize(38);
-	aimText.setFillColor(sf::Color::White);
+	mAimText.setFont(mPixelFont);
+	mAimText.setString("aim");
+	mAimText.setCharacterSize(38);
+	mAimText.setFillColor(sf::Color::White);
 
-	howToText.setFont(pixelFont);
-	howToText.setString("How to Play:");
-	howToText.setCharacterSize(38);
-	howToText.setFillColor(sf::Color::White);
+	mHowToText.setFont(mPixelFont);
+	mHowToText.setString("How to Play:");
+	mHowToText.setCharacterSize(38);
+	mHowToText.setFillColor(sf::Color::White);
 
-	loadingText.setFont(pixelFont);
-	loadingText.setString("loading");
-	loadingText.setCharacterSize(38);
-	loadingText.setFillColor(sf::Color::White);
+	mLoadingText.setFont(mPixelFont);
+	mLoadingText.setString("loading");
+	mLoadingText.setCharacterSize(38);
+	mLoadingText.setFillColor(sf::Color::White);
 
-	moveText.setPosition(749.1f, 1060.0f - 178.13f);
-	reloadText.setPosition(943.52f, 1060.0f - 178.13f);
-	aimText.setPosition(1153.0f, 1060.0f - 178.13f);
-	howToText.setPosition(863.96f, 1050.0f - 402.72f);
-	loadingText.setPosition(887.22f, 1050.0f - 664.63f);
+	mMoveText.setPosition(749.1f, 1060.0f - 178.13f);
+	mReloadText.setPosition(943.52f, 1060.0f - 178.13f);
+	mAimText.setPosition(1153.0f, 1060.0f - 178.13f);
+	mHowToText.setPosition(863.96f, 1050.0f - 402.72f);
+	mLoadingText.setPosition(887.22f, 1050.0f - 664.63f);
 
 	//setup texture
-	keyWTex.loadFromFile("data/Texture/Sprites/Loading/W-Key.png");
-	keyATex.loadFromFile("data/Texture/Sprites/Loading/A-Key.png");
-	keySTex.loadFromFile("data/Texture/Sprites/Loading/S-Key.png");
-	keyDTex.loadFromFile("data/Texture/Sprites/Loading/D-Key.png");
-	keyRTex.loadFromFile("data/Texture/Sprites/Loading/R-Key.png");
-	mouseTex.loadFromFile("data/Texture/Sprites/Loading/mouse-sprite.png");
+	mKeyWTex.loadFromFile("data/Texture/Sprites/Loading/W-Key.png");
+	mKeyATex.loadFromFile("data/Texture/Sprites/Loading/A-Key.png");
+	mKeySTex.loadFromFile("data/Texture/Sprites/Loading/S-Key.png");
+	mKeyDTex.loadFromFile("data/Texture/Sprites/Loading/D-Key.png");
+	mKeyRTex.loadFromFile("data/Texture/Sprites/Loading/R-Key.png");
+	mMouseTex.loadFromFile("data/Texture/Sprites/Loading/mouse-sprite.png");
 
 	//setup anim
-	keyWAnim.Setup(&keyWTex, 1, 2);
-	keyAAnim.Setup(&keyATex, 1, 2);
-	keySAnim.Setup(&keySTex, 1, 2);
-	keyDAnim.Setup(&keyDTex, 1, 2);
-	keyRAnim.Setup(&keyRTex, 1, 2);
-	mouseAnim.Setup(&mouseTex, 1, 2);
+	mKeyWAnim.Setup(&mKeyWTex, 1, 2);
+	mKeyAAnim.Setup(&mKeyATex, 1, 2);
+	mKeySAnim.Setup(&mKeySTex, 1, 2);
+	mKeyDAnim.Setup(&mKeyDTex, 1, 2);
+	mKeyRAnim.Setup(&mKeyRTex, 1, 2);
+	mMouseAnim.Setup(&mMouseTex, 1, 2);
 
 	//setup rectangle
-	keyWRect.setSize(sf::Vector2f(static_cast<float>(keyWTex.getSize().x)/2, static_cast<float>(keyWTex.getSize().y)));
-	keyARect.setSize(sf::Vector2f(static_cast<float>(keyATex.getSize().x)/2, static_cast<float>(keyATex.getSize().y)));
-	keySRect.setSize(sf::Vector2f(static_cast<float>(keySTex.getSize().x)/2, static_cast<float>(keySTex.getSize().y)));
-	keyDRect.setSize(sf::Vector2f(static_cast<float>(keyDTex.getSize().x)/2, static_cast<float>(keyDTex.getSize().y)));
-	keyRRect.setSize(sf::Vector2f(static_cast<float>(keyRTex.getSize().x)/2, static_cast<float>(keyRTex.getSize().y)));
-	mouseRect.setSize(sf::Vector2f(113, 132));
+	mKeyWRect.setSize(sf::Vector2f(static_cast<float>(mKeyWTex.getSize().x)/2, static_cast<float>(mKeyWTex.getSize().y)));
+	mKeyARect.setSize(sf::Vector2f(static_cast<float>(mKeyATex.getSize().x)/2, static_cast<float>(mKeyATex.getSize().y)));
+	mKeySRect.setSize(sf::Vector2f(static_cast<float>(mKeySTex.getSize().x)/2, static_cast<float>(mKeySTex.getSize().y)));
+	mKeyDRect.setSize(sf::Vector2f(static_cast<float>(mKeyDTex.getSize().x)/2, static_cast<float>(mKeyDTex.getSize().y)));
+	mKeyRRect.setSize(sf::Vector2f(static_cast<float>(mKeyRTex.getSize().x)/2, static_cast<float>(mKeyRTex.getSize().y)));
+	mMouseRect.setSize(sf::Vector2f(113, 132));
 
-	keyWRect.setScale(1.57f, 1.57f);
-	keyARect.setScale(1.57f, 1.57f);
-	keySRect.setScale(1.57f, 1.57f);
-	keyDRect.setScale(1.57f, 1.57f);
-	keyRRect.setScale(1.57f, 1.57f);
+	mKeyWRect.setScale(1.57f, 1.57f);
+	mKeyARect.setScale(1.57f, 1.57f);
+	mKeySRect.setScale(1.57f, 1.57f);
+	mKeyDRect.setScale(1.57f, 1.57f);
+	mKeyRRect.setScale(1.57f, 1.57f);
 	
-	keyWRect.setTexture(&keyWTex);
-	keyARect.setTexture(&keyATex);
-	keySRect.setTexture(&keySTex);
-	keyDRect.setTexture(&keyDTex);
-	keyRRect.setTexture(&keyRTex);
-	mouseRect.setTexture(&mouseTex);
+	mKeyWRect.setTexture(&mKeyWTex);
+	mKeyARect.setTexture(&mKeyATex);
+	mKeySRect.setTexture(&mKeySTex);
+	mKeyDRect.setTexture(&mKeyDTex);
+	mKeyRRect.setTexture(&mKeyRTex);
+	mMouseRect.setTexture(&mMouseTex);
 
-	keyWRect.setPosition(770.83f, 1080.0f - 308.45f);
-	keyARect.setPosition(706.17f, 1080.0f - 255.43f);
-	keySRect.setPosition(770.83f, 1080.0f - 255.43f);
-	keyDRect.setPosition(835.49f, 1080.0f - 255.43f);
-	keyRRect.setPosition(969.98f, 1080.0f - 255.43f);
-	mouseRect.setPosition(1127.0f, 1080.0f - 321.43f);
+	mKeyWRect.setPosition(770.83f, 1080.0f - 308.45f);
+	mKeyARect.setPosition(706.17f, 1080.0f - 255.43f);
+	mKeySRect.setPosition(770.83f, 1080.0f - 255.43f);
+	mKeyDRect.setPosition(835.49f, 1080.0f - 255.43f);
+	mKeyRRect.setPosition(969.98f, 1080.0f - 255.43f);
+	mMouseRect.setPosition(1127.0f, 1080.0f - 321.43f);
 }
 
 LoadingScreen::~LoadingScreen()
@@ -113,12 +113,12 @@ LoadingScreen::~LoadingScreen()
 	std::cout << "LoadingScreen Deleted" << std::endl;
 }
 
-void LoadingScreen::initButton()
+void LoadingScreen::InitButton()
 {
 	//Initialize button here
 }
 
-void LoadingScreen::initBg()
+void LoadingScreen::InitBackground()
 {
 	//Initialize background here
 }
@@ -133,7 +133,7 @@ void LoadingScreen::Resume()
 	std::cout << "LoadingScreen Resume" << std::endl;
 }
 
-void LoadingScreen::Update(float deltaTime)
+void LoadingScreen::Update(float delta_time)
 {
 	for (auto event = sf::Event{}; mWindow.GetRenderWindow()->pollEvent(event);)
 	{
@@ -146,7 +146,7 @@ void LoadingScreen::Update(float deltaTime)
 			{
 				/*Only for non-simultaneous key
 				Use if statement for simultaneous key*/
-			case sf::Keyboard::Space: mNext = SceneManager::build<GamePlay>(mObj, true);
+			case sf::Keyboard::Space: mNextScene = SceneManager::Build<GamePlay>(mSharedObject, true);
 			default: break;
 			}
 			break;
@@ -155,33 +155,33 @@ void LoadingScreen::Update(float deltaTime)
 		}
 	}
 
-	keyWAnim.Update(deltaTime, 0, 1.f, 0, 2);
-	keyAAnim.Update(deltaTime, 0, 1.f, 0, 2);
-	keySAnim.Update(deltaTime, 0, 1.f, 0, 2);
-	keyDAnim.Update(deltaTime, 0, 1.f, 0, 2);
-	keyRAnim.Update(deltaTime, 0, 1.f, 0, 2);
-	mouseAnim.Update(deltaTime, 0, 1.f, 0, 2);
+	mKeyWAnim.Update(delta_time, 0, 1.f, 0, 2);
+	mKeyAAnim.Update(delta_time, 0, 1.f, 0, 2);
+	mKeySAnim.Update(delta_time, 0, 1.f, 0, 2);
+	mKeyDAnim.Update(delta_time, 0, 1.f, 0, 2);
+	mKeyRAnim.Update(delta_time, 0, 1.f, 0, 2);
+	mMouseAnim.Update(delta_time, 0, 1.f, 0, 2);
 
-	keyWRect.setTextureRect(*keyWAnim.getTexture());
-	keyARect.setTextureRect(*keyAAnim.getTexture());
-	keySRect.setTextureRect(*keySAnim.getTexture());
-	keyDRect.setTextureRect(*keyDAnim.getTexture());
-	keyRRect.setTextureRect(*keyRAnim.getTexture());
-	mouseRect.setTextureRect(*mouseAnim.getTexture());
+	mKeyWRect.setTextureRect(*mKeyWAnim.GetTextureRect());
+	mKeyARect.setTextureRect(*mKeyAAnim.GetTextureRect());
+	mKeySRect.setTextureRect(*mKeySAnim.GetTextureRect());
+	mKeyDRect.setTextureRect(*mKeyDAnim.GetTextureRect());
+	mKeyRRect.setTextureRect(*mKeyRAnim.GetTextureRect());
+	mMouseRect.setTextureRect(*mMouseAnim.GetTextureRect());
 
 	//loading text animation update
 	static float totalTimeLoading;
-	totalTimeLoading += deltaTime;
+	totalTimeLoading += delta_time;
 
 	if (totalTimeLoading >= 0.5f)
 	{
 		static unsigned int currentLoading = 0;
 		
 		totalTimeLoading = 0;
-		if (currentLoading == 0) loadingText.setString("loading");
-		if (currentLoading == 1) loadingText.setString("loading.");
-		if (currentLoading == 2) loadingText.setString("loading..");
-		if (currentLoading == 3) loadingText.setString("loading...");
+		if (currentLoading == 0) mLoadingText.setString("loading");
+		if (currentLoading == 1) mLoadingText.setString("loading.");
+		if (currentLoading == 2) mLoadingText.setString("loading..");
+		if (currentLoading == 3) mLoadingText.setString("loading...");
 
 		currentLoading++;
 		if (currentLoading > 3) currentLoading = 0;
@@ -189,18 +189,18 @@ void LoadingScreen::Update(float deltaTime)
 
 	//loading bar animation update
 	static float totalTimeBar;
-	totalTimeBar += deltaTime;
+	totalTimeBar += delta_time;
 
 	if (totalTimeBar >= 0.5f)
 	{
 		static unsigned int currentBar = 0;
 
-		loadingBar.setPosition(693.0f + (26.75f * static_cast<float>(currentBar)), 1080.0f - 604);
-		loadingBars.emplace_back(loadingBar);
+		mSingleLoadingBar.setPosition(693.0f + (26.75f * static_cast<float>(currentBar)), 1080.0f - 604);
+		mLoadingBars.emplace_back(mSingleLoadingBar);
 
 		totalTimeBar = 0;
 		currentBar++;
-		if (currentBar >= 21) mNext = SceneManager::build<GamePlay>(mObj, true);
+		if (currentBar >= 21) mNextScene = SceneManager::Build<GamePlay>(mSharedObject, true);
 	}
 
 }
@@ -210,20 +210,20 @@ void LoadingScreen::Draw()
 	mWindow.BeginDraw();
 
 	/*Draw everything here*/
-	mWindow.Draw(keyWRect);
-	mWindow.Draw(keyARect);
-	mWindow.Draw(keySRect);
-	mWindow.Draw(keyDRect);
-	mWindow.Draw(keyRRect);
-	mWindow.Draw(mouseRect);
-	mWindow.Draw(moveText);
-	mWindow.Draw(reloadText);
-	mWindow.Draw(aimText);
-	mWindow.Draw(howToText);
-	mWindow.Draw(loadingText);
-	mWindow.Draw(loadingFrame);
+	mWindow.Draw(mKeyWRect);
+	mWindow.Draw(mKeyARect);
+	mWindow.Draw(mKeySRect);
+	mWindow.Draw(mKeyDRect);
+	mWindow.Draw(mKeyRRect);
+	mWindow.Draw(mMouseRect);
+	mWindow.Draw(mMoveText);
+	mWindow.Draw(mReloadText);
+	mWindow.Draw(mAimText);
+	mWindow.Draw(mHowToText);
+	mWindow.Draw(mLoadingText);
+	mWindow.Draw(mLoadingBarOutline);
 
-	for (auto &bar:loadingBars)
+	for (auto &bar:mLoadingBars)
 	{
 		mWindow.Draw(bar);
 	}

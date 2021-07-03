@@ -2,14 +2,14 @@
 
 #include "SharedObject.h"
 
-BaseScene::BaseScene(SharedObject& obj, bool replace) : mObj(obj), mWindow(*obj.Window), mAudio(*obj.AudioManager), mManager(*obj.SceneManager), mReplace(replace){}
+BaseScene::BaseScene(SharedObject& shared_object, bool replace) : mSharedObject(shared_object), mWindow(*shared_object.Window), mAudio(*shared_object.AudioManager), mScene(*shared_object.SceneManager), mReplace(replace){}
 
 std::unique_ptr<BaseScene> BaseScene::Next()
 {
-	return std::move(mNext);
+	return std::move(mNextScene);
 }
 
-bool BaseScene::isReplacing() const
+bool BaseScene::IsReplacing() const
 {
 	return mReplace;
 }

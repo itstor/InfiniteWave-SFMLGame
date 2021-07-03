@@ -10,27 +10,32 @@
 #include "AudioManager.h"
 
 
-SplashScreen::SplashScreen(SharedObject& obj, bool replace) :BaseScene(obj, replace), alphaMask(0, 0, 0, 255)
+SplashScreen::SplashScreen(SharedObject& shared_object, bool replace) :BaseScene(shared_object, replace), mAlphaMask(0, 0, 0, 255)
 {
 #ifdef _DEBUG
 	std::cout << "SplashScreen Created" << std::endl;
 #endif
 	//Background
-	background.setSize(sf::Vector2f(mWindow.GetWindowSize().x, mWindow.GetWindowSize().y));
-	background.setFillColor(sf::Color::Black);
+	mBackgroundRect.setSize(sf::Vector2f(mWindow.GetWindowSize().x, mWindow.GetWindowSize().y));
+	mBackgroundRect.setFillColor(sf::Color::Black);
 	//Mask fader
-	rectMask.setFillColor(alphaMask);
-	rectMask.setSize(sf::Vector2f(mWindow.GetWindowSize().x, mWindow.GetWindowSize().y));
+	mMaskRect.setFillColor(mAlphaMask);
+	mMaskRect.setSize(sf::Vector2f(mWindow.GetWindowSize().x, mWindow.GetWindowSize().y));
 
-	logoITS.Setup("data/Texture/GUI/splash_whiteits.png",
-		sf::Vector2f(static_cast<float>(conf::windowWidth) / 2, static_cast<float>(conf::windowHeight) / 2),
+	mITSLogo.Setup("data/Texture/GUI/splash_whiteits.png",
+		sf::Vector2f(static_cast<float>(conf::gWindowWidth) / 2, static_cast<float>(conf::gWindowHeight) / 2),
 		sf::Vector2f(500, 500));
 	
-	logoGame.Setup("data/Texture/GUI/splash_logogame.png",
-		sf::Vector2f(static_cast<float>(conf::windowWidth) / 2, static_cast<float>(conf::windowHeight) / 2),
+	mGameLogo.Setup("data/Texture/GUI/splash_logogame.png",
+		sf::Vector2f(static_cast<float>(conf::gWindowWidth) / 2, static_cast<float>(conf::gWindowHeight) / 2),
 		sf::Vector2f(500, 548));
 	
-	mAudio.play("Loading");
+	mAudio.PlayMusic("Loading");
+}
+
+SplashScreen::~SplashScreen()
+{
+	std::cout << "SplashScreen Deleted" << std::endl;
 }
 
 
@@ -44,7 +49,7 @@ void SplashScreen::Resume()
 	std::cout << "SplashScreen Resume" << std::endl;
 }
 
-void SplashScreen::Update(float deltaTime)
+void SplashScreen::Update(float delta_time)
 {
 	for (auto event = sf::Event{}; mWindow.GetRenderWindow()->pollEvent(event);)
 	{
@@ -57,10 +62,10 @@ void SplashScreen::Update(float deltaTime)
 			switch (event.key.code)
 			{
 			case sf::Keyboard::Space:
-				mNext = SceneManager::build<MainMenu>(mObj, false);
+				mNextScene = SceneManager::Build<MainMenu>(mSharedObject, false);
 				break;
 			case sf::Keyboard::Escape: mWindow.Destroy(); break;
-			case sf::Keyboard::M: mAudio.toggleMute(); break;
+			case sf::Keyboard::M: mAudio.ToggleMute(); break;
 			default: break;
 			}
 			break;
@@ -71,20 +76,20 @@ void SplashScreen::Update(float deltaTime)
 	}
 
 	
-	if (alphaMask.a != 0 && (logoFlag == 1 || logoFlag == 3))
-		alphaMask.a -= 1;
+	if (mAlphaMask.a != 0 && (mLogoFlag == 1 || mLogoFlag == 3))
+		mAlphaMask.a -= 1;
 	else
-		alphaMask.a += 1;
+		mAlphaMask.a += 1;
 
-	if (logoFlag == 3 && alphaMask.a == 0)
-		mNext = SceneManager::build<MainMenu>(mObj, true);
+	if (mLogoFlag == 3 && mAlphaMask.a == 0)
+		mNextScene = SceneManager::Build<MainMenu>(mSharedObject, true);
 
-	if (alphaMask.a == 0 || (alphaMask.a == 255 && logoFlag == 2))
-		logoFlag++;
+	if (mAlphaMask.a == 0 || (mAlphaMask.a == 255 && mLogoFlag == 2))
+		mLogoFlag++;
 
 
 
-	rectMask.setFillColor(alphaMask);
+	mMaskRect.setFillColor(mAlphaMask);
 
 }
 
@@ -92,16 +97,16 @@ void SplashScreen::Draw()
 {
 	mWindow.BeginDraw();
 
-	mWindow.Draw(background);
+	mWindow.Draw(mBackgroundRect);
 
-	if (logoFlag == 1 || logoFlag == 2)
-		mWindow.Draw(*logoITS.getDraw());
+	if (mLogoFlag == 1 || mLogoFlag == 2)
+		mWindow.Draw(*mITSLogo.GetDraw());
 	else
-		mWindow.Draw(*logoGame.getDraw());
+		mWindow.Draw(*mGameLogo.GetDraw());
 
-	if (alphaMask.a != 0)
+	if (mAlphaMask.a != 0)
 	{
-		mWindow.Draw(rectMask);
+		mWindow.Draw(mMaskRect);
 	}
 
 	mWindow.EndDraw();

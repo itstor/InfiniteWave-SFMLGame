@@ -48,19 +48,19 @@ std::stack<Node> PathFinding::FindPath(sf::Vector2f start_position)
 
 			for (auto &neighbor : mGrid.GetNeighbors(currentNode))
 			{
-				if (neighbor.GetType() == NodeType::OBSTACLE_NODE || isContains(closedSet, neighbor))
+				if (neighbor.GetType() == NodeType::OBSTACLE_NODE || IsContains(closedSet, neighbor))
 				{
 					continue;
 				}
 
-				if (const int movementCostToNeighbor = currentNode.GetgCost() + GetDistance(currentNode, neighbor);
-					movementCostToNeighbor < neighbor.GetgCost() || !isContains(openSet, neighbor))
+				if (const int movementCostToNeighbor = currentNode.GetGCost() + GetDistance(currentNode, neighbor);
+					movementCostToNeighbor < neighbor.GetGCost() || !IsContains(openSet, neighbor))
 				{
-					neighbor.SetgCost(movementCostToNeighbor);
-					neighbor.SethCost(GetDistance(neighbor, targetNode));
-					neighbor.setNodeParent(&currentNode);
+					neighbor.SetGCost(movementCostToNeighbor);
+					neighbor.SetHCost(GetDistance(neighbor, targetNode));
+					neighbor.SetNodeParent(&currentNode);
 
-					if (!isContains(openSet, neighbor))
+					if (!IsContains(openSet, neighbor))
 					{
 						openSet.push_back(neighbor);
 						std::push_heap(openSet.begin(), openSet.end(), std::greater<>{});
@@ -72,12 +72,12 @@ std::stack<Node> PathFinding::FindPath(sf::Vector2f start_position)
 	}
 }
 
-Grid * PathFinding::getGrid()
+Grid * PathFinding::GetGrid()
 {
 	return &mGrid;
 }
 
-bool PathFinding::isContains(const std::vector<Node>& node_container, const Node & node_to_check) const
+bool PathFinding::IsContains(const std::vector<Node>& node_container, const Node & node_to_check) const
 {
 	if (std::find(node_container.begin(), node_container.end(), node_to_check) != node_container.end())
 	{
@@ -87,7 +87,7 @@ bool PathFinding::isContains(const std::vector<Node>& node_container, const Node
 	
 }
 
-bool PathFinding::isContains(const std::unordered_set<Node, NodeHash>& node_container, const Node & node_to_check) const
+bool PathFinding::IsContains(const std::unordered_set<Node, NodeHash>& node_container, const Node & node_to_check) const
 {
 	if (node_container.find(node_to_check) != node_container.end())
 	{

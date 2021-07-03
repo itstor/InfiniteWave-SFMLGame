@@ -1,41 +1,42 @@
 #pragma once
+#ifndef GAMEOVER_SCENE_H_
+#define GAMEOVER_SCENE_H_
 
 #include <SFML/Graphics.hpp>
 
 #include "AnimationManager.h"
 #include "BaseScene.h"
-#include "Button.h" //GUI Optional
 
 class SceneManager;
+
 
 class GameoverScene final : public BaseScene
 {
 public:
-	GameoverScene(SharedObject& obj, bool replace = true);
+	GameoverScene(SharedObject& shared_object, bool replace = true);
 	~GameoverScene() override;
 
 	void Pause() override;
 	void Draw() override;
 	void Resume() override;
-	void Update(float deltaTime) override;
-
-	void initBg();
-	void initButton();
+	void Update(float delta_time) override;
 
 private:
+	void InitBackground();
+	void InitButton();
+
+	float mElapsedTime = 0.0f;
+	
 	//Define scene component here
 	AnimationManager mAnimManager;
-	sf::RectangleShape fadeToBlack;
-	sf::RectangleShape scoreMask;
 
-
-	sf::Font pixelFont;
-	sf::Text gameOverText;
-	sf::Text scoreText;
-	sf::Text newHighScoreText;
-	sf::Text respawnText;
-	sf::Text backToMainText;
-
-	float elapsedTime = 0.0f;
+	sf::RectangleShape mFadeToBlackOverlay;
+	sf::Font mPixelFont;
+	sf::Text mGameOverText;
+	sf::Text mScoreText;
+	sf::Text mNewHighScoreText;
+	sf::Text mRespawnText;
+	sf::Text mBackToMainText;
 };
 
+#endif

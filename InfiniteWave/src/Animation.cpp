@@ -14,8 +14,8 @@ Animation::Animation(AnimType anim_type, TransitionType transition_type, const s
 	mBack = back;
 	mObject = &object;
 	mBackDelay = back_delay;
-	totalFrame.x = mEnd.x - mStart.x;
-	totalFrame.y = mEnd.y - mStart.y;
+	mTotalFrame.x = mEnd.x - mStart.x;
+	mTotalFrame.y = mEnd.y - mStart.y;
 
 	switch (transition_type)
 	{
@@ -40,71 +40,71 @@ Animation::Animation(AnimType anim_type, TransitionType transition_type, const s
 	//calculate progress increment
 	if (mAnimType == AnimType::MOVE)
 	{
-		const float maxTotalFrame = std::max(totalFrame.x, totalFrame.y);
+		const float maxTotalFrame = std::max(mTotalFrame.x, mTotalFrame.y);
 		
-		res = powf(0.01f, round(log10(maxTotalFrame)) - 1);
-		res = res >= 1.0f ? 0.01f : res;
+		mRes = powf(0.01f, round(log10(maxTotalFrame)) - 1);
+		mRes = mRes >= 1.0f ? 0.01f : mRes;
 	}
 	else if (mAnimType == AnimType::ZOOM)
 	{
-		res = powf(0.01f, round(log10(totalFrame.x)) - 1);
-		res = res >= 1.0f ? 0.01f : res;
+		mRes = powf(0.01f, round(log10(mTotalFrame.x)) - 1);
+		mRes = mRes >= 1.0f ? 0.01f : mRes;
 	}
 
-	timePerFrame = time * res;
+	mTimePerFrame = time * mRes;
 }
 
 void Animation::Update(float deltaTime)
 {
-	elapsedTime += deltaTime;
+	mElapsedTime += deltaTime;
 
 	if (mAnimType == AnimType::MOVE)
 	{
-		if (elapsedTime >= timePerFrame)
+		if (mElapsedTime >= mTimePerFrame)
 		{
-			const float posChangeY = mStart.y + totalFrame.y * mTransitionFunc(progress);
-			const float posChangeX = mStart.x + totalFrame.x * mTransitionFunc(progress);
+			const float posChangeY = mStart.y + mTotalFrame.y * mTransitionFunc(mProgress);
+			const float posChangeX = mStart.x + mTotalFrame.x * mTransitionFunc(mProgress);
 
 			mObject->setPosition(posChangeX, posChangeY);
-			progress += res;
+			mProgress += mRes;
 
-			elapsedTime = 0.0f;
+			mElapsedTime = 0.0f;
 
-			if (progress >= 1.0f && !mBack || progress < 0.0f && mBack)
+			if (mProgress >= 1.0f && !mBack || mProgress < 0.0f && mBack)
 			{
 				misFinished = true;
 			}
-			else if (progress >= 1.0f)
+			else if (mProgress >= 1.0f)
 			{
-				res *= -1;
+				mRes *= -1;
 			}
 		}
 	}
 	else if (mAnimType == AnimType::ZOOM)
 	{
-		if (elapsedTime >= timePerFrame)
+		if (mElapsedTime >= mTimePerFrame)
 		{
-			const float scaleChangeX = mStart.x + totalFrame.x * mTransitionFunc(progress);
+			const float scaleChangeX = mStart.x + mTotalFrame.x * mTransitionFunc(mProgress);
 
 			mObject->setScale(scaleChangeX, scaleChangeX);
-			progress += res;
+			mProgress += mRes;
 
-			elapsedTime = 0.0f;
+			mElapsedTime = 0.0f;
 
-			if (progress >= 1.0f && !mBack || progress < 0.0f && mBack)
+			if (mProgress >= 1.0f && !mBack || mProgress < 0.0f && mBack)
 			{
 				misFinished = true;
 			}
-			else if (progress >= 1.0f)
+			else if (mProgress >= 1.0f)
 			{
-				res *= -1;
-				elapsedTime -= mBackDelay;
+				mRes *= -1;
+				mElapsedTime -= mBackDelay;
 			}
 		}
 	}
 }
 
-bool Animation::isFinished() const
+bool Animation::IsFinished() const
 {
 	return misFinished;
 }

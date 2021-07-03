@@ -1,22 +1,27 @@
 #pragma once
+#ifndef MUSIC_H_
+#define MUSIC_H_
 
 #include <SFML/Audio.hpp>
 
+
 class Music
 {
-private:
-	sf::Music music;
-	std::string file_path;
-
 public:
-	Music(const std::string& file_path, const bool& isLoop);
+	Music(const std::string& file_path, bool is_loop);
 	~Music() = default;
 	
-	void play();
-	void pause();
-	void stop();
-	void setVolume(float& newVolume);
-	sf::SoundSource::Status getStatus() const;
+	void Play();
+	void Pause();
+	void Stop();
+	void SetVolume(float new_volume);
+	
+	sf::SoundSource::Status GetStatus() const;
+
+private:
+	sf::Music mMusic;
+	std::string mFilePath;
+
 };
 
-
+#endif

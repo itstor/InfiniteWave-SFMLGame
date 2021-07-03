@@ -9,7 +9,7 @@ SceneManager::SceneManager(): mIsResume(false)
 #endif
 }
 
-void SceneManager::run(std::unique_ptr<BaseScene> scene)
+void SceneManager::Run(std::unique_ptr<BaseScene> scene)
 {
 #ifdef _DEBUG
 	std::cout << "Scene Manager Running" << std::endl;
@@ -19,7 +19,7 @@ void SceneManager::run(std::unique_ptr<BaseScene> scene)
 }
 
 
-void SceneManager::nextScene()
+void SceneManager::NextScene()
 {
 	if (mIsResume)
 	{
@@ -36,7 +36,7 @@ void SceneManager::nextScene()
 	{
 		if (auto temp = mScene.top()->Next(); temp!=nullptr)
 		{
-			if (temp->isReplacing())
+			if (temp->IsReplacing())
 				mScene.pop();
 
 			else
@@ -47,14 +47,14 @@ void SceneManager::nextScene()
 	}
 }
 
-void SceneManager::prevScene()
+void SceneManager::PrevScene()
 {
 	mIsResume = true;
 }
 
-void SceneManager::Update(float deltaTime)
+void SceneManager::Update(float delta_time)
 {
-	mScene.top()->Update(deltaTime);
+	mScene.top()->Update(delta_time);
 }
 
 void SceneManager::Draw()

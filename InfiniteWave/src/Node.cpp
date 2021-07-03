@@ -37,16 +37,16 @@ bool Node::operator!=(const Node & node) const
 
 bool Node::operator<(const Node & node) const
 {
-	return this->GetfCost() < node.GetfCost();
+	return this->GetFCost() < node.GetFCost();
 }
 
 bool Node::operator>(const Node & node) const
 {
-	return this->GetfCost() > node.GetfCost();
+	return this->GetFCost() > node.GetFCost();
 }
 
 
-sf::RectangleShape * Node::getDraw()
+sf::RectangleShape * Node::GetDraw()
 {
 	return &mNodeRect;
 }
@@ -71,29 +71,29 @@ NodeType Node::GetType() const
 
 
 //Getter setter
-void Node::SetgCost(int gCost)
+void Node::SetGCost(int g_cost)
 {
-	m_gCost = gCost;
+	mGCost = g_cost;
 }
 
-void Node::SethCost(int hCost)
+void Node::SetHCost(int h_cost)
 {
-	m_hCost = hCost;
+	mHCost = h_cost;
 }
 
-int Node::GetgCost() const
+int Node::GetGCost() const
 {
-	return m_gCost;
+	return mGCost;
 }
 
-int Node::GethCost() const
+int Node::GetHCost() const
 {
-	return m_hCost;
+	return mHCost;
 }
 
-int Node::GetfCost() const
+int Node::GetFCost() const
 {
-	return m_gCost + m_hCost;
+	return mGCost + mHCost;
 }
 
 int Node::GetNodeId() const
@@ -101,7 +101,7 @@ int Node::GetNodeId() const
 	return mNodeId;
 }
 
-void Node::setNodeParent(Node* node)
+void Node::SetNodeParent(Node* node)
 {
 	mParentNode = new Node(*node);
 }

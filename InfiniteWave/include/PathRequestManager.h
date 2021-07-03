@@ -1,6 +1,7 @@
 #pragma once
-#ifndef PATH_REQUEST_MANAGER_H
-#define PATH_REQUEST_MANAGER_H
+#ifndef PATH_REQUEST_MANAGER_H_
+#define PATH_REQUEST_MANAGER_H_
+
 #include <queue>
 #include <SFML/System/Thread.hpp>
 
@@ -8,13 +9,14 @@
 
 class Zombie;
 
+
 class PathFindingRequest
 {
 public:
 	Zombie* zombie;
-	sf::Vector2f start_position;
+	sf::Vector2f startPosition;
 
-	PathFindingRequest(Zombie& zombie, const sf::Vector2f& start_position):zombie(&zombie), start_position(start_position){}
+	PathFindingRequest(Zombie& zombie, const sf::Vector2f& start_position):zombie(&zombie), startPosition(start_position){}
 };
 
 class PathRequestManager
@@ -26,14 +28,17 @@ public:
 	void AddRequest(Zombie& zombie_obj, const sf::Vector2f& start_position);
 	void TryNext();
 	void StartProcess();
-	Grid* getGrid();
+	
+	Grid* GetGrid();
+
 private:
-	bool isBusy = false;
+	bool mIsBusy = false;
 	
 	PathFinding& mPathfinding;
-	std::queue<PathFindingRequest> requestQueue;
-	PathFindingRequest* currentRequest;
-	sf::Thread pfThread;
+	PathFindingRequest* mCurrentRequest;
+	sf::Thread mPFThread;
+
+	std::queue<PathFindingRequest> mRequestQueue;
 };
 
 #endif
