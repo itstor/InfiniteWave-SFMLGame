@@ -1,7 +1,7 @@
 # Infinite Wave - SFML Game
 Created by Akhmad Thoriq Afif as part of Advanced Programming Final Project
 
-## Screenshoot
+## Screenshots
 ![SplashScreen](images/splashscreen.png)
 ![MainMenu](images/mainmenu.png)
 ![Settings](images/settings.png)
@@ -9,7 +9,7 @@ Created by Akhmad Thoriq Afif as part of Advanced Programming Final Project
 ![Gameplay](images/gameplay.png)
 ![Gameplay](images/dying.png)
 
-## Additional Credit
+## Additional Credits
 + rileygombart - Player and Zombie Sprites
 + adamatomic - Jawbreaker Tile Map
 + freepik.com - Button
